@@ -113,15 +113,17 @@ StructDataClass.prototype.loadRemovedStart=function (removedStart) {
             this.getxy({x,y}).removedStart=1
         }
     }
+    let endIndex=1
+    let startIndex=1
     for (let y = 0; y < this.ysize; y++) {
         for (let x = 0; x < this.xsize; x++) {
             if(! (x===0 || y==0 ||x===this.xsize-1 || y===this.ysize-1))continue;
             if (! this.getxy({x,y}).unused)continue;
-            this.getxy({x,y}).end=1
+            this.getxy({x,y}).end=endIndex++
             if (this.getxy({x,y}).removedStart) {
                 this.removedStart.push(x+y*this.xsize)
             }else{
-                this.getxy({x,y}).start=1
+                this.getxy({x,y}).start=startIndex++
             }
         }
     }
