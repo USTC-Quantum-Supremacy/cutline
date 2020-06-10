@@ -97,6 +97,37 @@ StructDataClass.prototype.loadChoosen=function (choosen) {
     return this
 }
 
+/**
+ * @param {Number[]} removedStart x+y*xsize的形式给出移除的起点
+ */
+StructDataClass.prototype.loadRemovedStart=function (removedStart) {
+    if (!removedStart) {
+        removedStart=[]
+    }
+    this.removedStart=[]
+    for (let index = 0; index < removedStart.length; index++) {
+        const xy = removedStart[index];
+        let x=xy%this.xsize;
+        let y=(xy-x)/this.xsize;
+        if (this.getxy({x,y}).unused) {
+            this.getxy({x,y}).removedStart=1
+        }
+    }
+    for (let y = 0; y < this.ysize; y++) {
+        for (let x = 0; x < this.xsize; x++) {
+            if(! (x===0 || y==0 ||x===this.xsize-1 || y===this.ysize-1))continue;
+            if (! this.getxy({x,y}).unused)continue;
+            this.getxy({x,y}).end=1
+            if (this.getxy({x,y}).removedStart) {
+                this.removedStart.push(x+y*this.xsize)
+            }else{
+                this.getxy({x,y}).start=1
+            }
+        }
+    }
+    return this
+}
+
 StructDataClass.prototype.pickMaxArea = function (params) {
     let areaindex=1
     let area={}
@@ -162,12 +193,17 @@ StructDataClass.prototype.pickMaxArea = function (params) {
 }
 
 StructDataClass.prototype.generateCInput=function (params) {
-    let text=`x y ndeep edeep max min
-area
-cost
-start
-end
-cost2`
+    try {
+        
+        let text=`${this.xsize} ${this.ysize} ${this._ndeep()} ${this._edeep()} ${this._max()} ${this._min()} ${this._q0x()} ${this._q0y()}
+    ${this._area()}
+    ${this._cost()}
+    ${this._start()}
+    ${this._end()}
+    ${this._cost2()}`
+    } catch (error) {
+        
+    }
     this.CInput=''
     return this
 }
@@ -277,6 +313,8 @@ VisualClass.prototype.lineStrokeColor = '#000'
 VisualClass.prototype.lineWidth = 10
 VisualClass.prototype.markOffsetQ={x:0,y:0}
 VisualClass.prototype.markFontSizeQ=28
+VisualClass.prototype.startR=15
+VisualClass.prototype.startFill='#444'
 
 
 VisualClass.prototype.init = function (params) {
@@ -298,6 +336,10 @@ VisualClass.prototype.point=function (o,qi,strokeColor,fillColor) {
     return `<circle class="qpt q${qi} m${this.data.maxAreaMap[qi]}" cx="${100*o.x}" cy="${100*o.y}" r="${this.ptR}" stroke="${strokeColor}"stroke-width="${this.ptWidth}" fill="${fillColor}"/>`
 }
 
+VisualClass.prototype.start=function (x,y) {
+    return `<circle class="qstart s${x+y*this.data.xsize}" cx="${100*x}" cy="${100*y}" r="${this.startR}" fill="${this.startFill}"/>`
+}
+
 VisualClass.prototype.line =function (o1,o2,q1,q2,strokeColor) {
     return `<line class="qline q${q1} q${q2} m${this.data.maxAreaMap[q1]} m${this.data.maxAreaMap[q2]}" x1="${100*o1.x}" y1="${100*o1.y}" x2="${100*o2.x}" y2="${100*o2.y}" stroke="${strokeColor}" stroke-width="${this.lineWidth}"/>`
 }
@@ -317,6 +359,7 @@ VisualClass.prototype.generateBaseSVG = function (params) {
     let points=[]
     let edges=[]
     let QMarks=[]
+    let starts=[]
 
     let _f = this.data.getAdjacent
     for (let qindex = 0; qindex < this.data.bitCount; qindex++) {
@@ -336,9 +379,18 @@ VisualClass.prototype.generateBaseSVG = function (params) {
             }
         }
     }
+
+    for (let y = 0; y < this.data.ysize; y++) {
+        for (let x = 0; x < this.data.xsize; x++) {
+            if (! this.data.getxy({x,y}).end)continue;
+            starts.push(this.start(x,y))
+        }
+    }
+
     this.points=points
     this.edges=edges
     this.QMarks=QMarks
+    this.starts=starts
 
     return this
 }
@@ -349,7 +401,8 @@ VisualClass.prototype.generateSVGCSS = function (params) {
     let notinmax=[]
     let choosen=[]
     let splitedges=[]
-    let tmpArr=[remove,normal,choosen,notinmax,splitedges]
+    let removedStart=[]
+    
 
     remove=this.data.removeList.map(v=>`#${this.getId()} .q${v}`)
     for (let qindex = 0; qindex < this.data.bitCount; qindex++) {
@@ -364,7 +417,9 @@ VisualClass.prototype.generateSVGCSS = function (params) {
     }
     choosen=this.data.choosen.map(v=>`#${this.getId()} .q${v}`)
     splitedges=this.data.splitEdges.map(v=>`#${this.getId()} .qline.q${v[0]}.q${v[1]}`)
+    removedStart=this.data.removedStart.map(v=>`#${this.getId()} .s${v}`)
 
+    let tmpArr=[remove,normal,choosen,notinmax,splitedges,removedStart]
     for (let index = 0; index < tmpArr.length; index++) {
         const element = tmpArr[index];
         if (element.length===0) {
@@ -412,6 +467,10 @@ VisualClass.prototype.generateSVGCSS = function (params) {
         stroke:#29e142
     }
 
+    ${removedStart.join(', ')} {
+        fill:#ccc;
+    }
+
     `
     return this
 }
@@ -436,6 +495,9 @@ VisualClass.prototype.generateSVG = function (params) {
         <g>
             ${this.QMarks.join('\n')}
         </g>
+        <g>
+            ${this.starts.join('\n')}
+        </g>
     </svg>
     `
     this.SVG=SVG
@@ -443,16 +505,24 @@ VisualClass.prototype.generateSVG = function (params) {
 }
 
 VisualClass.prototype.bindSVGClick = function (svgNode,trigger) {
-    let pts=Array.from(svgNode.querySelectorAll('circle, text'))
     let thisv=this
+    let pts=Array.from(svgNode.querySelectorAll('.qpt, .mark'))
     for (let index = 0,pt; pt=pts[index]; index++) {
         (function (pt,thisv,trigger) {
             let cssclass=pt.getAttribute('class')
-            pt.setAttribute('title',cssclass)
             pt.onclick=function (params) {
-                trigger(/q\d+/.exec(cssclass)[0].slice(1),thisv)
+                trigger(~~(/q\d+/.exec(cssclass)[0].slice(1)),thisv,'choosen')
             }
         })(pt,thisv,trigger)
+    }
+    let starts=Array.from(svgNode.querySelectorAll('.qstart'))
+    for (let index = 0,start; start=starts[index]; index++) {
+        (function (start,thisv,trigger) {
+            let cssclass=start.getAttribute('class')
+            start.onclick=function (params) {
+                trigger(~~(/s\d+/.exec(cssclass)[0].slice(1)),thisv,'removedStart')
+            }
+        })(start,thisv,trigger)
     }
     return this
 }
@@ -469,16 +539,18 @@ var StructDataClass = exports.StructDataClass
 var VisualClass = exports.VisualClass
 
 function buildMainSVG(params) {
-    var choosen=[]
     var xy=[12,11]
+    var choosen=[]
+    var removedStart=[]
     if (typeof document !== "undefined") {
         var inputstr=document.getElementById('circult').value
-        var choosen=eval('['+inputstr.split('\n')[1]+']')
         var xy=eval('['+inputstr.split('\n')[0]+']')
+        var choosen=eval('['+inputstr.split('\n')[1]+']')
+        var removedStart=eval('['+inputstr.split('\n')[2]+']')
     }
 
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1]}).initmap().loadChoosen(choosen).pickMaxArea().setSplit([])
+    sd.init({xsize:xy[0],ysize:xy[1]}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).generateCInput().setSplit([])
     console.log(sd)
 
     var view=new VisualClass();
@@ -493,19 +565,28 @@ function buildMainSVG(params) {
         // document.getElementById('insertHere').appendChild(node)
         document.getElementById('insertHere').innerHTML=view.SVG
         document.getElementById('formatedGateArray').innerText=sd.CInput
-        view.bindSVGClick(document.getElementById('insertHere').children[0],function(qi,thisv){
-            qi=~~qi
+        view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
             /**
              * @type {VisualClass}
              */
             let view=thisv
             let choosen=view.data.choosen
-            if (choosen.indexOf(qi)===-1) {
-                choosen.push(qi)
-            } else {
-                choosen.splice(choosen.indexOf(qi),1)
+            let removedStart=view.data.removedStart
+            if (type==='choosen') {
+                if (choosen.indexOf(clickData)===-1) {
+                    choosen.push(clickData)
+                } else {
+                    choosen.splice(choosen.indexOf(clickData),1)
+                }
             }
-            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize}\n${choosen.join(',')}`
+            if (type==='removedStart') {
+                if (removedStart.indexOf(clickData)===-1) {
+                    removedStart.push(clickData)
+                } else {
+                    removedStart.splice(removedStart.indexOf(clickData),1)
+                }
+            }
+            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize}\n${choosen.join(',')}\n${removedStart.join(',')}`
             buildMainSVG()
         })
     }
