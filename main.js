@@ -28,18 +28,18 @@ StructDataClass.prototype.initmap=function (params) {
     for (let yindex = 0; yindex < this.ysize+2; yindex++) {
         for (let xindex = 0; xindex < this.xsize+2; xindex++) {
             if ((xindex+yindex)%2===this.unused) {
-                this.map[xindex][yindex]=this.unusedElement
+                this.map[xindex][yindex]=JSON.parse(JSON.stringify(this.unusedElement))
             }
         }
     }
     // 移除边界
     for (let index = 0; index < this.xsize+2; index++) {
         this.map[index][0]=this.boundaryElement
-        this.map[index][this.ysize+1]=this.boundaryElement
+        this.map[index][this.ysize+1]=JSON.parse(JSON.stringify(this.boundaryElement))
     }
     for (let index = 0; index < this.ysize+2; index++) {
         this.map[0][index]=this.boundaryElement
-        this.map[this.xsize+1][index]=this.boundaryElement
+        this.map[this.xsize+1][index]=JSON.parse(JSON.stringify(this.boundaryElement))
     }
     // 标qi序号
     let qindex=0;
@@ -161,10 +161,14 @@ StructDataClass.prototype.pickMaxArea = function (params) {
     return this
 }
 
-StructDataClass.prototype.generateCNF = function (params) {
-    let text='p cnf '+this.maxAreaCount+' '+this.maxAreaEdgeCount+'\n'
-    text+=this.maxAreaEdges.map(v=>v.map(v=>this.maxAreaMap[v]).concat([0]).join(' ')).join('\n')
-    this.CNF=text
+StructDataClass.prototype.generateCInput=function (params) {
+    let text=`x y ndeep edeep max min
+area
+cost
+start
+end
+cost2`
+    this.CInput=''
     return this
 }
 
@@ -256,19 +260,6 @@ StructDataClass.prototype.setSplit = function (removeList) {
     return this
 }
 
-/**
- * @param {Number[]} result
- */
-StructDataClass.prototype.processCNFResult =function (result) {
-    let list=[]
-    for (let index = 1; index <= result.length; index++) {
-        const removeList = result.slice(0,index);
-        list.push(this.copy().setSplit(removeList))
-    }
-    return list
-}
-
-
 
 /**
  * @constructor
@@ -285,10 +276,8 @@ VisualClass.prototype.ptWidth = 10
 VisualClass.prototype.lineStrokeColor = '#000'
 VisualClass.prototype.lineWidth = 10
 VisualClass.prototype.markOffsetQ={x:0,y:0}
-VisualClass.prototype.markOffsetM={x:55,y:0}
 VisualClass.prototype.markFontSizeQ=28
-// VisualClass.prototype.markFontSizeM=20
-VisualClass.prototype.markFontSizeM=0
+
 
 VisualClass.prototype.init = function (params) {
     Object.assign(this,params)
@@ -328,17 +317,13 @@ VisualClass.prototype.generateBaseSVG = function (params) {
     let points=[]
     let edges=[]
     let QMarks=[]
-    let MMarks=[]
+
     let _f = this.data.getAdjacent
     for (let qindex = 0; qindex < this.data.bitCount; qindex++) {
 
         points.push(this.point(this.data.qi2xy(qindex),qindex,this.ptStrokeColor,this.ptFillColor))
 
         QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,qindex,this.markFontSizeQ))
-
-        if (this.data.maxAreaMap[qindex]>=1) {
-            MMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetM,qindex,this.data.maxAreaMap[qindex],this.markFontSizeM))
-        }
 
         let pts=_f(this.data.qi2xy(qindex))
         for (let index = 0,pt; pt=pts[index]; index++) {
@@ -354,7 +339,7 @@ VisualClass.prototype.generateBaseSVG = function (params) {
     this.points=points
     this.edges=edges
     this.QMarks=QMarks
-    this.MMarks=MMarks
+
     return this
 }
 
@@ -451,9 +436,6 @@ VisualClass.prototype.generateSVG = function (params) {
         <g>
             ${this.QMarks.join('\n')}
         </g>
-        <g>
-            ${this.MMarks.join('\n')}
-        </g>
     </svg>
     `
     this.SVG=SVG
@@ -473,14 +455,6 @@ VisualClass.prototype.bindSVGClick = function (svgNode,trigger) {
         })(pt,thisv,trigger)
     }
     return this
-}
-
-VisualClass.prototype.processCNFResult = function (result) {
-    let list = this.data.processCNFResult(result)
-    let maxEageCount=Math.max.apply(null,list.map(v=>v.splitEdges.length))
-    list=list.filter(v=>v.splitEdges.length===maxEageCount)
-    let viewList=list.map(v=>new this.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
-    return viewList
 }
 
 if (typeof exports === "undefined") exports = {};
@@ -504,9 +478,8 @@ function buildMainSVG(params) {
     }
 
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1]}).initmap().loadChoosen(choosen).pickMaxArea().generateCNF().setSplit([])
+    sd.init({xsize:xy[0],ysize:xy[1]}).initmap().loadChoosen(choosen).pickMaxArea().setSplit([])
     console.log(sd)
-    // console.log(sd.CNF)
 
     var view=new VisualClass();
     view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
@@ -519,7 +492,7 @@ function buildMainSVG(params) {
         // node.innerHTML=view.SVG
         // document.getElementById('insertHere').appendChild(node)
         document.getElementById('insertHere').innerHTML=view.SVG
-        document.getElementById('formatedGateArray').innerText=sd.CNF
+        document.getElementById('formatedGateArray').innerText=sd.CInput
         view.bindSVGClick(document.getElementById('insertHere').children[0],function(qi,thisv){
             qi=~~qi
             /**
