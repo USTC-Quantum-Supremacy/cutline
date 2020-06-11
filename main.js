@@ -16,6 +16,7 @@ StructDataClass.prototype.map=[[]] // map[x+1][y+1]
 StructDataClass.prototype.qi2xy_dict=[]
 StructDataClass.prototype.removeList=[]
 StructDataClass.prototype.splitEdges=[]
+StructDataClass.prototype.CInputFirstLine=''
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
@@ -252,6 +253,11 @@ ${this._start()}
 ${this._end()}
 ${this._cost2()}`
 
+    if (this.CInputFirstLine) {
+        text=text.split('\n')
+        text[0]=this.CInputFirstLine
+        text=text.join('\n')
+    }
     this.CInput=text
     return this
 }
@@ -590,15 +596,17 @@ function buildMainSVG(params) {
     var xy=[12,11]
     var choosen=[]
     var removedStart=[]
+    var CInputFirstLine=''
     if (typeof document !== "undefined") {
         var inputstr=document.getElementById('circult').value
         var xy=eval('['+inputstr.split('\n')[0]+']')
         var choosen=eval('['+inputstr.split('\n')[1]+']')
         var removedStart=eval('['+inputstr.split('\n')[2]+']')
+        var CInputFirstLine=inputstr.split('\n')[3]||''
     }
 
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1]}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).generateCInput().setSplit([])
+    sd.init({xsize:xy[0],ysize:xy[1],CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).generateCInput().setSplit([])
     console.log(sd)
 
     var view=new VisualClass();
