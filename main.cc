@@ -2,8 +2,23 @@
 #include <fstream>
 #include <stdlib.h>
 #include <cstring>
+#include <vector>
 
 using namespace std;
+
+typedef struct
+{
+    int startx;
+    int starty;
+    int endx;
+    int endy;
+    int currentCount;
+    int stage; // 0 for running, 1 for failed
+    int ndeep;
+    vector<int> qubits;
+} pathType;
+
+vector<pathType *> Results;
 
 typedef struct
 {
@@ -67,11 +82,21 @@ inputType *scanInput(char *filename)
     return gg;
 }
 
-int _walkingArea(inputType *gg, int *area2, int sx, int sy)
+int _walkingArea(inputType *gg, pathType *pp, int *area2, int sx, int sy)
 {
-    // check max min etc
-    //
+    if (pp->stage)
+        return 1;
+    pp->currentCount += gg->cost2[sx * gg->ysize + sy];
+    if (pp->currentCount > gg->max)
+    {
+        pp->stage = 1;
+        return 1;
+    }
     area2[sx * gg->ysize + sy] = 1;
+    if (gg->cost2[sx * gg->ysize + sy])
+    {
+        pp->qubits.push_back(gg->cost2[sx * gg->ysize + sy]);
+    }
     int xi[] = {-1, 1, 0, 0};
     int yi[] = {0, 0, -1, 1};
     for (int ii = 0; ii < 4; ii++)
@@ -80,22 +105,42 @@ int _walkingArea(inputType *gg, int *area2, int sx, int sy)
         int yy = sy + yi[ii];
         if (area2[xx * gg->ysize + yy] == 0)
         {
-            _walkingArea(gg, area2, xx, yy);
+            _walkingArea(gg, pp, area2, xx, yy);
         }
     }
     return 0;
 }
 
-int check(inputType *gg)
+int check(inputType *gg, int startx, int starty, int endx, int endy, int nd)
 {
     int *area2 = new int[gg->xsize * gg->ysize];
     memcpy(area2, gg->area, gg->xsize * gg->ysize * sizeof(int));
-    _walkingArea(gg, area2, gg->q0x, gg->q0y);
+    pathType *pp = new pathType;
+    pp->startx = startx;
+    pp->starty = starty;
+    pp->endx = endx;
+    pp->endy = endy;
+    pp->ndeep = nd;
+    pp->currentCount = 0;
+    pp->stage = 0;
+    _walkingArea(gg, pp, area2, gg->q0x, gg->q0y);
     delete area2;
+    if (pp->stage == 1)
+    {
+        delete pp;
+    }
+    else
+    {
+        if (nd < gg->ndeep)
+        {
+            gg->ndeep = nd;
+        }
+        Results.push_back(pp);
+    }
     return 0;
 }
 
-int _walkingPath(inputType *gg, int sx, int sy, int precost, int nd, int ed)
+int _walkingPath(inputType *gg, int sx, int sy, int precost, int nd, int ed, int startx, int starty)
 {
     // bfs
     gg->area[sx * gg->ysize + sy] = 1;
@@ -114,7 +159,7 @@ int _walkingPath(inputType *gg, int sx, int sy, int precost, int nd, int ed)
 
     if (gg->end[sx * gg->ysize + sy])
     {
-        return check(gg);
+        return check(gg, startx, starty, sx, sy, nd);
     }
 
     int xi[] = {-1, 1, 1, -1};
@@ -125,7 +170,7 @@ int _walkingPath(inputType *gg, int sx, int sy, int precost, int nd, int ed)
         int yy = sy + yi[ii];
         if (gg->area[xx * gg->ysize + yy] == 0)
         {
-            // _walkingPath(gg, xx, yy, cost, nd, ed);
+            _walkingPath(gg, xx, yy, cost, nd, ed, startx, starty);
         }
     }
     gg->area[sx * gg->ysize + sy] = 0;
@@ -146,7 +191,7 @@ int findPath(inputType *gg, int sx, int sy)
         int yy = sy + yi[ii];
         if (gg->area[xx * gg->ysize + yy] == 0)
         {
-            _walkingPath(gg, xx, yy, cost, 0, 0);
+            _walkingPath(gg, xx, yy, cost, 0, 0, sx, sy);
         }
     }
     gg->area[sx * gg->ysize + sy] = 0;
@@ -174,6 +219,20 @@ int main(int argc, char **argv)
 {
     auto gg = scanInput(argv[1]);
     initPath(gg);
+    if (Results.size())
+    {
+        cout << "shortest length: " << Results.back()->ndeep << endl;
+    }
+    else
+    {
+        cout << "no path found" << endl;
+    }
+
+    while (Results.size())
+    {
+        delete Results.back();
+        Results.pop_back();
+    }
     delete gg->area;
     delete gg->cost;
     delete gg->start;
