@@ -228,17 +228,27 @@ int initPath(inputType *gg)
     return 0;
 }
 
-int printPath(pathType *pp)
+int printPath(pathType *pp, bool qubitsOnly)
 {
-    cout << "shortest length: " << pp->ndeep << endl;
-    cout << "qubits: ";
+    if (!qubitsOnly)
+    {
+        cout << "shortest length: " << pp->ndeep << endl;
+        cout << "qubits: ";
+    }
+    else
+    {
+        cout << pp->ndeep << ": ";
+    }
     int qsize = pp->qubits.size();
     for (int ii = 0; ii < qsize; ii++)
     {
         cout << pp->qubits[ii] << ", ";
     }
     cout << endl;
-    cout << "start,end: " << pp->startx << " " << pp->starty << " " << pp->endx << " " << pp->endy << " " << endl;
+    if (!qubitsOnly)
+    {
+        cout << "start,end: " << pp->startx << " " << pp->starty << " " << pp->endx << " " << pp->endy << " " << endl;
+    }
     return 0;
 }
 
@@ -248,17 +258,17 @@ int main(int argc, char **argv)
     initPath(gg);
     if (Results.size())
     {
-        cout << Results.size() << "path found" << endl;
-        printPath(Results.back());
+        cout << Results.size() << " path found" << endl;
+        printPath(Results.back(), false);
     }
     else
     {
         cout << "no path found" << endl;
     }
-
+    cout << "===" << Results.size() << endl;
     while (Results.size())
     {
-        // printPath(Results.back());
+        // printPath(Results.back(), true);
         delete Results.back();
         Results.pop_back();
     }
