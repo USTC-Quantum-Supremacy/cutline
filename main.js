@@ -227,7 +227,7 @@ StructDataClass.prototype._cost=function (params) {
 }
 
 StructDataClass.prototype._ndeep=function (params) {
-    return Math.max(9,2*Math.min(this.xsize,this.ysize))
+    return Math.max(9,Math.min(this.xsize,this.ysize)-1)
 }
 StructDataClass.prototype._edeep=function (params) {
     return this.choosen.length*2 
