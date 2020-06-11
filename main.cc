@@ -95,7 +95,8 @@ int _walkingArea(inputType *gg, pathType *pp, int *area2, int sx, int sy)
     area2[sx * gg->ysize + sy] = 1;
     if (gg->cost2[sx * gg->ysize + sy])
     {
-        pp->qubits.push_back(gg->cost2[sx * gg->ysize + sy]);
+        pp->qubits.push_back(sx);
+        pp->qubits.push_back(sy);
     }
     int xi[] = {-1, 1, 0, 0};
     int yi[] = {0, 0, -1, 1};
@@ -125,6 +126,10 @@ int check(inputType *gg, int startx, int starty, int endx, int endy, int nd)
     pp->stage = 0;
     _walkingArea(gg, pp, area2, gg->q0x, gg->q0y);
     delete area2;
+    if (pp->currentCount < gg->min)
+    {
+        pp->stage = 1;
+    }
     if (pp->stage == 1)
     {
         delete pp;
@@ -215,13 +220,27 @@ int initPath(inputType *gg)
     return 0;
 }
 
+int printPath(pathType * pp)
+{
+    cout << "shortest length: " << pp->ndeep << endl;
+    cout << "qubits: ";
+    int qsize=pp->qubits.size();
+    for (int ii = 0; ii < qsize; ii++)
+    {
+        cout << pp->qubits[ii] << ", ";
+    }
+    cout << endl;
+    cout << "start,end: " << pp->startx << " " << pp->starty << " " << pp->endx << " " << pp->endy << " " <<endl;
+    return 0;
+}
+
 int main(int argc, char **argv)
 {
     auto gg = scanInput(argv[1]);
     initPath(gg);
     if (Results.size())
     {
-        cout << "shortest length: " << Results.back()->ndeep << endl;
+        // printPath(Results.back());
     }
     else
     {
@@ -230,6 +249,7 @@ int main(int argc, char **argv)
 
     while (Results.size())
     {
+        printPath(Results.back());
         delete Results.back();
         Results.pop_back();
     }
