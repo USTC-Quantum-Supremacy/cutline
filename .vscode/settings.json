@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.tpl": "html",
+        "*.m": "matlab",
+        "*.mlog": "matlab",
+        "*.tex": "latex",
+        "xutility": "cpp",
+        "initializer_list": "cpp",
+        "type_traits": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp"
+    }
+}
