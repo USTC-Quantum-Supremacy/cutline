@@ -194,19 +194,65 @@ StructDataClass.prototype.pickMaxArea = function (params) {
     return this
 }
 
-StructDataClass.prototype.generateCInput=function (params) {
-    try {
-        
-        let text=`${this.xsize} ${this.ysize} ${this._ndeep()} ${this._edeep()} ${this._max()} ${this._min()} ${this._q0x()} ${this._q0y()}
-    ${this._area()}
-    ${this._cost()}
-    ${this._start()}
-    ${this._end()}
-    ${this._cost2()}`
-    } catch (error) {
-        
+StructDataClass.prototype._area=function (params) {
+    return this.map.map(v=>v.map(u=>u.isBoundary||0).join(' ')).join('\n')
+}
+StructDataClass.prototype._start=function (params) {
+    return this.map.map(v=>v.map(u=>u.start||0).join(' ')).join('\n')
+}
+StructDataClass.prototype._end=function (params) {
+    return this.map.map(v=>v.map(u=>u.end||0).join(' ')).join('\n')
+}
+StructDataClass.prototype._cost2=function (params) {
+    return this.map.map(v=>v.map(u=>u.area===this.maxArea?1:0).join(' ')).join('\n')
+}
+StructDataClass.prototype._cost=function (params) {
+    for (let qindex = 0; qindex < this.bitCount; qindex++) {
+        if (this.getxy(this.qi2xy(qindex)).save===0){
+            let o=this.qi2xy(qindex)
+            let pts=[
+                                 {x:o.x-1,y:o.y},                
+                {x:o.x-0,y:o.y-1},                {x:o.x-0,y:o.y+1},
+                                 {x:o.x+1,y:o.y},
+            ]
+            for (let index = 0,pt; pt=pts[index]; index++) {
+                if (! this.getxy(pt).isBoundary) {
+                    this.getxy(pt).cost1=1
+                }
+            }
+        }
     }
-    this.CInput=''
+    return this.map.map(v=>v.map(u=>u.cost1||0).join(' ')).join('\n')
+}
+
+StructDataClass.prototype._ndeep=function (params) {
+    return 9
+}
+StructDataClass.prototype._edeep=function (params) {
+    return this.choosen.length*2 // todo
+}
+StructDataClass.prototype._max=function (params) {
+    return this.maxAreaCount-this._min()
+}
+StructDataClass.prototype._min=function (params) {
+    return ~~(this.maxAreaCount/2-2.5)
+}
+StructDataClass.prototype._q0x=function (params) {
+    return 2 // todo
+}
+StructDataClass.prototype._q0y=function (params) {
+    return 1 // todo
+}
+
+StructDataClass.prototype.generateCInput=function (params) {
+    let text=`${this.xsize} ${this.ysize} ${this._ndeep()} ${this._edeep()} ${this._max()} ${this._min()} ${this._q0x()} ${this._q0y()}
+${this._area()}
+${this._cost()}
+${this._start()}
+${this._end()}
+${this._cost2()}`
+
+    this.CInput=text
     return this
 }
 
@@ -368,7 +414,7 @@ VisualClass.prototype.generateBaseSVG = function (params) {
 
         points.push(this.point(this.data.qi2xy(qindex),qindex,this.ptStrokeColor,this.ptFillColor))
 
-        QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,qindex,this.markFontSizeQ))
+        // QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,qindex,this.markFontSizeQ))
 
         let pts=_f(this.data.qi2xy(qindex))
         for (let index = 0,pt; pt=pts[index]; index++) {
