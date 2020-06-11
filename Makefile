@@ -4,4 +4,4 @@ all:
 build:
 	g++ -Wall main.cc -O3 -o run
 run:
-	run demoinput.txt
+	./run demoinput.txt

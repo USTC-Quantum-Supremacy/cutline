@@ -125,7 +125,7 @@ int _walkingPath(inputType *gg, int sx, int sy, int precost, int nd, int ed)
         int yy = sy + yi[ii];
         if (gg->area[xx * gg->ysize + yy] == 0)
         {
-            _walkingPath(gg, xx, yy, cost, nd, ed);
+            // _walkingPath(gg, xx, yy, cost, nd, ed);
         }
     }
     gg->area[sx * gg->ysize + sy] = 0;
