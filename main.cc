@@ -154,17 +154,25 @@ int _walkingPath(inputType *gg, int sx, int sy, int precost, int nd, int ed, int
     if (precost == 1 && cost == 1)
     {
         if (++ed > gg->edeep)
+        {
+            gg->area[sx * gg->ysize + sy] = 0;
             return 1;
+        }
     }
     else
     {
         if (++nd > gg->ndeep)
+        {
+            gg->area[sx * gg->ysize + sy] = 0;
             return 1;
+        }
     }
 
     if (gg->end[sx * gg->ysize + sy])
     {
-        return check(gg, startx, starty, sx, sy, nd);
+        check(gg, startx, starty, sx, sy, nd);
+        gg->area[sx * gg->ysize + sy] = 0;
+        return 1;
     }
 
     int xi[] = {-1, 1, 1, -1};
@@ -220,17 +228,17 @@ int initPath(inputType *gg)
     return 0;
 }
 
-int printPath(pathType * pp)
+int printPath(pathType *pp)
 {
     cout << "shortest length: " << pp->ndeep << endl;
     cout << "qubits: ";
-    int qsize=pp->qubits.size();
+    int qsize = pp->qubits.size();
     for (int ii = 0; ii < qsize; ii++)
     {
         cout << pp->qubits[ii] << ", ";
     }
     cout << endl;
-    cout << "start,end: " << pp->startx << " " << pp->starty << " " << pp->endx << " " << pp->endy << " " <<endl;
+    cout << "start,end: " << pp->startx << " " << pp->starty << " " << pp->endx << " " << pp->endy << " " << endl;
     return 0;
 }
 
@@ -240,7 +248,8 @@ int main(int argc, char **argv)
     initPath(gg);
     if (Results.size())
     {
-        // printPath(Results.back());
+        cout << Results.size() << "path found" << endl;
+        printPath(Results.back());
     }
     else
     {
@@ -249,7 +258,7 @@ int main(int argc, char **argv)
 
     while (Results.size())
     {
-        printPath(Results.back());
+        // printPath(Results.back());
         delete Results.back();
         Results.pop_back();
     }
