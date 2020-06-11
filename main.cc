@@ -15,6 +15,7 @@ typedef struct
     int currentCount;
     int stage; // 0 for running, 1 for failed
     int ndeep;
+    int unbalance;
     vector<int> qubits;
 } pathType;
 
@@ -136,6 +137,22 @@ int check(inputType *gg, int startx, int starty, int endx, int endy, int nd)
     }
     else
     {
+        pp->unbalance = (gg->max - pp->currentCount) - (pp->currentCount - gg->min);
+        pp->unbalance *= pp->unbalance < 0 ? -1 : 1;
+        // //debug start
+        // if (pp->ndeep==2 && pp->unbalance==1)
+        // {
+        //     for (int xx = 0; xx < gg->xsize; xx++)
+        //     {
+        //         for (int yy = 0; yy < gg->ysize; yy++)
+        //         {
+        //             cout<<gg->area[xx*gg->ysize+yy]<< ' ';
+        //         }
+        //         cout<<endl;
+        //     }
+        //     cout<<pp->qubits.size()<<endl;
+        // }
+        // //debug end
         if (nd < gg->ndeep)
         {
             gg->ndeep = nd;
@@ -232,12 +249,12 @@ int printPath(pathType *pp, bool qubitsOnly)
 {
     if (!qubitsOnly)
     {
-        cout << "shortest length: " << pp->ndeep << endl;
+        cout << "shortest length & unbalance: " << pp->ndeep << "," << pp->unbalance << endl;
         cout << "qubits: ";
     }
     else
     {
-        cout << pp->ndeep << ": ";
+        cout << pp->ndeep << "," << pp->unbalance << ": ";
     }
     int qsize = pp->qubits.size();
     for (int ii = 0; ii < qsize; ii++)
@@ -252,26 +269,66 @@ int printPath(pathType *pp, bool qubitsOnly)
     return 0;
 }
 
+int _emptyList(vector<pathType *> &list)
+{
+    while (list.size())
+    {
+        delete list.back();
+        list.pop_back();
+    }
+    return 0;
+}
+
+int filtResult(inputType *gg)
+{
+    if (Results.size() == 0)
+    {
+        cout << "no path found" << endl;
+        cout << "===" << Results.size() << endl;
+        return 0;
+    }
+    vector<pathType *> tlist;
+    int ndeep = 999999;
+    int unbalance = 999999;
+    while (Results.size())
+    {
+        auto pp = Results.back();
+        if (pp->ndeep < ndeep || (pp->ndeep == ndeep && pp->unbalance < unbalance))
+        {
+            _emptyList(tlist);
+            tlist.push_back(pp);
+            ndeep = pp->ndeep;
+            unbalance = pp->unbalance;
+        }
+        else if (pp->ndeep == ndeep && pp->unbalance == unbalance)
+        {
+            tlist.push_back(pp);
+        }
+        else
+        {
+            delete pp;
+        }
+        Results.pop_back();
+    }
+    if (tlist.size())
+    {
+        cout << tlist.size() << " paths found" << endl;
+        printPath(tlist.back(), false);
+    }
+    cout << "===" << tlist.size() << endl;
+    for (int ii = tlist.size() - 1; ii >= 0; ii--)
+    {
+        printPath(tlist[ii], true);
+    }
+    _emptyList(tlist);
+    return 0;
+}
+
 int main(int argc, char **argv)
 {
     auto gg = scanInput(argv[1]);
     initPath(gg);
-    if (Results.size())
-    {
-        cout << Results.size() << " path found" << endl;
-        printPath(Results.back(), false);
-    }
-    else
-    {
-        cout << "no path found" << endl;
-    }
-    cout << "===" << Results.size() << endl;
-    while (Results.size())
-    {
-        // printPath(Results.back(), true);
-        delete Results.back();
-        Results.pop_back();
-    }
+    filtResult(gg);
     delete gg->area;
     delete gg->cost;
     delete gg->start;

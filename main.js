@@ -227,10 +227,10 @@ StructDataClass.prototype._cost=function (params) {
 }
 
 StructDataClass.prototype._ndeep=function (params) {
-    return 9
+    return Math.max(9,2*Math.min(this.xsize,this.ysize))
 }
 StructDataClass.prototype._edeep=function (params) {
-    return this.choosen.length*2 // todo
+    return this.choosen.length*2 
 }
 StructDataClass.prototype._max=function (params) {
     return this.maxAreaCount-this._min()
@@ -239,10 +239,10 @@ StructDataClass.prototype._min=function (params) {
     return ~~(this.maxAreaCount/2-2.5)
 }
 StructDataClass.prototype._q0x=function (params) {
-    return 2 // todo
+    return 2 
 }
 StructDataClass.prototype._q0y=function (params) {
-    return 1 // todo
+    return 1 
 }
 
 StructDataClass.prototype.generateCInput=function (params) {
