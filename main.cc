@@ -126,7 +126,7 @@ int check(inputType *gg, int startx, int starty, int endx, int endy, int nd)
     pp->currentCount = 0;
     pp->stage = 0;
     _walkingArea(gg, pp, area2, gg->q0x, gg->q0y);
-    delete area2;
+    delete[] area2;
     if (pp->currentCount < gg->min)
     {
         pp->stage = 1;
@@ -283,7 +283,7 @@ int filtResult(inputType *gg)
 {
     if (Results.size() == 0)
     {
-        cout << "no path found" << endl;
+        cout << "0 paths found" << endl;
         cout << "===" << Results.size() << endl;
         return 0;
     }
@@ -329,11 +329,11 @@ int main(int argc, char **argv)
     auto gg = scanInput(argv[1]);
     initPath(gg);
     filtResult(gg);
-    delete gg->area;
-    delete gg->cost;
-    delete gg->start;
-    delete gg->end;
-    delete gg->cost2;
+    delete[] gg->area;
+    delete[] gg->cost;
+    delete[] gg->start;
+    delete[] gg->end;
+    delete[] gg->cost2;
     delete gg;
     return 0;
 }

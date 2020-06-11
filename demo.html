@@ -77,25 +77,31 @@ function submit(params) {
 }
 
 function preProcessResult(resultStr) {
-    let sd= window.sd
-    let rmap={}
-    for (const key in sd.maxAreaMap) {
-        if (sd.maxAreaMap.hasOwnProperty(key)) {
-            const value = sd.maxAreaMap[key];
-            rmap[value]=key
+    // 2 paths found
+    // shortest length & unbalance: 2,1
+    // qubits: 2, 1, 1, 2, 2, 3, 1, 4,
+    // start,end: 2 4 3 1
+    // ===2
+    // 2,1: 2, 1, 1, 2, 2, 3, 1, 4,
+    // 2,1: 2, 1, 1, 2, 3, 2, 2, 3, 1, 4,
+    try {
+        let check={}
+        let sd= window.sd
+        let last=[]
+        let str=resultStr.split('===')[1]
+        let lines=str.split('\n')
+        for (let ii = 1; ii <= ~~lines[0]; ii++) {
+            let a=eval('['+lines[ii].split(':')[1]+']')
+            let b=a.map((v,i,a)=>{ return {x:v-1,y:a[i+1]-1}}).filter((v,i)=>i%2==0).map(v=>sd.getxy(v).qi)
+            if (check[JSON.stringify(b)]==null) {
+                check[JSON.stringify(b)]=1
+                last.push(b)
+            }
         }
+        window.lastResult=last
+    } catch (error) {
     }
-    let lines = resultStr.split('\n')
-    let last=[]
-    for (let index = 0; index < lines.length; index++) {
-        const line = lines[index];
-        if (/^(\s*?\d+\s*)+$/.exec(line)) {
-            last=[]
-            lines[index]=line.replace(/\d+/g,v=>{last.push(~~rmap[~~v]);return last.slice(-1)[0]})
-        }
-    }
-    window.lastResult=last
-    return lines.join('\n')
+    return resultStr
 }
 
 function processCNFResult(result,showall,target) {
@@ -105,16 +111,15 @@ function processCNFResult(result,showall,target) {
     target=target?'resultlist2':'resultlist'
 
     let list=[]
-    for (let index = 1; index <= result.length; index++) {
-        const removeList = result.slice(0,index);
+    for (let index = 0; index < result.length; index++) {
+        const removeList = result[index];
         list.push(window.sd.copy().setSplit(removeList))
     }
 
-    let maxEageCount=Math.max.apply(null,list.map(v=>v.splitEdges.length))
-    if(!showall)list=list.filter(v=>v.splitEdges.length===maxEageCount)
+    if(!showall)list=list.slice(0,1)
     let viewList=list.map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
 
-    document.getElementById(target).innerHTML=maxEageCount+'\n<br>\n'+viewList.map(v=>v.SVG).join('\n<br>\n')
+    document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
 }
 
 

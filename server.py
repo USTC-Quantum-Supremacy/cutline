@@ -39,9 +39,9 @@ def sysecho(a):
 class g:
     strtemplate='HTTP/1.0 302 Move temporarily\r\nContent-Length: 0\r\nLocation: {urlstr}\r\n\r\n' #{urlstr}
     ip='0.0.0.0'
-    port=26184
-    quickbb='/home/user/guochu/quickbb-master/quickbb_64 --min-fill-ordering --time 60 --cnffile '
-    cnfpath='/home/user/zhaouv/quickbb/cnf/current.cnf'
+    port=26185
+    cutline='/home/user/zhaouv/cutline/run '
+    filepath='/home/user/zhaouv/cutline/in/current.in'
     isRunning=False
 
 
@@ -74,19 +74,18 @@ def mainpost(urlstr,body):
             ]))
         try:
             op=json.loads(body)
-            cnf=op['cnf']
+            CInput=op['CInput']
         except Exception as e:
             return (200,'error format')
-
         if g.isRunning:
             return (200,'failed, last task is running')
         
 
         try:
             g.isRunning=True
-            with open(g.cnfpath,'w') as fid:
-                fid.write(cnf)
-            ss=os.popen(g.quickbb+g.cnfpath)
+            with open(g.filepath,'w') as fid:
+                fid.write(CInput)
+            ss=os.popen(g.cutline+g.filepath)
             return (200,ss.read())
         except Exception as ee:
             return (200,'error happens')
