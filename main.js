@@ -360,8 +360,8 @@ StructDataClass.prototype.setSplit = function (removeList) {
  */
 StructDataClass.prototype.calExpectation = function (params) {
     let p=Object.assign({
-        n1:this.unbalance/8+this.maxAreaCount/2,
-        n2:-this.unbalance/8+this.maxAreaCount/2,
+        n1:this.unbalance/4+this.maxAreaCount/2,
+        n2:-this.unbalance/4+this.maxAreaCount/2,
         n:this.maxAreaCount,
         c:this.splitEdges.length,
         b:this.maxAreaEdgeCount
