@@ -286,7 +286,7 @@ StructDataClass.prototype.setSplit = function (removeList) {
         if (removeList.indexOf(qindex)!==-1) {
             mi.remove=1
         } else {
-            mi.area2=1
+            // mi.area2=1
         }
     }
     // 染色
@@ -350,6 +350,31 @@ StructDataClass.prototype.setSplit = function (removeList) {
     return this
 }
 
+/**
+ * 计算一些预期的数
+ * @param {Object} params
+ * @param {number} params.e1 单比特
+ * @param {number} params.e2 双比特
+ * @param {number} params.er 读取
+ * @param {number} params.d  深度
+ */
+StructDataClass.prototype.calExpectation = function (params) {
+    let p=Object.assign({
+        n1:this.unbalance/8+this.maxAreaCount/2,
+        n2:-this.unbalance/8+this.maxAreaCount/2,
+        n:this.maxAreaCount,
+        c:this.splitEdges.length
+    },params)
+    let f=((1-p.e1)**p.n * (1-p.e2)**p.c)**p.d * (1-p.er)**p.n
+    let r2=9/f/f
+    let r3=r2/(0.6*1000000/200)
+    let cu=(2**p.n1+2**p.n2)*4**(p.d/4*p.c)
+    let cg=(2**27+2**26)*4**(p.d/4*7)
+    let r6=cu/cg
+    this.expectation=[f,r2,r3,cu,cg,r6]
+    this.expectation_describe=['f','count','time','SFA_u','SFA_g','SFA_u/SFA_g']
+    return this
+}
 
 /**
  * @constructor
@@ -369,6 +394,7 @@ VisualClass.prototype.markOffsetQ={x:0,y:0}
 VisualClass.prototype.markFontSizeQ=28
 VisualClass.prototype.startR=15
 VisualClass.prototype.startFill='#444'
+VisualClass.prototype.expectation=''
 
 
 VisualClass.prototype.init = function (params) {
@@ -581,6 +607,13 @@ VisualClass.prototype.bindSVGClick = function (svgNode,trigger) {
     return this
 }
 
+VisualClass.prototype.getExpectation = function () {
+    if (this.data.expectation) {
+        this.expectation='<br>\n'+this.data.expectation.map((v,i)=>this.data.expectation_describe[i]+': '+v).join(', <br>\n')
+    }
+    return this
+}
+
 if (typeof exports === "undefined") exports = {};
 exports.StructDataClass = StructDataClass
 exports.VisualClass = VisualClass
@@ -642,7 +675,7 @@ function buildMainSVG(params) {
                     removedStart.splice(removedStart.indexOf(clickData),1)
                 }
             }
-            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize}\n${choosen.join(',')}\n${removedStart.join(',')}`
+            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize}\n${choosen.join(',')}\n${removedStart.join(',')}\n`+document.getElementById('circult').value.split('\n').slice(3).join('\n')
             buildMainSVG()
         })
     }

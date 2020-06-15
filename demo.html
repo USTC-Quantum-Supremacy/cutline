@@ -14,16 +14,17 @@
         <br>
         <div>
 
-            <textarea name="circult" id="circult" cols="40" rows="5" spellcheck="false">12,11
+            <textarea name="circult" id="circult" cols="40" rows="6" spellcheck="false">12,11
 
 
 
-
+0.001,0.02,0.05,14
 
             </textarea>
             <br>
             <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
             <input type="button" id='Submit' onclick="submit()" value="Submit">
+            <input type="button" id='reRenderResult' onclick="reRenderResult()" value="ReRenderResult">
         </div>
         <div id='resultlist' style="font-family:monospace;"></div>
         <pre id='postresult' style="font-family:monospace;"></pre>
@@ -68,8 +69,7 @@ function submit(params) {
             document.getElementById('postresult').innerHTML=err
         } else {
             document.getElementById('postresult').innerHTML=preProcessResult(data)
-            processCNFResult()
-            processCNFResult(null,1,1)
+            reRenderResult()
         }
 
         enablesubmit()
@@ -110,19 +110,30 @@ function processCNFResult(result,showall,target) {
     }
     target=target?'resultlist2':'resultlist'
 
+
     let list=[]
     for (let index = 0; index < result.length; index++) {
         const removeList = result[index];
         list.push(window.sd.copy().setSplit(removeList))
     }
 
+    let cal = document.getElementById('circult').value.split('\n')[4]
+    if (cal && !showall) {
+        cal=eval('['+cal+']')
+        let e1=cal[0],e2=cal[1],er=cal[2],d=cal[3];
+        list.map(v=>v.calExpectation({e1,e2,er,d}))
+    }
+
     if(!showall)list=list.slice(0,1)
     let viewList=list.map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
 
-    document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
+    document.getElementById(target).innerHTML=viewList.map(v=>v.SVG+v.getExpectation().expectation).join('\n<br>\n')
 }
 
-
+function reRenderResult(params) {
+    processCNFResult()
+    processCNFResult(null,1,1)
+}
     </script>
 
 </body>
