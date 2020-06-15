@@ -10,7 +10,7 @@ isPy3 = sys.version_info > (3, 0)
 
 class g:
     ip='0.0.0.0'
-    port=26186
+    port=26185
     cutline='/home/user/zhaouv/cutline/run '
     filepath='/home/user/zhaouv/cutline/in/current.in'
     isRunning=False
