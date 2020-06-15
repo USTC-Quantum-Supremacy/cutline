@@ -366,7 +366,7 @@ StructDataClass.prototype.calExpectation = function (params) {
         c:this.splitEdges.length,
         b:this.maxAreaEdgeCount
     },params)
-    let f=((1-p.e1)**p.n * (1-p.e2)**p.b/4)**p.d * (1-p.er)**p.n
+    let f=((1-p.e1)**p.n * (1-p.e2)**(p.b/4))**p.d * (1-p.er)**p.n
     let r2=9/f/f
     let r3=r2/(0.6*1000000/200)
     let cu=(2**p.n1+2**p.n2)*4**(p.d/4*p.c)
