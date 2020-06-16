@@ -422,7 +422,7 @@ VisualClass.prototype.start=function (x,y) {
 }
 
 VisualClass.prototype.line =function (o1,o2,q1,q2,strokeColor) {
-    return `<line class="qline q${q1} q${q2} m${this.data.maxAreaMap[q1]} m${this.data.maxAreaMap[q2]}" x1="${100*o1.x}" y1="${100*o1.y}" x2="${100*o2.x}" y2="${100*o2.y}" stroke="${strokeColor}" stroke-width="${this.lineWidth}"/>`
+    return `<line class="qline q${q1} q${q2} m${this.data.maxAreaMap[q1]} m${this.data.maxAreaMap[q2]} ${this.calPatterns(o1,o2).join(' ')}" x1="${100*o1.x}" y1="${100*o1.y}" x2="${100*o2.x}" y2="${100*o2.y}" stroke="${strokeColor}" stroke-width="${this.lineWidth}"/>`
 }
 
 VisualClass.prototype.mark=function (o,f,qi,mark,markFontSize) {
@@ -434,6 +434,35 @@ VisualClass.prototype.getId=function (params) {
         this.cssid = ('I'+Math.random()).replace(/\./g,'')
     }
     return this.cssid
+}
+
+VisualClass.prototype.calPatterns = function (o1,o2) {
+    let patterns=[]
+    if (o1.x>o2.x) {
+        let _t=o1;
+        o1=o2
+        o2=_t
+    }
+    let eq=(modbase,a)=>o1.x%modbase===a[0]&&o1.y%modbase===a[1]&&o2.x%modbase===a[2]&&o2.y%modbase===a[3]
+    let ld = eq(2,[0,1,1,0])
+    let ru = eq(2,[1,0,0,1])
+    let big = o1.y>o2.y
+    let small = o1.y<o2.y
+    let s1 = (o1.x+o1.y)%4===1
+    let s3 = (o1.x+o1.y)%4===3
+    let m1 = ((o1.x-o1.y)%4+4)%4===1
+    let m3 = ((o1.x-o1.y)%4+4)%4===3
+    if (ld && small) patterns.push('A');
+    if (ru && small) patterns.push('B');
+    if (ld && big) patterns.push('C');
+    if (ru && big) patterns.push('D');
+    if (small && s3) patterns.push('E');
+    if (small && s1) patterns.push('F');
+    if (big && m1) patterns.push('G');
+    if (big && m3) patterns.push('H');
+    if (patterns.length===0)patterns=['N'];
+    patterns=patterns.map(v=>'pattern'+v)
+    return patterns
 }
 
 VisualClass.prototype.generateBaseSVG = function (params) {
@@ -537,7 +566,7 @@ VisualClass.prototype.generateSVGCSS = function (params) {
         fill:#bbb;
     }
     
-    ${choosen.join(', ')} {
+    ${choosen.join(', ')+', '+choosen.map(v=>v+'.qline').join(', ')} {
         stroke:#fdd;
     }
     ${choosen.map(v=>v+'.mark').join(', ')} {
