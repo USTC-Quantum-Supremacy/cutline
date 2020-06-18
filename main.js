@@ -239,10 +239,10 @@ StructDataClass.prototype._min=function (params) {
     return ~~(this.maxAreaCount/2-2.5)
 }
 StructDataClass.prototype._q0x=function (params) {
-    return 2 
+    return this.qi2xy(0).x+1
 }
 StructDataClass.prototype._q0y=function (params) {
-    return 1 
+    return this.qi2xy(0).y+1
 }
 
 StructDataClass.prototype.generateCInput=function (params) {
@@ -377,6 +377,37 @@ StructDataClass.prototype.calExpectation = function (params) {
     return this
 }
 
+StructDataClass.prototype.calPatterns = function (o1,o2) {
+    if (this.unused!==0) {
+        o1={x:o1.x,y:o1.y+1}
+        o2={x:o2.x,y:o2.y+1}
+    }
+    let patterns=[]
+    if (o1.x>o2.x) {
+        let _t=o1;
+        o1=o2
+        o2=_t
+    }
+    let eq=(modbase,a)=>o1.x%modbase===a[0]&&o1.y%modbase===a[1]&&o2.x%modbase===a[2]&&o2.y%modbase===a[3]
+    let ld = eq(2,[0,1,1,0])
+    let ru = eq(2,[1,0,0,1])
+    let big = o1.y>o2.y
+    let small = o1.y<o2.y
+    let s1 = (o1.x+o1.y)%4===1
+    let s3 = (o1.x+o1.y)%4===3
+    let m1 = ((o1.x-o1.y)%4+4)%4===1
+    let m3 = ((o1.x-o1.y)%4+4)%4===3
+    if (ld && big) patterns.push('A');
+    if (ru && big) patterns.push('B');
+    if (ld && small) patterns.push('C');
+    if (ru && small) patterns.push('D');
+    if (small && s1) patterns.push('E');
+    if (small && s3) patterns.push('F');
+    if (big && m3) patterns.push('G');
+    if (big && m1) patterns.push('H');
+    return patterns
+}
+
 /**
  * @constructor
  */
@@ -437,29 +468,7 @@ VisualClass.prototype.getId=function (params) {
 }
 
 VisualClass.prototype.calPatterns = function (o1,o2) {
-    let patterns=[]
-    if (o1.x>o2.x) {
-        let _t=o1;
-        o1=o2
-        o2=_t
-    }
-    let eq=(modbase,a)=>o1.x%modbase===a[0]&&o1.y%modbase===a[1]&&o2.x%modbase===a[2]&&o2.y%modbase===a[3]
-    let ld = eq(2,[0,1,1,0])
-    let ru = eq(2,[1,0,0,1])
-    let big = o1.y>o2.y
-    let small = o1.y<o2.y
-    let s1 = (o1.x+o1.y)%4===1
-    let s3 = (o1.x+o1.y)%4===3
-    let m1 = ((o1.x-o1.y)%4+4)%4===1
-    let m3 = ((o1.x-o1.y)%4+4)%4===3
-    if (ld && small) patterns.push('A');
-    if (ru && small) patterns.push('B');
-    if (ld && big) patterns.push('C');
-    if (ru && big) patterns.push('D');
-    if (small && s3) patterns.push('E');
-    if (small && s1) patterns.push('F');
-    if (big && m1) patterns.push('G');
-    if (big && m3) patterns.push('H');
+    let patterns=this.data.calPatterns(o1,o2)
     if (patterns.length===0)patterns=['N'];
     patterns=patterns.map(v=>'pattern'+v)
     return patterns
