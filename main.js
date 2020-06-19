@@ -61,12 +61,12 @@ StructDataClass.prototype.getxy=function (o) {
     return this.map[o.x+1][o.y+1]
 }
 
-StructDataClass.prototype.setxy=function (o,v) {
-    return (this.map[o.x+1][o.y+1]=v)
-}
-
 StructDataClass.prototype.qi2xy=function (qi) {
     return this.qi2xy_dict[qi]
+}
+
+StructDataClass.prototype.qubit=function (qi) {
+    return this.getxy(this.qi2xy(qi))
 }
 
 StructDataClass.prototype.getAdjacent=function (o) {
@@ -88,11 +88,11 @@ StructDataClass.prototype.loadChoosen=function (choosen) {
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
         if (choosen.indexOf(qindex)!==-1) {
             // 排除
-            this.getxy(this.qi2xy(qindex)).save=0
+            this.qubit(qindex).save=0
             this.choosen.push(qindex)
         } else {
             // 保留
-            this.getxy(this.qi2xy(qindex)).area=0
+            this.qubit(qindex).area=0
         }
     }
     return this
@@ -135,13 +135,13 @@ StructDataClass.prototype.pickMaxArea = function (params) {
     let areaindex=1
     let area={}
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
-        if (this.getxy(this.qi2xy(qindex)).area!==0) continue;
+        if (this.qubit(qindex).area!==0) continue;
         // BFS 统计区域数和面积
         let queue=[qindex]
         while (queue.length) {
             let qi=queue.shift()
-            if (this.getxy(this.qi2xy(qi)).area!==0) continue;
-            this.getxy(this.qi2xy(qi)).area=areaindex
+            if (this.qubit(qi).area!==0) continue;
+            this.qubit(qi).area=areaindex
             area[areaindex]=(area[areaindex]||0)+1
             let _f = this.getAdjacent
             let pts=_f(this.qi2xy(qi))
@@ -175,7 +175,7 @@ StructDataClass.prototype.pickMaxArea = function (params) {
     let map={}
     let currentCount=1
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
-        if (this.getxy(this.qi2xy(qindex)).area!==this.maxArea) continue
+        if (this.qubit(qindex).area!==this.maxArea) continue
         map[qindex]=currentCount++
         let _f = this.getAdjacent
         let pts=_f(this.qi2xy(qindex))
@@ -209,7 +209,7 @@ StructDataClass.prototype._cost2=function (params) {
 }
 StructDataClass.prototype._cost=function (params) {
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
-        if (this.getxy(this.qi2xy(qindex)).save===0){
+        if (this.qubit(qindex).save===0){
             let o=this.qi2xy(qindex)
             let pts=[
                                  {x:o.x-1,y:o.y},                
@@ -281,7 +281,7 @@ StructDataClass.prototype.setSplit = function (removeList) {
     // 标记remove
     let area2={1:0,2:0}
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
-        let mi=this.getxy(this.qi2xy(qindex))
+        let mi=this.qubit(qindex)
         if (mi.area!==this.maxArea) continue
         mi.area2=0
         if (removeList.indexOf(qindex)!==-1) {
@@ -296,7 +296,7 @@ StructDataClass.prototype.setSplit = function (removeList) {
     // 不同色则加边
     let edgemap={}
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
-        let mi=this.getxy(this.qi2xy(qindex))
+        let mi=this.qubit(qindex)
         if (!(mi.area2>0)) continue;
         let _f = this.getAdjacent
         let pts=_f(this.qi2xy(qindex))
