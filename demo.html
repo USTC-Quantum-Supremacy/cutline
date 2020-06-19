@@ -158,7 +158,10 @@ function processCNFResult(result,showall,target) {
         window.pv=pv
         window.ssd=list[0]
         window.spattern=pv[pi][2]
-        wedgestr='<br>'+JSON.stringify(list[0].wegde[window.spattern])+'<br>'
+        wedgestr='<br>'+JSON.stringify(window.ssd.wegde[window.spattern])+'<br>'
+        console.log(window.ssd)
+        console.log(window.ssd.wegde[window.spattern])
+        console.log(window.pv)
     }
     let viewList=list.slice(0,500).map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
 
