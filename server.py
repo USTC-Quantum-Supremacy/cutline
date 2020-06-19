@@ -12,6 +12,7 @@ class g:
     ip='0.0.0.0'
     port=26185
     cutline='/home/user/zhaouv/cutline/run '
+    cutline2='/home/user/zhaouv/cutline/run2 '
     filepath='/home/user/zhaouv/cutline/in/current.in'
     isRunning=False
 
@@ -82,6 +83,7 @@ def writeFile():
     try:
         op=json.loads(data)
         CInput=op['CInput']
+        prune=op['prune']
     except Exception as e:
         return 'error format'
     if g.isRunning:
@@ -91,7 +93,8 @@ def writeFile():
         g.isRunning=True
         with open(g.filepath,'w') as fid:
             fid.write(CInput)
-        ss=os.popen(g.cutline+g.filepath)
+        exe=g.cutline if prune else g.cutline2
+        ss=os.popen(exe+g.filepath)
         ret=ss.read()
     except Exception as ee:
         ret='error happens'

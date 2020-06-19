@@ -80,7 +80,7 @@ function disablesubmit(params) {
 function submit(params) {
     disablesubmit()
     document.getElementById('postresult').innerHTML='waiting'
-    xhrPost('/',JSON.stringify({CInput:window.sd.CInput}),function (err,data) {
+    xhrPost('/',JSON.stringify({CInput:window.sd.CInput,prune:true}),function (err,data) {
         if (err) {
             console.log(err)
             document.getElementById('postresult').innerHTML=err
