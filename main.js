@@ -279,39 +279,20 @@ StructDataClass.prototype.setSplit = function (removeList) {
         return this
     }
     // 标记remove
+    let area2={1:0,2:0}
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
         let mi=this.getxy(this.qi2xy(qindex))
         if (mi.area!==this.maxArea) continue
         mi.area2=0
         if (removeList.indexOf(qindex)!==-1) {
             mi.remove=1
+            mi.area2=2
+            area2[2]++
         } else {
-            // mi.area2=1
+            mi.area2=1
+            area2[1]++
         }
     }
-    // 染色
-    let areaindex2=2
-    let area2={}
-    for (let qindex = 0; qindex < this.bitCount; qindex++) {
-        if (this.getxy(this.qi2xy(qindex)).area2!==0) continue;
-        // BFS 统计区域数和面积
-        let queue=[qindex]
-        while (queue.length) {
-            let qi=queue.shift()
-            if (this.getxy(this.qi2xy(qi)).area2!==0) continue;
-            this.getxy(this.qi2xy(qi)).area2=areaindex2
-            area2[areaindex2]=(area2[areaindex2]||0)+1
-            let _f = this.getAdjacent
-            let pts=_f(this.qi2xy(qi))
-            for (let index = 0,pt; pt=pts[index]; index++) {
-                if (this.getxy(pt).area2===0 && this.getxy(pt).remove===this.getxy(this.qi2xy(qi)).remove) {
-                    queue.push(this.getxy(pt).qi)
-                }
-            }
-        }
-        areaindex2++
-    }
-    areaindex2--
     // 不同色则加边
     let edgemap={}
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
