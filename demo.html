@@ -26,7 +26,12 @@
             </textarea>
             <br>
             <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
+            <select id="isusingwegde">
+                <option value="true">Min(cut length)</option>
+                <option value="false">Min(cut length *2 - wegde)</option>
+            </select>
             <input type="button" id='Submit' onclick="submit()" value="Submit">
+            <br>
             <input type="button" id='reRenderResult' onclick="reRenderResult()" value="ReRenderResult">
             <select id="patternSelect" onchange="changePatten()">
                 <option value="None">None</option>
@@ -80,7 +85,7 @@ function disablesubmit(params) {
 function submit(params) {
     disablesubmit()
     document.getElementById('postresult').innerHTML='waiting'
-    xhrPost('/',JSON.stringify({CInput:window.sd.CInput,prune:true}),function (err,data) {
+    xhrPost('/',JSON.stringify({CInput:window.sd.CInput,prune:eval(isusingwegde.value)}),function (err,data) {
         if (err) {
             console.log(err)
             document.getElementById('postresult').innerHTML=err
@@ -133,18 +138,31 @@ function processCNFResult(result,showall,target) {
         const removeList = result[index];
         list.push(window.sd.copy().setSplit(removeList))
     }
-
+    window.slist=list
     let cal = document.getElementById('circult').value.split('\n')[4]
     if (cal && !showall) {
         cal=eval('['+cal+']')
         let e1=cal[0],e2=cal[1],er=cal[2],d=cal[3];
         list.map(v=>v.calExpectation({e1,e2,er,d}))
     }
+    let wedgestr=''
+    if(!showall){
+        list.map(v=>v.calCutLengthWithWedge())
+        let pv=list[0].circles.map((ps,ii,arr)=>{
+            let pattern = ps[0]
+            let mini=list.map(v=>v.wegde[pattern].length).reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
+            return [list[mini].wegde[pattern].length,mini,pattern]
+        })
+        let pi=pv.map(v=>v[0]).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+        list=[list[pv[pi][1]]]
+        window.pv=pv
+        window.ssd=list[0]
+        window.spattern=pv[pi][2]
+        wedgestr='<br>'+JSON.stringify(list[0].wegde[window.spattern])+'<br>'
+    }
+    let viewList=list.slice(0,500).map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
 
-    if(!showall)list=list.slice(0,1)
-    let viewList=list.map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
-
-    document.getElementById(target).innerHTML=viewList.map(v=>v.SVG+v.getExpectation().expectation).join('\n<br>\n')
+    document.getElementById(target).innerHTML=viewList.map(v=>v.SVG+wedgestr+v.getExpectation().expectation).join('\n<br>\n')
 }
 
 function reRenderResult(params) {

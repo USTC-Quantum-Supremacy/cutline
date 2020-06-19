@@ -19,6 +19,16 @@ StructDataClass.prototype.removeList=[]
 StructDataClass.prototype.splitEdges=[]
 StructDataClass.prototype.CInputFirstLine=''
 StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H']
+StructDataClass.prototype.circles=[
+    ['ABCDCDAB','BC','DA'],
+    ['BACDCDBA','AC','DB'],
+    ['ABEFEFAB','BE','FA'],
+    ['BAEFEFBA','AE','FB'],
+    ['GHCDCDGH','HC','DG'],
+    ['HGCDCDHG','GC','DH'],
+    ['GHEFEFGH','HE','FG'],
+    ['HGEFEFHG','GE','FH'],
+]
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
@@ -421,6 +431,64 @@ StructDataClass.prototype.pushPatterns = function (params) {
             edge['isPattern_'+pattern]=1
         }
     }
+    return this
+}
+
+
+/**
+ * check if a edge is a pattern
+ * @callback EdgeToIsPattern
+ * @param {Object} edge edge
+ * @return {Boolean}
+ */
+
+/**
+ * @param {EdgeToIsPattern} pf1 
+ * @param {EdgeToIsPattern} pf2 
+ */
+StructDataClass.prototype.calWedge = function (pf1,pf2) {
+    let count=0
+    let edges=this.splitEdges
+    let used={}
+    for (let ii = 0; ii < edges.length; ii++) {
+        if (used[ii]) continue;
+        const ei = this.edge(edges[ii])
+        for (let jj = ii+1; jj < edges.length; jj++) {
+            if (used[jj]) continue;
+            const ej = this.edge(edges[jj])
+            let tocheck=1*(ei.q1===ej.q1)+2*(ei.q1===ej.q2)+3*(ei.q2===ej.q1)+4*(ei.q2===ej.q2)
+            if (!tocheck) continue; // 没有相同比特
+            let q1=[null,ei.q2,ei.q2,ei.q1,ei.q1][tocheck]
+            let q2=[null,ej.q2,ej.q1,ej.q2,ej.q1][tocheck]
+            let o1=this.qi2xy(q1)
+            let o2=this.qi2xy(q2)
+            if (o1.x!==o2.x && o1.y!==o2.y) continue; // 直线
+            if (pf1(ei)&&pf2(ej) || pf1(ej)&&pf2(ei)) {
+                used[ii]=1
+                used[jj]=1
+                count++
+            }
+        }
+    }
+    return count
+}
+
+StructDataClass.prototype.calCutLengthWithWedge = function (params) {
+    let patterns=this.circles
+    let wedge={}
+    for (let pi = 0; pi < patterns.length; pi++) {
+        const pattern = patterns[pi];
+        let cwegde1=this.calWedge(e=>e['isPattern_'+pattern[1][0]],e=>e['isPattern_'+pattern[1][1]])
+        let cwegde2=this.calWedge(e=>e['isPattern_'+pattern[2][0]],e=>e['isPattern_'+pattern[2][1]])
+        wedge[pattern[0]]={
+            length:this.splitEdges.length*2-cwegde1+cwegde2,
+            cut:this.splitEdges.length,
+            wegde:cwegde1+cwegde2,
+            wegdes:[cwegde1,cwegde2],
+            pattern:JSON.parse(JSON.stringify(pattern)),
+        }
+    }
+    this.wegde=wedge
     return this
 }
 
