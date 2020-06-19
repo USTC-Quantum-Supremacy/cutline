@@ -13,10 +13,12 @@ StructDataClass.prototype.defaultElement={isBit:1,save:1}
 StructDataClass.prototype.unusedElement={unused:1}
 StructDataClass.prototype.boundaryElement={isBoundary:1}
 StructDataClass.prototype.map=[[]] // map[x+1][y+1]
+StructDataClass.prototype.edge_dict={} // edge_dict[q1_q2]
 StructDataClass.prototype.qi2xy_dict=[]
 StructDataClass.prototype.removeList=[]
 StructDataClass.prototype.splitEdges=[]
 StructDataClass.prototype.CInputFirstLine=''
+StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H']
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
@@ -25,6 +27,7 @@ StructDataClass.prototype.init = function (params) {
 
 StructDataClass.prototype.initmap=function (params) {
     this.map=Array.from({length:this.xsize+2}).map(v=>Array.from({length:this.ysize+2}).map(v=>JSON.parse(JSON.stringify(this.defaultElement))))
+    this.edge_dict={}
     // 移除unused
     for (let yindex = 0; yindex < this.ysize+2; yindex++) {
         for (let xindex = 0; xindex < this.xsize+2; xindex++) {
@@ -67,6 +70,23 @@ StructDataClass.prototype.qi2xy=function (qi) {
 
 StructDataClass.prototype.qubit=function (qi) {
     return this.getxy(this.qi2xy(qi))
+}
+
+StructDataClass.prototype.edge=function (q1,q2) {
+    if (q2==null) {
+        q2=q1[1]
+        q1=q1[0]
+    }
+    if (q1>q2) {
+        let t=q1
+        q1=q2
+        q2=t
+    }
+    let key=q1+'_'+q2
+    if (this.edge_dict[key]==null) {
+        this.edge_dict[key]={q1,q2}
+    }
+    return this.edge_dict[key]
 }
 
 StructDataClass.prototype.getAdjacent=function (o) {
@@ -172,11 +192,10 @@ StructDataClass.prototype.pickMaxArea = function (params) {
     this.maxAreaCount=man
     // 统计边
     let edges = []
-    let map={}
-    let currentCount=1
+    let currentCount=0
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
         if (this.qubit(qindex).area!==this.maxArea) continue
-        map[qindex]=currentCount++
+        this.qubit(qindex).mi=currentCount++
         let _f = this.getAdjacent
         let pts=_f(this.qi2xy(qindex))
         for (let index = 0,pt; pt=pts[index]; index++) {
@@ -185,13 +204,13 @@ StructDataClass.prototype.pickMaxArea = function (params) {
                 let q2=this.getxy(pt).qi
                 if (q1<q2) {
                     edges.push([q1,q2])
+                    this.edge(q1,q2).isMaxAreaEdge=1
                 }
             }
         }
     }
     this.maxAreaEdges=edges
     this.maxAreaEdgeCount=edges.length
-    this.maxAreaMap=map
     return this
 }
 
@@ -325,6 +344,10 @@ StructDataClass.prototype.setSplit = function (removeList) {
     }
     let area2s=mk.split('_').map(v=>area2[~~v])
     let unbalance=Math.abs(2*area2s[0]-this.maxAreaCount)+Math.abs(2*area2s[1]-this.maxAreaCount)
+    for (let ei = 0; ei < edgemap[mk].length; ei++) {
+        const edge = edgemap[mk][ei];
+        this.edge(edge).isSplitEdge=1
+    }
     this.splitEdges=edgemap[mk]
     this.unbalance=unbalance
     //
@@ -389,6 +412,18 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     return patterns
 }
 
+StructDataClass.prototype.pushPatterns = function (params) {
+    for (let ei = 0; ei < this.maxAreaEdges.length; ei++) {
+        const edge = this.edge(this.maxAreaEdges[ei]);
+        let patterns = this.calPatterns(this.qi2xy(edge.q1),this.qi2xy(edge.q2))
+        for (let pi = 0; pi < patterns.length; pi++) {
+            const pattern = patterns[pi];
+            edge['isPattern_'+pattern]=1
+        }
+    }
+    return this
+}
+
 /**
  * @constructor
  */
@@ -426,19 +461,51 @@ VisualClass.prototype.importData = function (data) {
 }
 
 VisualClass.prototype.point=function (o,qi,strokeColor,fillColor) {
-    return `<circle class="qpt q${qi} m${this.data.maxAreaMap[qi]}" cx="${100*o.x}" cy="${100*o.y}" r="${this.ptR}" stroke="${strokeColor}"stroke-width="${this.ptWidth}" fill="${fillColor}"/>`
-}
-
-VisualClass.prototype.start=function (x,y) {
-    return `<circle class="qstart s${x+y*this.data.xsize}" cx="${100*x}" cy="${100*y}" r="${this.startR}" fill="${this.startFill}"/>`
-}
-
-VisualClass.prototype.line =function (o1,o2,q1,q2,strokeColor) {
-    return `<line class="qline q${q1} q${q2} m${this.data.maxAreaMap[q1]} m${this.data.maxAreaMap[q2]} ${this.calPatterns(o1,o2).join(' ')}" x1="${100*o1.x}" y1="${100*o1.y}" x2="${100*o2.x}" y2="${100*o2.y}" stroke="${strokeColor}" stroke-width="${this.lineWidth}"/>`
+    let save = this.data.qubit(qi).save?'save':'notsave'
+    let notinmax = (this.data.qubit(qi).area!==this.data.maxArea && save==='save')?'notinmax':''
+    let part12=this.data.removeList.indexOf(qi)===-1?"part1":"part2"
+    if (notinmax || save==='notsave') {
+        part12=''
+    }
+    let cssclass=`qpt q${qi} m${this.data.qubit(qi).mi} ${notinmax} ${save} ${part12}`
+    return `<circle class="${cssclass}" cx="${100*o.x}" cy="${100*o.y}" r="${this.ptR}" stroke="${strokeColor}"stroke-width="${this.ptWidth}" fill="${fillColor}"/>`
 }
 
 VisualClass.prototype.mark=function (o,f,qi,mark,markFontSize) {
-    return `<text x="${100*o.x+f.x}" y="${100*o.y+f.y}" class="mark q${qi} m${this.data.maxAreaMap[qi]}}" dominant-baseline="middle" text-anchor="middle" font-size="${markFontSize}" stroke="black">${mark}</text>`
+    let save = this.data.qubit(qi).save?'save':'notsave'
+    let notinmax = (this.data.qubit(qi).area!==this.data.maxArea && save==='save')?'notinmax':''
+    let part12=this.data.removeList.indexOf(qi)===-1?"part1":"part2"
+    if (notinmax || save==='notsave') {
+        part12=''
+    }
+    let cssclass=`mark q${qi} m${this.data.qubit(qi).mi}} ${notinmax} ${save} ${part12}`
+    return `<text x="${100*o.x+f.x}" y="${100*o.y+f.y}" class="${cssclass}" dominant-baseline="middle" text-anchor="middle" font-size="${markFontSize}" stroke="black">${mark}</text>`
+}
+
+VisualClass.prototype.line =function (o1,o2,q1,q2,strokeColor) {
+    let save = (this.data.qubit(q1).save && this.data.qubit(q2).save)?'save':'notsave'
+    let split = this.data.edge([q1,q2]).isSplitEdge?'split':''
+    let notinmax = (this.data.qubit(q1).area!==this.data.maxArea || this.data.qubit(q2).area!==this.data.maxArea)?'notinmax':''
+    if (save==='notsave') {
+        notinmax=''
+    }
+    let inmax = this.data.qubit(q1).area===this.data.maxArea && this.data.qubit(q2).area===this.data.maxArea
+    let part12=''
+    if (inmax && split==='') {
+        part12='part2'
+        if (this.data.removeList.indexOf(q1)===-1 && this.data.removeList.indexOf(q2)===-1 ) {
+            part12='part1'
+        }
+    }
+    let cssclass=`qline q${q1} q${q2} m${this.data.qubit(q1).mi} m${this.data.qubit(q2).mi} ${this.calPatterns(q1,q2).join(' ')} ${save} ${split} ${notinmax} ${part12}`
+    return `<line class="${cssclass}" x1="${100*o1.x}" y1="${100*o1.y}" x2="${100*o2.x}" y2="${100*o2.y}" stroke="${strokeColor}" stroke-width="${this.lineWidth}"/>`
+}
+
+VisualClass.prototype.start=function (x,y) {
+    let sid=x+y*this.data.xsize
+    let removedStart=this.data.removedStart.indexOf(sid)===-1
+    let cssclass=`qstart s${sid} ${removedStart?"removedStart":"notremovedStart"}`
+    return `<circle class="${cssclass}" cx="${100*x}" cy="${100*y}" r="${this.startR}" fill="${this.startFill}"/>`
 }
 
 VisualClass.prototype.getId=function (params) {
@@ -448,8 +515,15 @@ VisualClass.prototype.getId=function (params) {
     return this.cssid
 }
 
-VisualClass.prototype.calPatterns = function (o1,o2) {
-    let patterns=this.data.calPatterns(o1,o2)
+VisualClass.prototype.calPatterns = function (q1,q2) {
+    let edge=this.data.edge([q1,q2])
+    let patterns=[]
+    for (let pi = 0; pi < this.data.patterns.length; pi++) {
+        const pattern = this.data.patterns[pi];
+        if (edge['isPattern_'+pattern]) {
+            patterns.push(pattern)
+        }
+    }
     if (patterns.length===0)patterns=['N'];
     patterns=patterns.map(v=>'pattern'+v)
     return patterns
@@ -511,7 +585,7 @@ VisualClass.prototype.generateSVGCSS = function (params) {
         }
     }
     for (let qindex = 0; qindex < this.data.bitCount; qindex++) {
-        if (this.data.getxy(this.data.qi2xy(qindex)).area!==this.data.maxArea) {
+        if (this.data.qubit(qindex).area!==this.data.maxArea) {
             notinmax.push(`#${this.getId()} .q${qindex}`)
         }
     }
@@ -659,7 +733,7 @@ function buildMainSVG(params) {
     }
 
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1],CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).generateCInput().setSplit([])
+    sd.init({xsize:xy[0],ysize:xy[1],CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).pushPatterns().generateCInput().setSplit([])
     console.log(sd)
 
     var view=new VisualClass();
