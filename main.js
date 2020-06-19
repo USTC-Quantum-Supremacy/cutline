@@ -749,6 +749,7 @@ var StructDataClass = exports.StructDataClass
 var VisualClass = exports.VisualClass
 
 function buildMainSVG(params) {
+    if(typeof resultlist2)resultlist2.innerHTML=``
     var xy=[12,11]
     var choosen=[]
     var removedStart=[]
