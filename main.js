@@ -503,7 +503,7 @@ VisualClass.prototype.line =function (o1,o2,q1,q2,strokeColor) {
 
 VisualClass.prototype.start=function (x,y) {
     let sid=x+y*this.data.xsize
-    let removedStart=this.data.removedStart.indexOf(sid)===-1
+    let removedStart=this.data.removedStart.indexOf(sid)!==-1
     let cssclass=`qstart s${sid} ${removedStart?"removedStart":"notremovedStart"}`
     return `<circle class="${cssclass}" cx="${100*x}" cy="${100*y}" r="${this.startR}" fill="${this.startFill}"/>`
 }
@@ -570,36 +570,6 @@ VisualClass.prototype.generateBaseSVG = function (params) {
 }
 
 VisualClass.prototype.generateSVGCSS = function (params) {
-    let remove=[]
-    let normal=[]
-    let notinmax=[]
-    let choosen=[]
-    let splitedges=[]
-    let removedStart=[]
-    
-
-    remove=this.data.removeList.map(v=>`#${this.getId()} .q${v}`)
-    for (let qindex = 0; qindex < this.data.bitCount; qindex++) {
-        if (this.data.removeList.indexOf(qindex)===-1) {
-            normal.push(`#${this.getId()} .q${qindex}`)
-        }
-    }
-    for (let qindex = 0; qindex < this.data.bitCount; qindex++) {
-        if (this.data.qubit(qindex).area!==this.data.maxArea) {
-            notinmax.push(`#${this.getId()} .q${qindex}`)
-        }
-    }
-    choosen=this.data.choosen.map(v=>`#${this.getId()} .q${v}`)
-    splitedges=this.data.splitEdges.map(v=>`#${this.getId()} .qline.q${v[0]}.q${v[1]}`)
-    removedStart=this.data.removedStart.map(v=>`#${this.getId()} .s${v}`)
-
-    let tmpArr=[remove,normal,choosen,notinmax,splitedges,removedStart]
-    for (let index = 0; index < tmpArr.length; index++) {
-        const element = tmpArr[index];
-        if (element.length===0) {
-            element.push('nothing')
-        }
-    }
 
     this.SVGCSS=`
     #${this.getId()} .mark{
@@ -609,39 +579,39 @@ VisualClass.prototype.generateSVGCSS = function (params) {
         user-select: none;
     }
 
-    ${remove.join(', ')} {
+    #${this.getId()} .part2{
         stroke:#009;
     }
-    ${remove.map(v=>v+'.mark').join(', ')} {
+    #${this.getId()} .part2.mark{
         fill:#009;
     }
 
-    ${normal.join(', ')} {
+    #${this.getId()} .part1{
         stroke:#000;
     }
-    ${normal.map(v=>v+'.mark').join(', ')} {
+    #${this.getId()} .part1.mark{
         fill:#000;
     }
 
-    ${notinmax.join(', ')} {
+    #${this.getId()} .notinmax{
         stroke:#bbb;
     }
-    ${notinmax.map(v=>v+'.mark').join(', ')} {
+    #${this.getId()} .notinmax.mark{
         fill:#bbb;
     }
     
-    ${choosen.join(', ')+', '+choosen.map(v=>v+'.qline').join(', ')} {
+    #${this.getId()} .notsave{
         stroke:#fdd;
     }
-    ${choosen.map(v=>v+'.mark').join(', ')} {
+    #${this.getId()} .notsave.mark{
         fill:#fdd;
     }
 
-    ${splitedges.join(', ')} {
+    #${this.getId()} .split{
         stroke:#29e142
     }
 
-    ${removedStart.join(', ')} {
+    #${this.getId()} .removedStart{
         fill:#ccc;
     }
 
