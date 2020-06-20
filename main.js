@@ -434,6 +434,40 @@ StructDataClass.prototype.pushPatterns = function (params) {
     return this
 }
 
+/**
+ * 
+ * @param {{x:Number,y:number}} o1 
+ * @param {{x:Number,y:number}} o2 
+ * @param {String} pattern 形如 0_001010, _ 前是0代表左下右上, 1代表左上右下
+ */
+StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
+    if (this.unused!==0) {
+        o1={x:o1.x,y:o1.y+1}
+        o2={x:o2.x,y:o2.y+1}
+        throw "unfinished"
+    }
+    let patterns=[]
+    if (o1.x>o2.x) {
+        let _t=o1;
+        o1=o2
+        o2=_t
+    }
+    let big = o1.y>o2.y // 左下右上 A类
+    let small = o1.y<o2.y // 左上右下 C类
+    if (~~pattern[0]!=small) {
+        return false
+    }
+    let ac = o1.x%2===0&&o1.y%2===1 // 在bitstring0时和patternAC同模式
+    if (big) { 
+        // 左下右上 A类
+        let index=(o1.x+o1.y-1)/2
+        return ac^pattern[2+index]
+    } else { 
+        // 左上右下 C类
+        let index=(o1.x-o1.y+this.ysize-(this.ysize%2===0?3:2))/2
+        return ac^pattern[2+index]
+    }
+}
 
 /**
  * check if a edge is a pattern
