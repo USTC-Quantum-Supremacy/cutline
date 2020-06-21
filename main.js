@@ -511,8 +511,8 @@ StructDataClass.prototype.calWedge = function (pf1,pf2) {
         let ei=this.edge(edges[li[0]])
         let ej=this.edge(edges[li[1]])
         if (pf1(ei)&&pf2(ej) || pf1(ej)&&pf2(ei)) {
-            used[ii]=1
-            used[jj]=1
+            used[li[0]]=1
+            used[li[1]]=1
             count++
         }
     }
