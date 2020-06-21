@@ -1,6 +1,5 @@
 const cutlineMain = require('./main.js')
 let StructDataClass = cutlineMain.StructDataClass
-let VisualClass = cutlineMain.VisualClass
 
 const exec = require('child_process').exec
 // exec('echo 1',(err,stdout,stderr)=>console.log(err,stdout,stderr));
@@ -45,14 +44,27 @@ for (let index = 0; index < result.length; index++) {
 
 sd.getBitStringCircles()
 
-list.map(v=>v.calCutLengthWithWedge_bitString())
-let pv=sd.bitStringCircles.map((ps,ii,arr)=>{
-    let pattern = ps[0]
-    let mini=list.map(v=>v.wegde[pattern].length+0.01*v.unbalance).reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
-    return [list[mini].wegde[pattern].length,mini,pattern]
+let patternMin={};
+list.foreach((v,i,a)=>{
+    console.log(`${i+1} of ${a.length}`)
+    /** @type {import('./main.js').StructDataClass} */
+    let csd=v
+    csd.calCutLengthWithWedge_bitString()
+    sd.bitStringCircles.foreach(ps=>{
+        let pattern = ps[0]
+        let length=csd.wegde[pattern].length+0.01*csd.unbalance
+        if (patternMin[pattern]==null || length<patternMin[pattern].length) {
+            patternMin[pattern]={
+                split:csd.removeList,
+                lengthInfo:csd.wegde[pattern],
+                length:length,
+            }
+        }
+    })
+    delete a[i]
 })
-let pi=pv.map(v=>v[0]).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
-let ssd=list[pv[pi][1]]
-let spattern=pv[pi][2]
-console.log(ssd.wegde[spattern])
-console.log(ssd.removeList)
+
+let pi=sd.bitStringCircles.map(ps=>patternMin[ps[0]].length).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+let pattern=sd.bitStringCircles[pi][0]
+console.log(JSON.stringify(patternMin[pattern].lengthInfo))
+console.log(JSON.stringify(patternMin[pattern].split))

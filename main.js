@@ -1,6 +1,6 @@
 
 /**
- * @constructor
+ * @class
  */
 function StructDataClass() {
 
@@ -292,7 +292,7 @@ ${this._cost2()}`
 }
 
 /**
- * @return {StructDataClass}
+ * @returns {StructDataClass}
  */
 StructDataClass.prototype.copy = function (params) {
     let copy=new this.constructor()
@@ -497,7 +497,7 @@ StructDataClass.prototype.getPotentialWedgeList = function (params) {
  * check if a edge is a pattern
  * @callback EdgeToIsPattern
  * @param {Object} edge edge
- * @return {Boolean}
+ * @returns {Boolean}
  */
 /**
  * @param {EdgeToIsPattern} pf1 
@@ -557,7 +557,6 @@ StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
             cut:this.splitEdges.length,
             wegde:cwegde1+cwegde2,
             wegdes:[cwegde1,cwegde2],
-            pattern:JSON.parse(JSON.stringify(pattern)),
         }
     }
     this.wegde=wedge
