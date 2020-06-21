@@ -150,7 +150,7 @@ function processCNFResult(result,showall,target) {
         list.map(v=>v.calCutLengthWithWedge())
         let pv=list[0].circles.map((ps,ii,arr)=>{
             let pattern = ps[0]
-            let mini=list.map(v=>v.wegde[pattern].length).reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
+            let mini=list.map(v=>v.wegde[pattern].length+0.01*v.unbalance).reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
             return [list[mini].wegde[pattern].length,mini,pattern]
         })
         let pi=pv.map(v=>v[0]).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
