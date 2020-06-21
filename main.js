@@ -291,6 +291,9 @@ ${this._cost2()}`
     return this
 }
 
+/**
+ * @return {StructDataClass}
+ */
 StructDataClass.prototype.copy = function (params) {
     let copy=new this.constructor()
     Object.assign(copy,JSON.parse(JSON.stringify(this)))
@@ -837,67 +840,3 @@ if (typeof exports === "undefined") exports = {};
 exports.StructDataClass = StructDataClass
 exports.VisualClass = VisualClass
 
-
-//////////////////////
-
-
-var StructDataClass = exports.StructDataClass
-var VisualClass = exports.VisualClass
-
-function buildMainSVG(params) {
-    if(typeof resultlist2)resultlist2.innerHTML=``
-    var xy=[12,11]
-    var choosen=[]
-    var removedStart=[]
-    var CInputFirstLine=''
-    if (typeof document !== "undefined") {
-        var inputstr=document.getElementById('circult').value
-        var xy=eval('['+inputstr.split('\n')[0]+']')
-        var choosen=eval('['+inputstr.split('\n')[1]+']')
-        var removedStart=eval('['+inputstr.split('\n')[2]+']')
-        var CInputFirstLine=inputstr.split('\n')[3]||''
-    }
-
-    var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1],CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).pushPatterns().setSplit([]).generateCInput()
-    console.log(sd)
-
-    var view=new VisualClass();
-    view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
-    console.log(view)
-
-    if (typeof document !== "undefined") {
-        window.sd=sd
-        window.view=view
-        // var node=document.createElement('div')
-        // node.innerHTML=view.SVG
-        // document.getElementById('insertHere').appendChild(node)
-        document.getElementById('insertHere').innerHTML=view.SVG
-        document.getElementById('formatedGateArray').innerText=sd.CInput
-        view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
-            /**
-             * @type {VisualClass}
-             */
-            let view=thisv
-            let choosen=view.data.choosen
-            let removedStart=view.data.removedStart
-            if (type==='choosen') {
-                if (choosen.indexOf(clickData)===-1) {
-                    choosen.push(clickData)
-                } else {
-                    choosen.splice(choosen.indexOf(clickData),1)
-                }
-            }
-            if (type==='removedStart') {
-                if (removedStart.indexOf(clickData)===-1) {
-                    removedStart.push(clickData)
-                } else {
-                    removedStart.splice(removedStart.indexOf(clickData),1)
-                }
-            }
-            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize}\n${choosen.join(',')}\n${removedStart.join(',')}\n`+document.getElementById('circult').value.split('\n').slice(3).join('\n')
-            buildMainSVG()
-        })
-    }
-}
-buildMainSVG()
