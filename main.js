@@ -29,6 +29,15 @@ StructDataClass.prototype.circles=[
     ['GHEFEFGH','HE','FG'],
     ['HGEFEFHG','GE','FH'],
 ]
+StructDataClass.prototype.bitStringCircles=(()=>{
+    let pa='0000000100'
+    let pb='1111111011'
+    let pc='0000000000'
+    let pd='1111111111'
+    return [
+        [pa+'_'+pc,['0_'+pb,'1_'+pc],['1_'+pd,'0_'+pa]]
+    ]
+})()
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
@@ -557,9 +566,21 @@ StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
             cut:this.splitEdges.length,
             wegde:cwegde1+cwegde2,
             wegdes:[cwegde1,cwegde2],
+            // pattern:JSON.parse(JSON.stringify(pattern)),
         }
     }
     this.wegde=wedge
+    return this
+}
+
+StructDataClass.prototype.getPatternSize = function (params) {
+    if (this.unused!==0) {
+        throw "unfinished"
+    }
+    let asize=~~((this.xsize+this.ysize)/2)-1
+    let csize=~~((this.xsize-1)/2)+~~((this.ysize-1)/2)
+    this.constructor.prototype.asize=asize
+    this.constructor.prototype.csize=csize
     return this
 }
 
@@ -567,8 +588,9 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
     if (this.unused!==0) {
         throw "unfinished"
     }
-    let asize=~~((this.xsize+this.ysize)/2)-1
-    let csize=~~((this.xsize-1)/2)+~~((this.ysize-1)/2)
+    this.getPatternSize()
+    let asize=this.asize
+    let csize=this.csize
     let circles=[]
     for (let ai = 0; ai < 2**(asize-1); ai++) {
         let pa=(ai+2**asize).toString(2).slice(1)
@@ -584,8 +606,6 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
             )
         }
     }
-    this.constructor.prototype.asize=asize
-    this.constructor.prototype.csize=csize
     this.constructor.prototype.bitStringCircles=circles
     return this
 }

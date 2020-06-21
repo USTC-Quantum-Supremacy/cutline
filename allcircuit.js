@@ -1,5 +1,5 @@
 const cutlineMain = require('./main.js')
-let StructDataClass = cutlineMain.StructDataClass
+const StructDataClass = cutlineMain.StructDataClass
 
 const exec = require('child_process').exec
 // exec('echo 1',(err,stdout,stderr)=>console.log(err,stdout,stderr));
@@ -42,7 +42,7 @@ for (let index = 0; index < result.length; index++) {
     list.push(sd.copy().setSplit(removeList))
 }
 
-sd.getBitStringCircles()
+// sd.getBitStringCircles()
 
 let patternMin={};
 list.forEach((v,i,a)=>{
@@ -58,6 +58,7 @@ list.forEach((v,i,a)=>{
                 split:csd.removeList,
                 lengthInfo:csd.wegde[pattern],
                 length:length,
+                pattern:ps,
             }
         }
     })
@@ -66,5 +67,4 @@ list.forEach((v,i,a)=>{
 
 let pi=sd.bitStringCircles.map(ps=>patternMin[ps[0]].length).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
 let pattern=sd.bitStringCircles[pi][0]
-console.log(JSON.stringify(patternMin[pattern].lengthInfo))
-console.log(JSON.stringify(patternMin[pattern].split))
+console.log(JSON.stringify(patternMin[pattern]))
