@@ -521,12 +521,13 @@ StructDataClass.prototype.calWedge = function (pf1,pf2) {
 
 StructDataClass.prototype.calCutLengthWithWedge = function (params) {
     this.getPotentialWedgeList()
+    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
     let patterns=this.circles
     let wedge={}
     for (let pi = 0; pi < patterns.length; pi++) {
         const pattern = patterns[pi];
-        let cwegde1=this.calWedge(e=>e['isPattern_'+pattern[1][0]],e=>e['isPattern_'+pattern[1][1]])
-        let cwegde2=this.calWedge(e=>e['isPattern_'+pattern[2][0]],e=>e['isPattern_'+pattern[2][1]])
+        let cwegde1=this.calWedge(e=>pf(e,pattern[1][0]),e=>pf(e,pattern[1][1]))
+        let cwegde2=this.calWedge(e=>pf(e,pattern[2][0]),e=>pf(e,pattern[2][0]))
         wedge[pattern[0]]={
             length:this.splitEdges.length*2-cwegde1+cwegde2,
             cut:this.splitEdges.length,
@@ -536,6 +537,54 @@ StructDataClass.prototype.calCutLengthWithWedge = function (params) {
         }
     }
     this.wegde=wedge
+    return this
+}
+
+StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
+    this.getPotentialWedgeList()
+    let pf=(edge,pattern)=>this.checkBitStringPattern(this.qi2xy(edge.q1),this.qi2xy(edge.q2),pattern)
+    let patterns=this.bitStringCircles
+    let wedge={}
+    for (let pi = 0; pi < patterns.length; pi++) {
+        const pattern = patterns[pi];
+        let cwegde1=this.calWedge(e=>pf(e,pattern[1][0]),e=>pf(e,pattern[1][1]))
+        let cwegde2=this.calWedge(e=>pf(e,pattern[2][0]),e=>pf(e,pattern[2][0]))
+        wedge[pattern[0]]={
+            length:this.splitEdges.length*2-cwegde1+cwegde2,
+            cut:this.splitEdges.length,
+            wegde:cwegde1+cwegde2,
+            wegdes:[cwegde1,cwegde2],
+            pattern:JSON.parse(JSON.stringify(pattern)),
+        }
+    }
+    this.wegde=wedge
+    return this
+}
+
+StructDataClass.prototype.getBitStringCircles = function (params) {
+    if (this.unused!==0) {
+        throw "unfinished"
+    }
+    let asize=~~((this.xsize+this.ysize)/2)-1
+    let csize=~~((this.xsize-1)/2)+~~((this.ysize-1)/2)
+    let circles=[]
+    for (let ai = 0; ai < 2**(asize-1); ai++) {
+        let pa=(ai+2**asize).toString(2).slice(1)
+        let pb=(-1-ai+2*2**asize).toString(2).slice(1)
+        for (let ci = 0; ci < 2**(csize-1); ci++) {
+            let pc=(ci+2**csize).toString(2).slice(1)
+            let pd=(-1-ci+2*2**csize).toString(2).slice(1)
+            // ['ABCDCDAB','BC','DA'],
+            // ['BACDCDBA','AC','DB'],
+            circles.push(
+                [pa+'_'+pc,['0_'+pb,'1_'+pc],['1_'+pd,'0_'+pa]],
+                [pb+'_'+pc,['0_'+pa,'1_'+pc],['1_'+pd,'0_'+pb]]
+            )
+        }
+    }
+    this.constructor.prototype.asize=asize
+    this.constructor.prototype.csize=csize
+    this.constructor.prototype.bitStringCircles=circles
     return this
 }
 
