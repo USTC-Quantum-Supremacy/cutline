@@ -469,26 +469,12 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
     }
 }
 
-/**
- * check if a edge is a pattern
- * @callback EdgeToIsPattern
- * @param {Object} edge edge
- * @return {Boolean}
- */
-
-/**
- * @param {EdgeToIsPattern} pf1 
- * @param {EdgeToIsPattern} pf2 
- */
-StructDataClass.prototype.calWedge = function (pf1,pf2) {
-    let count=0
+StructDataClass.prototype.getPotentialWedgeList = function (params) {
+    let list = []
     let edges=this.splitEdges
-    let used={}
     for (let ii = 0; ii < edges.length; ii++) {
-        if (used[ii]) continue;
         const ei = this.edge(edges[ii])
         for (let jj = ii+1; jj < edges.length; jj++) {
-            if (used[jj]) continue;
             const ej = this.edge(edges[jj])
             let tocheck=1*(ei.q1===ej.q1)+2*(ei.q1===ej.q2)+3*(ei.q2===ej.q1)+4*(ei.q2===ej.q2)
             if (!tocheck) continue; // 没有相同比特
@@ -497,17 +483,44 @@ StructDataClass.prototype.calWedge = function (pf1,pf2) {
             let o1=this.qi2xy(q1)
             let o2=this.qi2xy(q2)
             if (o1.x!==o2.x && o1.y!==o2.y) continue; // 直线
-            if (pf1(ei)&&pf2(ej) || pf1(ej)&&pf2(ei)) {
-                used[ii]=1
-                used[jj]=1
-                count++
-            }
+            list.push([ii,jj])
+        }
+    }
+    this.potentialWedgeList=list
+    return this
+}
+
+/**
+ * check if a edge is a pattern
+ * @callback EdgeToIsPattern
+ * @param {Object} edge edge
+ * @return {Boolean}
+ */
+/**
+ * @param {EdgeToIsPattern} pf1 
+ * @param {EdgeToIsPattern} pf2 
+ */
+StructDataClass.prototype.calWedge = function (pf1,pf2) {
+    let count=0
+    let edges=this.splitEdges
+    let used={}
+    let list=this.potentialWedgeList
+    for (let index = 0; index < list.length; index++) {
+        const li = list[index];
+        if (used[li[0]] || used[li[1]]) continue;
+        let ei=this.edge(edges[li[0]])
+        let ej=this.edge(edges[li[1]])
+        if (pf1(ei)&&pf2(ej) || pf1(ej)&&pf2(ei)) {
+            used[ii]=1
+            used[jj]=1
+            count++
         }
     }
     return count
 }
 
 StructDataClass.prototype.calCutLengthWithWedge = function (params) {
+    this.getPotentialWedgeList()
     let patterns=this.circles
     let wedge={}
     for (let pi = 0; pi < patterns.length; pi++) {
