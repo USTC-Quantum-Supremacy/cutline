@@ -45,12 +45,12 @@ for (let index = 0; index < result.length; index++) {
 sd.getBitStringCircles()
 
 let patternMin={};
-list.foreach((v,i,a)=>{
+list.forEach((v,i,a)=>{
     console.log(`${i+1} of ${a.length}`)
     /** @type {import('./main.js').StructDataClass} */
     let csd=v
     csd.calCutLengthWithWedge_bitString()
-    sd.bitStringCircles.foreach(ps=>{
+    sd.bitStringCircles.forEach(ps=>{
         let pattern = ps[0]
         let length=csd.wegde[pattern].length+0.01*csd.unbalance
         if (patternMin[pattern]==null || length<patternMin[pattern].length) {
