@@ -9,7 +9,7 @@ var VisualClass = cutlineMain.VisualClass
 
 function buildMainSVG(params) {
     if(typeof resultlist2)resultlist2.innerHTML=``
-    var xy=[12,11]
+    var xy=[12,11,1]
     var choosen=[]
     var removedStart=[]
     var CInputFirstLine=''
@@ -22,7 +22,7 @@ function buildMainSVG(params) {
     }
 
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1],CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).pushPatterns().setSplit([]).generateCInput()
+    sd.init({xsize:xy[0],ysize:xy[1],unused:xy[2],CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).pushPatterns().setSplit([]).generateCInput()
     console.log(sd)
 
     var view=new VisualClass();
@@ -58,7 +58,7 @@ function buildMainSVG(params) {
                     removedStart.splice(removedStart.indexOf(clickData),1)
                 }
             }
-            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize}\n${choosen.join(',')}\n${removedStart.join(',')}\n`+document.getElementById('circult').value.split('\n').slice(3).join('\n')
+            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize},${view.data.unused}\n${choosen.join(',')}\n${removedStart.join(',')}\n`+document.getElementById('circult').value.split('\n').slice(3).join('\n')
             buildMainSVG()
         })
     }

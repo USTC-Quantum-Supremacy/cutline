@@ -8,7 +8,7 @@ function StructDataClass() {
 
 StructDataClass.prototype.xsize=12
 StructDataClass.prototype.ysize=11
-StructDataClass.prototype.unused=0 // 黑白染色, 0,0这组不使用
+StructDataClass.prototype.unused=1 // 黑白染色, 0:0,0这组不使用, 1:0,1这组不使用
 StructDataClass.prototype.defaultElement={isBit:1,save:1}
 StructDataClass.prototype.unusedElement={unused:1}
 StructDataClass.prototype.boundaryElement={isBoundary:1}
@@ -42,7 +42,7 @@ StructDataClass.prototype.bitStringCircles=(()=>{
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
-    if(this.xsize==12 && this.ysize==11){
+    if(this.xsize===12 && this.ysize===11 && this.unused===0){
         this.orderList=[36,30,24,31,43,19,37,25,44,20,42,18,32,48,49,12,13,38,26,14,50,33,21,45,9,57,27,39,51,15,56,8,55,7,62,61,2,1,34,22,46,10,58,63,3,28,40,16,52,4,64,23,35,11,47,59,53,17,29,41,6,54,0,60,5,65]
         this.orderMap={}
         this.orderList.forEach((v,i)=>this.orderMap[v]=i+1)
@@ -439,8 +439,14 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     if (small && s3) patterns.push('F');
     if (big && m3) patterns.push('G');
     if (big && m1) patterns.push('H');
-    if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?1:0).join(''))) patterns.push('I');
-    if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?0:1).join(''))) patterns.push('J');
+    if (this.unused===0) {
+        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?1:0).join(''))) patterns.push('I');
+        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?0:1).join(''))) patterns.push('J');
+    } else {
+        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?1:0).join(''))) patterns.push('I');
+        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?0:1).join(''))) patterns.push('J');
+    }
+    
     return patterns
 }
 
@@ -466,7 +472,7 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
     if (this.unused!==0) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
-        throw "unfinished"
+        // throw "unfinished"
     }
     let patterns=[]
     if (o1.x>o2.x) {
@@ -483,6 +489,7 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
     if (big) { 
         // 左下右上 A类
         let index=(o1.x+o1.y-1)/2
+        if (this.unused!==0) index = (o1.x+o1.y-3)/2;
         return ac^pattern[2+index]
     } else { 
         // 左上右下 C类
@@ -596,9 +603,6 @@ StructDataClass.prototype.getPatternSize = function (params) {
 }
 
 StructDataClass.prototype.getBitStringCircles = function (params) {
-    if (this.unused!==0) {
-        throw "unfinished"
-    }
     let asize=this.asize
     let csize=this.csize
     let circles=[]
