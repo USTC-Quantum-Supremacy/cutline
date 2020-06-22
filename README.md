@@ -4,7 +4,7 @@ git clone
 cd cutline
 git submodule update --init --recursive antlr-blockly
 make
-
+python3 generateRandomNumber.py
 
 ## 搜索切割线
 

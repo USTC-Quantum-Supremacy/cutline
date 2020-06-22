@@ -1,3 +1,8 @@
+if (typeof document === "undefined") {
+    var rand = require('./random.js').rand
+} else {
+    var rand = exports.rand
+}
 
 /**
  * @class
@@ -622,6 +627,10 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
     }
     this.constructor.prototype.bitStringCircles=circles
     return this
+}
+
+StructDataClass.prototype.generateCircuitProto = function (params) {
+    
 }
 
 /**
