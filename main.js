@@ -472,7 +472,6 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
     if (this.unused!==0) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
-        // throw "unfinished"
     }
     let patterns=[]
     if (o1.x>o2.x) {
@@ -494,6 +493,7 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
     } else { 
         // 左上右下 C类
         let index=(o1.x-o1.y+this.ysize-(this.ysize%2===0?3:2))/2
+        if (this.unused!==0) index=(o1.x-o1.y+this.ysize-(this.ysize%2===0?1:2))/2
         return ac^pattern[2+index]
     }
 }
