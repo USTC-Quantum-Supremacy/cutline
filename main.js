@@ -42,8 +42,8 @@ StructDataClass.prototype.bitStringCircles=(()=>{
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
-    if(this.xsize===12 && this.ysize===11 && this.unused===0){
-        this.orderList=[36,30,24,31,43,19,37,25,44,20,42,18,32,48,49,12,13,38,26,14,50,33,21,45,9,57,27,39,51,15,56,8,55,7,62,61,2,1,34,22,46,10,58,63,3,28,40,16,52,4,64,23,35,11,47,59,53,17,29,41,6,54,0,60,5,65]
+    if(this.xsize===12 && this.ysize===11 && this.unused===1){
+        this.orderList=[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]
         this.orderMap={}
         this.orderList.forEach((v,i)=>this.orderMap[v]=i+1)
     }
