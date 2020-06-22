@@ -41,6 +41,11 @@ StructDataClass.prototype.bitStringCircles=(()=>{
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
+    if(this.xsize==12 && this.ysize==11){
+        this.orderList=[36,30,24,31,43,19,37,25,44,20,42,18,32,48,49,12,13,38,26,14,50,33,21,45,9,57,27,39,51,15,56,8,55,7,62,61,2,1,34,22,46,10,58,63,3,28,40,16,52,4,64,23,35,11,47,59,53,17,29,41,6,54,0,60,5,65]
+        this.orderMap={}
+        this.orderList.forEach((v,i)=>this.orderMap[v]=i+1)
+    }
     return this
 }
 
@@ -718,6 +723,9 @@ VisualClass.prototype.generateBaseSVG = function (params) {
         points.push(this.point(this.data.qi2xy(qindex),qindex,this.ptStrokeColor,this.ptFillColor))
 
         // QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,qindex,this.markFontSizeQ))
+        if (this.data.orderMap) {
+            QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,this.data.orderMap[qindex],this.markFontSizeQ))
+        }
 
         let pts=_f(this.data.qi2xy(qindex))
         for (let index = 0,pt; pt=pts[index]; index++) {
