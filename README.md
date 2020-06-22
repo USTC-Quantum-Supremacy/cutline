@@ -1,3 +1,11 @@
+## install
+
+git clone
+cd cutline
+git submodule update --init --recursive antlr-blockly
+make
+
+
 ## 搜索切割线
 
 1. 在剪枝的情况下看看一共有多少路径 main.cc run
