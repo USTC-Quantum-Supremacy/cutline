@@ -18,7 +18,7 @@ StructDataClass.prototype.qi2xy_dict=[]
 StructDataClass.prototype.removeList=[]
 StructDataClass.prototype.splitEdges=[]
 StructDataClass.prototype.CInputFirstLine=''
-StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H']
+StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H','I','J']
 StructDataClass.prototype.circles=[
     ['ABCDCDAB','BC','DA'],
     ['BACDCDBA','AC','DB'],
@@ -28,6 +28,7 @@ StructDataClass.prototype.circles=[
     ['HGCDCDHG','GC','DH'],
     ['GHEFEFGH','HE','FG'],
     ['HGEFEFHG','GE','FH'],
+    ['IJCDCDIJ','JC','DI'],
 ]
 StructDataClass.prototype.bitStringCircles=(()=>{
     let pa='0000000100'
@@ -46,6 +47,7 @@ StructDataClass.prototype.init = function (params) {
         this.orderMap={}
         this.orderList.forEach((v,i)=>this.orderMap[v]=i+1)
     }
+    this.getPatternSize()
     return this
 }
 
@@ -409,6 +411,7 @@ StructDataClass.prototype.calExpectation = function (params) {
 }
 
 StructDataClass.prototype.calPatterns = function (o1,o2) {
+    // 待重构为用checkBitStringPattern实现
     if (this.unused!==0) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
@@ -436,6 +439,8 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     if (small && s3) patterns.push('F');
     if (big && m3) patterns.push('G');
     if (big && m1) patterns.push('H');
+    if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?1:0).join(''))) patterns.push('I');
+    if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?0:1).join(''))) patterns.push('J');
     return patterns
 }
 
@@ -579,13 +584,14 @@ StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
 }
 
 StructDataClass.prototype.getPatternSize = function (params) {
-    if (this.unused!==0) {
-        throw "unfinished"
-    }
     let asize=~~((this.xsize+this.ysize)/2)-1
     let csize=~~((this.xsize-1)/2)+~~((this.ysize-1)/2)
-    this.constructor.prototype.asize=asize
-    this.constructor.prototype.csize=csize
+    if (this.unused!==0) {
+        asize=~~(this.xsize/2)+~~(this.ysize/2)-1
+        csize=~~((this.xsize+this.ysize-1)/2)-1
+    }
+    this.asize=asize
+    this.csize=csize
     return this
 }
 
@@ -593,7 +599,6 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
     if (this.unused!==0) {
         throw "unfinished"
     }
-    this.getPatternSize()
     let asize=this.asize
     let csize=this.csize
     let circles=[]
