@@ -1,4 +1,4 @@
-let rand=(function(){
+let random=(function(){
 let randData=
 /// random list start ///
 {
@@ -8,13 +8,22 @@ let randData=
     ]
 }
 /// random list end ///
-;let current=0;
-let rand = function () {
+;
+let current=0;
+let random={}
+function rand () {
     let ret=randData.list[current++];
     if (typeof ret!==typeof 0)throw 'random number exhaust';
     return ret
 }
-return rand;
+function randn(n,s) {
+    if (s==null) return ~~(n*rand());
+    return s+ ~~((n-s)*rand())
+}
+
+random.rand=rand;
+random.randn=randn;
+return random;
 })()
 if (typeof exports === "undefined") exports = {};
-exports.rand=rand;
+exports.rand=random;

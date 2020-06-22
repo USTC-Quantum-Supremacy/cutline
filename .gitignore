@@ -3,4 +3,5 @@ run2.exe
 run
 run2
 /in/*.in
+/output/*.txt
 random.js

@@ -629,12 +629,90 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
     return this
 }
 
-StructDataClass.prototype.generateCircuitProto = function (params) {
-    
+/**
+ * 
+ * @param {String|String[]} circle 
+ * @param {Number} depth 
+ */
+StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
+    circle=Array.from(circle)
+    let proto={circle,depth,layer:[]}
+    let pushSingleLayer=()=>{
+        let gates={}
+        let layerno=proto.layer.length
+        for (let qindex = 0; qindex < this.bitCount; qindex++) {
+            let qubit=this.qubit(qindex)
+            if (!qubit.area2) continue;
+            if (layerno===0) {
+                gates[qindex]={qi:qindex,type:rand.randn(3)}
+            } else {
+                let rt=rand.randn(2)
+                rt+= rt>=proto.layer[layerno-2][qindex].type
+                gates[qindex]={qi:qindex,type:rt}
+            }
+        }
+        proto.layer.push(gates)
+    }
+    let pushDoubleLayer=()=>{
+        let gates={}
+        let layerno=proto.layer.length
+        let pf=(edge,pattern)=>edge['isPattern_'+pattern]
+        for (let eindex = 0; eindex < this.maxAreaEdges.length; eindex++) {
+            const edge = this.edge(this.maxAreaEdges[eindex]);
+            let pattern = circle[((layerno-1)/2)%circle.length]
+            if (!pf(edge,pattern)) continue;
+            gates[eindex]={q1:edge.q1,q2:edge.q2}
+        }
+        proto.layer.push(gates)
+    }
+    for (let index = 0; index < depth; index++) {
+        pushSingleLayer()
+        pushDoubleLayer()
+    }
+    pushSingleLayer()
+    return proto
 }
 
 /**
- * @constructor
+ * 
+ * @param {{String:Number[]}} gateArgs 
+ */
+StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateArgs) {
+    let text=[saveBitList.length]
+    let map={}
+    saveBitList.forEach((v,i)=>map[v]=i)
+    let edgeargs=()=>[]
+    if (gateArgs==null) {
+        edgeargs=(q1,q2)=>[1/2,1/6,0,0,0]
+    } else {
+        throw 'todo 待与实验侧约定格式'
+    }
+    for (let layerno = 0; layerno < proto.layer.length; layerno++) {
+        const layer = proto.layer[layerno];
+        if (layerno%2==0) {
+            for (const gi in layer) {
+                if (layer.hasOwnProperty(gi)) {
+                    const gate = layer[gi];
+                    if (map[gate.qi]==null) continue;
+                    let gatestr=['x_1_2','y_1_2','hz_1_2'][gate.type]
+                    text.push(`${layerno} ${gatestr} ${map[gate.qi]}`)
+                }
+            }
+        } else {
+            for (const gi in layer) {
+                if (layer.hasOwnProperty(gi)) {
+                    const gate = layer[gi];
+                    if (map[gate.q1]==null || map[gate.q2]==null) continue;
+                    text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${map[gate.q1]} ${map[gate.q2]}`)
+                }
+            }
+        }
+    }
+    return text.join('\n')
+}
+
+/**
+ * @class
  */
 function VisualClass() {
 
