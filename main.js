@@ -13,7 +13,7 @@ function StructDataClass() {
 
 StructDataClass.prototype.xsize=12
 StructDataClass.prototype.ysize=11
-StructDataClass.prototype.unused=1 // 黑白染色, 0:0,0这组不使用, 1:0,1这组不使用
+StructDataClass.prototype.use00=true // 黑白染色, 0:0,0这组不使用, 1:0,1这组不使用
 StructDataClass.prototype.defaultElement={isBit:1,save:1}
 StructDataClass.prototype.unusedElement={unused:1}
 StructDataClass.prototype.boundaryElement={isBoundary:1}
@@ -45,9 +45,48 @@ StructDataClass.prototype.bitStringCircles=(()=>{
     ]
 })()
 
+StructDataClass.prototype.import = function (input,cover,params) {
+    input = Object.assign({},input,cover)
+    this.input=input
+    this.init(Object.assign({
+        xsize:~~input.xsize,
+        ysize:~~input.ysize,
+        use00:input.use00,
+    },params))
+    .initmap()
+    .loadChoosen(eval(input.brokenBits||'[]'))
+    .pickMaxArea()
+    .loadRemovedStart(eval(input.removedEntrances||'[]'))
+    .pushPatterns()
+    .setSplit(eval(input.part1||'[]'))
+    return this
+}
+
+StructDataClass.prototype.buildInput = function (params) {
+    if (!this.input) this.input={};
+    let input={
+        type:'prog',
+        xsize:this.xsize+'',
+        ysize:this.ysize+'',
+        use00:this.use00,
+        brokenBits:JSON.stringify(this.choosen||[]),
+        part1:JSON.stringify(this.removeList||[]),
+        depth:(this.input.depth||'20')+'',
+        errorRates:(this.input.errorRates||'[0.0016,0.0062,0.038]')+'',
+        removedEntrances:JSON.stringify(this.removedStart||[]),
+        search:(this.input.search||'prune')+'',
+        generatingCircuit:this.input.generatingCircuit||[],
+        showMark:this.input.showMark||[],
+        showPattern:this.input.showPattern||[],
+    }
+    this.input=input
+    return this
+}
+
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
-    if(this.xsize===12 && this.ysize===11 && this.unused===1){
+    if (!this.input) this.buildInput();
+    if(this.xsize===12 && this.ysize===11 && this.use00===true){
         this.orderList=[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]
     }
     if (this.orderList) {
@@ -64,7 +103,7 @@ StructDataClass.prototype.initmap=function (params) {
     // 移除unused
     for (let yindex = 0; yindex < this.ysize+2; yindex++) {
         for (let xindex = 0; xindex < this.xsize+2; xindex++) {
-            if ((xindex+yindex)%2===this.unused) {
+            if ((xindex+yindex)%2===~~this.use00) { //(0+0)%2 === 1 -> false
                 this.map[xindex][yindex]=JSON.parse(JSON.stringify(this.unusedElement))
             }
         }
@@ -310,7 +349,7 @@ ${this._cost2()}`
         text[0]=this.CInputFirstLine
         text=text.join('\n')
     }
-    this.CInput=text
+    this.constructor.prototype.CInput=text
     return this
 }
 
@@ -419,7 +458,7 @@ StructDataClass.prototype.calExpectation = function (params) {
 
 StructDataClass.prototype.calPatterns = function (o1,o2) {
     // 待重构为用checkBitStringPattern实现
-    if (this.unused!==0) {
+    if (this.use00) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
     }
@@ -446,7 +485,7 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     if (small && s3) patterns.push('F');
     if (big && m3) patterns.push('G');
     if (big && m1) patterns.push('H');
-    if (this.unused===0) {
+    if (!this.use00) {
         if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===6?1:0).join(''))) patterns.push('I');
         if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===6?0:1).join(''))) patterns.push('J');
     } else {
@@ -476,7 +515,7 @@ StructDataClass.prototype.pushPatterns = function (params) {
  * @param {String} pattern 形如 0_001010, _ 前是0代表左下右上, 1代表左上右下
  */
 StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
-    if (this.unused!==0) {
+    if (this.use00) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
     }
@@ -495,12 +534,12 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
     if (big) { 
         // 左下右上 A类
         let index=(o1.x+o1.y-1)/2
-        if (this.unused!==0) index = (o1.x+o1.y-3)/2;
+        if (this.use00) index = (o1.x+o1.y-3)/2;
         return ac^pattern[2+index]
     } else { 
         // 左上右下 C类
         let index=(o1.x-o1.y+this.ysize-(this.ysize%2===0?3:2))/2
-        if (this.unused!==0) index=(o1.x-o1.y+this.ysize-(this.ysize%2===0?1:2))/2
+        if (this.use00) index=(o1.x-o1.y+this.ysize-(this.ysize%2===0?1:2))/2
         return ac^pattern[2+index]
     }
 }
@@ -600,7 +639,7 @@ StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
 StructDataClass.prototype.getPatternSize = function (params) {
     let asize=~~((this.xsize+this.ysize)/2)-1
     let csize=~~((this.xsize-1)/2)+~~((this.ysize-1)/2)
-    if (this.unused!==0) {
+    if (this.use00) {
         asize=~~(this.xsize/2)+~~(this.ysize/2)-1
         csize=~~((this.xsize+this.ysize-1)/2)-1
     }

@@ -1,15 +1,15 @@
 grammar CutlineInput;
 
-prog:   '*xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL 
-        '*broken bits' JsonStr BGNL
-        '*part1 indexes' JsonStr BGNL
+prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL 
+        'broken bits' JsonStr BGNL
+        'part1 indexes' JsonStr BGNL
         'depth' Number_List BGNL
         'e1 e2 er' JsonStr BGNL
         'removed entrances' JsonStr BGNL
         'search' Search_List BGNL
-        'generating circuit *1' BGNL generatingCircuits
-        'show mark *1(only for mark)' BGNL marks
-        'show pattern *2' BGNL patterns
+        'generating circuit ~1' BGNL generatingCircuits
+        'show mark ~1(only for mark)' BGNL marks
+        'show pattern ~2' BGNL patterns
 /* prog
 name : ['xsize','ysize','use00','brokenBits','part1','depth','errorRates','removedEntrances','search','generatingCircuit','showMark','showPattern']
 default : ['12','11',true,'[]','[]','20','[0.0016,0.0062,0.038]','[]','true']
@@ -23,15 +23,15 @@ generatingCircuits
     ;
 
 generatingCircuit
-    :   'elided' NormalStr? 'pattern' NormalStr BGNL 
-        'filename' NormalStr? 'qubit number' Int BGNL
+    :   'qubit number' Int 'elided' NormalStr? 'pattern' NormalStr BGNL 
+        'filename' NormalStr? BGNL
         'order' BGNL
         orderlist
 /* generatingCircuit
-name : ['elided','pattern','filename','qubitNumber','order']
-default : ['0','EFGH','circuit/sycamore60_20_EFGH.txt',60]
+name : ['qubitNumber','elided','pattern','filename','order']
+default : [60,'0','EFGH','circuit/sycamore60_20_EFGH.txt']
 colour : this.generatingCircuitColor
-var code = CutlineInputFunctions.defaultCode('generatingCircuit',[elided,pattern,filename,qubitNumber,order]);
+var code = CutlineInputFunctions.defaultCode('generatingCircuit',[qubitNumber,elided,pattern,filename,order]);
       return code;
 */;
 
@@ -109,7 +109,7 @@ Number_List : 'dynamic'|'12' /* Number_List function(){return Array.from({length
 PatternA_List : 'A'|'B'|'G'|'H'|'I'|'J' ;
 PatternC_List : 'C'|'D'|'E'|'F' ;
 Search_List : 'Min(CutLength)'|'Min(CutLength*2-wegde)'
-    /*Search_List ['true','false']*/ ;
+    /*Search_List ['prune','notprune']*/ ;
 
 MulDivAddSub_List : '*'|'/'|'+'|'-' ;
 

@@ -7,62 +7,53 @@ if (isNodejs) {
 var StructDataClass = cutlineMain.StructDataClass
 var VisualClass = cutlineMain.VisualClass
 
+
+function buildBlocks(params) {
+    try {
+        CutlineInputFunctions.parse(eval('('+document.querySelector('#blocklyinput').value+')'))
+    } catch (error) {
+        console.error(error)
+    }
+}
 function buildMainSVG(params) {
     if(typeof resultlist2)resultlist2.innerHTML=``
-    var xy=[12,11,1]
-    var choosen=[]
-    var removedStart=[]
-    var CInputFirstLine=''
-    if (typeof document !== "undefined") {
-        var inputstr=document.getElementById('circult').value
-        var xy=eval('['+inputstr.split('\n')[0]+']')
-        var choosen=eval('['+inputstr.split('\n')[1]+']')
-        var removedStart=eval('['+inputstr.split('\n')[2]+']')
-        var CInputFirstLine=inputstr.split('\n')[3]||''
-    }
-
+    
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1],use00:Boolean(xy[2]),CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).pushPatterns().setSplit([]).generateCInput()
+    sd.import(eval('('+document.querySelector('#blocklyinput').value+')')).generateCInput()
     console.log(sd)
-
+    
     var view=new VisualClass();
     view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
     console.log(view)
+    
+    window.sd=sd
+    window.view=view
 
-    if (typeof document !== "undefined") {
-        window.sd=sd
-        window.view=view
-        // var node=document.createElement('div')
-        // node.innerHTML=view.SVG
-        // document.getElementById('insertHere').appendChild(node)
-        document.getElementById('insertHere').innerHTML=view.SVG
-        document.getElementById('formatedGateArray').innerText=sd.CInput
-        view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
-            /**
-             * @type {VisualClass}
-             */
-            let view=thisv
-            let choosen=view.data.choosen
-            let removedStart=view.data.removedStart
-            if (type==='choosen') {
-                if (choosen.indexOf(clickData)===-1) {
-                    choosen.push(clickData)
-                } else {
-                    choosen.splice(choosen.indexOf(clickData),1)
-                }
+    buildBlocks()
+
+    document.getElementById('insertHere').innerHTML=view.SVG
+    document.getElementById('formatedGateArray').innerText=sd.CInput
+    view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
+
+        let choosen=view.data.choosen
+        let removedStart=view.data.removedStart
+        if (type==='choosen') {
+            if (choosen.indexOf(clickData)===-1) {
+                choosen.push(clickData)
+            } else {
+                choosen.splice(choosen.indexOf(clickData),1)
             }
-            if (type==='removedStart') {
-                if (removedStart.indexOf(clickData)===-1) {
-                    removedStart.push(clickData)
-                } else {
-                    removedStart.splice(removedStart.indexOf(clickData),1)
-                }
+        }
+        if (type==='removedStart') {
+            if (removedStart.indexOf(clickData)===-1) {
+                removedStart.push(clickData)
+            } else {
+                removedStart.splice(removedStart.indexOf(clickData),1)
             }
-            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize},${view.data.use00}\n${choosen.join(',')}\n${removedStart.join(',')}\n`+document.getElementById('circult').value.split('\n').slice(3).join('\n')
-            buildMainSVG()
-        })
-    }
-    return [sd,view]
+        }
+        document.querySelector('#blocklyinput').value=JSON.stringify(sd.buildInput().input)
+        buildMainSVG()
+    })
 }
 buildMainSVG()
 
@@ -95,7 +86,7 @@ function disablesubmit(params) {
 function submit(params) {
     disablesubmit()
     document.getElementById('postresult').innerHTML='waiting'
-    xhrPost('/',JSON.stringify({CInput:window.sd.CInput,prune:eval(isusingwegde.value)}),function (err,data) {
+    xhrPost('/',JSON.stringify({CInput:sd.CInput,prune:sd.input.search==='prune'}),function (err,data) {
         if (err) {
             console.log(err)
             document.getElementById('postresult').innerHTML=err
@@ -183,17 +174,34 @@ function reRenderResult(params) {
     processCNFResult(null,1,1)
 }
 
+var lastinputstr=''
+var delaydo=null
+function trigger(event) {
+    if (document.querySelector('#blocklyinput').value===lastinputstr) {
+        
+    } else {
+        lastinputstr=document.querySelector('#blocklyinput').value
+        blocklyDone()
+    }
+    // console.log(event)
+    if(event.type==="change"){
+        if (delaydo!=null) {
+            clearTimeout(delaydo)
+        }
+        delaydo=setTimeout(v=>{buildMainSVG();delaydo=null},400)
+    }
+}
+
+function blocklyDone(params) {
+    changePatten()
+}
+
 function changePatten(params) {
     resultlist2.innerHTML=``
-    patternColor.innerHTML=`
-        #insertHere .qline.pattern${patternSelect.value} {
-            stroke: blue;
-            stroke-width: 20;
-        }
-
-        #insertHere .qline.pattern${patternSelect2.value} {
-            stroke: green;
-            stroke-width: 20;
-        }
-    `
+    patternColor.innerHTML=sd.input.showPattern.filter(v=>v.type!=="patternNone").map(v=>`
+    #insertHere .qline.pattern${v.pattern} {
+        stroke: ${v.color};
+        stroke-width: 20;
+    }
+    `).join('')
 }
