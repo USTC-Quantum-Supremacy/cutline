@@ -13,9 +13,10 @@
 
 <body>
     <div>
-        <div id='insertHere'></div><div id="blocklyDiv" style="height: 350px; width: 500px;"></div>
+        <div style="width: 500px;float: left;" id='insertHere'></div><div id="blocklyDiv" style="height: 450px; width: 500px;float: left;"></div>
+        <br style="clear: both;">
         <div>
-            <textarea name="blocklyinput" id="blocklyinput" cols="40" rows="6" spellcheck="false">{"type":"prog","data":[12,11,true,20,"[]","[]","[0.0016,0.0062,0.038]","true",[{"type":"orderlist","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"markmap","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"patternA","data":["A","#ff6600"]},{"type":"patternC","data":["C","#339999"]}]]}</textarea>
+            <textarea name="blocklyinput" id="blocklyinput" cols="40" rows="6" spellcheck="false">{"type":"prog","data":["12","11",true,"20","[]","[]","[0.0016,0.0062,0.038]","true",[{"type":"orderlist","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"markmap","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"patternA","data":["A","#ff6600"]},{"type":"patternC","data":["C","#339999"]}]]}</textarea>
             <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
             <input type="button" id='Submit' onclick="submit()" value="Submit">
         </div>
@@ -81,15 +82,7 @@ var toolboxObj = {
   // 每个键值对作为一页
   "statement" : [
     // 所有语句块
-    CutlineInputBlocks["prog"].xmlText(),
-    CutlineInputBlocks["orderlist"].xmlText(),
-    CutlineInputBlocks["orderNone"].xmlText(),
-    CutlineInputBlocks["markQi"].xmlText(),
-    CutlineInputBlocks["markmap"].xmlText(),
-    CutlineInputBlocks["markNone"].xmlText(),
-    CutlineInputBlocks["patternA"].xmlText(),
-    CutlineInputBlocks["patternC"].xmlText(),
-    CutlineInputBlocks["patternNone"].xmlText(),
+
   ],
 //   "value" : [
 //     // 所有值块
@@ -138,7 +131,7 @@ function omitedcheckUpdateFunction(event) {
 console.log(event);
 try {
   var code = Blockly.JavaScript.workspaceToCode(workspace);
-  blocklyinput.value = code;
+  blocklyinput.value = code.slice(0,-1);
 } catch (error) {
   blocklyinput.value = String(error);
   if (error instanceof OmitedError){
@@ -159,18 +152,21 @@ workspace.addChangeListener(Blockly.Events.disableOrphans);
 CutlineInputFunctions.defaultCode = function (ruleName,args) {
     var rule = CutlineInputBlocks[ruleName];
     let values=args.filter(v=>v!=='\n')
+    let output={}
     for (let index = 0; index < values.length; index++) {
         const value = values[index];
         if (rule.argsType[index]==='statement') {
-            values[index]=eval('['+value+']')
+            output[rule.args[index]]=eval('['+value+']')
+        } else {
+            output[rule.args[index]]=value
         }
     }
     console.log(values)
     let ret
     if (rule.type==='statement') {
-        ret=JSON.stringify({type:rule.json.type,data:values})+','
+        ret=JSON.stringify(Object.assign({type:rule.json.type},output))+','
     } else {
-        ret=JSON.stringify(values)
+        ret=JSON.stringify(output)
     }
     return ret
 }
@@ -182,23 +178,25 @@ function CutlineBlocklyConverter(params) {
     
 }
 CutlineBlocklyConverter.prototype.parse = function (obj,next) {
-    obj=JSON.parse(JSON.stringify(obj))
     let rule = CutlineInputBlocks[obj.type]
-    for (let index = 0; index < obj.data.length; index++) {
-        const dobj = obj.data[index];
+    let input = []
+    for (let index = 0; index < rule.args.length; index++) {
+        const dobj = obj[rule.args[index]];
         if (rule.argsType[index]==='statement') {
             let snext=null
             while (dobj.length) {
                 let ds=dobj.pop()
                 snext=this.parse(ds,snext)
             }
-            obj.data[index]=snext
+            input.push(snext)
+        } else {
+            input.push(dobj)
         }
     }
     if (rule.type==='statement' && next!=null) {
-        obj.data.push(next)
+        input.push(next)
     }
-    return rule.xmlText(obj.data)
+    return rule.xmlText(input)
 }
 CutlineInputFunctions.parser=new CutlineBlocklyConverter()
 CutlineInputFunctions.parse=function(obj){
@@ -207,7 +205,7 @@ CutlineInputFunctions.parse=function(obj){
     xml = Blockly.Xml.textToDom('<xml>'+xml_text+'</xml>');
     Blockly.Xml.domToWorkspace(xml, CutlineInputFunctions.workspace());
 }
-CutlineInputFunctions.parse(eval('('+blocklyinput.value+')'))
+// CutlineInputFunctions.parse(eval('('+blocklyinput.value+')'))
 
 ///insert-initscriptfunc///
 }

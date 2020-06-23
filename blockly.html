@@ -174,18 +174,21 @@ function initscriptfunc(params) {
 CutlineInputFunctions.defaultCode = function (ruleName,args) {
     var rule = CutlineInputBlocks[ruleName];
     let values=args.filter(v=>v!=='\n')
+    let output={}
     for (let index = 0; index < values.length; index++) {
         const value = values[index];
         if (rule.argsType[index]==='statement') {
-            values[index]=eval('['+value+']')
+            output[rule.args[index]]=eval('['+value+']')
+        } else {
+            output[rule.args[index]]=value
         }
     }
     console.log(values)
     let ret
     if (rule.type==='statement') {
-        ret=JSON.stringify({type:rule.json.type,data:values})+','
+        ret=JSON.stringify(Object.assign({type:rule.json.type},output))+','
     } else {
-        ret=JSON.stringify(values)
+        ret=JSON.stringify(output)
     }
     return ret
 }
@@ -197,23 +200,25 @@ function CutlineBlocklyConverter(params) {
     
 }
 CutlineBlocklyConverter.prototype.parse = function (obj,next) {
-    obj=JSON.parse(JSON.stringify(obj))
     let rule = CutlineInputBlocks[obj.type]
-    for (let index = 0; index < obj.data.length; index++) {
-        const dobj = obj.data[index];
+    let input = []
+    for (let index = 0; index < rule.args.length; index++) {
+        const dobj = obj[rule.args[index]];
         if (rule.argsType[index]==='statement') {
             let snext=null
             while (dobj.length) {
                 let ds=dobj.pop()
                 snext=this.parse(ds,snext)
             }
-            obj.data[index]=snext
+            input.push(snext)
+        } else {
+            input.push(dobj)
         }
     }
     if (rule.type==='statement' && next!=null) {
-        obj.data.push(next)
+        input.push(next)
     }
-    return rule.xmlText(obj.data)
+    return rule.xmlText(input)
 }
 CutlineInputFunctions.parser=new CutlineBlocklyConverter()
 CutlineInputFunctions.parse=function(obj){
@@ -222,7 +227,8 @@ CutlineInputFunctions.parse=function(obj){
     xml = Blockly.Xml.textToDom('<xml>'+xml_text+'</xml>');
     Blockly.Xml.domToWorkspace(xml, CutlineInputFunctions.workspace());
 }
-CutlineInputFunctions.parse({"type":"prog","data":[12,11,true,20,"[]","[]","[0.0016,0.0062,0.038]","true",[{"type":"orderlist","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"markmap","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"patternA","data":["A","#ff6600"]},{"type":"patternC","data":["C","#339999"]}]]})
+// CutlineInputFunctions.parse({"type":"prog","xsize":"12","ysize":"11","use00":true,"brokenBits":"[]","part1":"[]","depth":"20","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","search":"true","generatingCircuit":[{"type":"generatingCircuitNone"}],"showMark":[{"type":"markNone"}],"showPattern":[{"type":"patternA","pattern":"A","pcolor":"#ff00ff"}]})
+
 
 ///insert-initscriptfunc///
 }
@@ -233,7 +239,7 @@ function func_Run(){
     left.style.width='100%';
     left.style.display='block';
     left.style.backgroundColor = 'white';
-    left.innerHTML = converter.mainFile[3].split('style="height: 480px; width: 940px;"').join('style="height: 480px; width: 500px;"');
+    left.innerHTML = converter.mainFile[3];
     var loadjs = function(src,callback){
         var script = document.createElement('script');
         script.src = src;
