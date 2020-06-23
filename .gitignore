@@ -6,5 +6,6 @@ run2
 /output/*.txt
 random.js
 ./syc*.txt
+/circuit/syc*.txt
 test.txt
 text.txt
