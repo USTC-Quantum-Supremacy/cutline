@@ -1,18 +1,38 @@
 grammar CutlineInput;
 
-prog:   'xsize' Int 'ysize' Int 'use00' Bool BGNL 
+prog:   'xsize' Int 'ysize' Int 'use00' Bool 'depth' Int BGNL 
         'broken bits' JsonStr BGNL
-        'removed entrance' JsonStr BGNL
-        'SFA arguments' JsonStr BGNL
+        'removed entrances' JsonStr BGNL
+        'e1 e2 er' JsonStr BGNL
         'search' Search_List BGNL
+        'order list' orderlists
         'show mark' marks
         'show pattern' patterns
 /* prog
-default : [12,11,true,'[]','[]','[0.0016,0.0062,0.038,20]','true']
-var code = CutlineInputFunctions.defaultCode('prog',[Int_0,Int_1,Bool_0,"\n",JsonStr_0,"\n",JsonStr_1,"\n",JsonStr_2,"\n",Search_List_0,"\n",marks_0,patterns_0]);
+default : [12,11,true,20,'[]','[]','[0.0016,0.0062,0.038]','true']
+var code = CutlineInputFunctions.defaultCode('prog',[Int_0,Int_1,Bool_0,Int_2,"\n",JsonStr_0,"\n",JsonStr_1,"\n",JsonStr_2,"\n",Search_List_0,"\n",orderlists_0,marks_0,patterns_0]);
       return code;
 */;
 
+orderlists
+    :   orderlist
+    |   orderNone
+    ;
+
+orderlist
+    :   JsonStr
+/* orderlist
+default : ['[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]']
+colour : this.orderlistColor
+var code = CutlineInputFunctions.defaultCode('orderlist',[JsonStr_0]);
+      return code;
+*/;
+orderNone : 'None' 
+/* orderNone
+colour : this.orderlistColor
+var code = CutlineInputFunctions.defaultCode('orderNone',[]);
+      return code;
+*/;
 
 marks
     :   markQi
@@ -25,14 +45,14 @@ colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('markQi',[]);
       return code;
 */;
-markmap : 'order list' JsonStr 
+markmap : 'order' JsonStr 
 /* markmap
 default : ['[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]']
 colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('markmap',[JsonStr_0]);
       return code;
 */;
-markNone : 'None' 
+markNone : 'No' 
 /* markNone
 colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('markNone',[]);
@@ -46,7 +66,7 @@ patterns
     ;
 patternA : '/' PatternA_List Colour;
 patternC : '\\' PatternC_List Colour;
-patternNone : 'None' ;
+patternNone : 'No' ;
 
 
 statExprSplit : '=== statement ^ === expression v ===' ;
@@ -81,11 +101,11 @@ WS  :   [ \t]+ -> skip ;         // toss out whitespace
 /* Function_0
 //this.evisitor.recieveOrder='ORDER_NONE';
 // this.evisitor.valueColor=330;
-// this.evisitor.statementColor=70;
+this.evisitor.statementColor=300;
 // this.evisitor.entryColor=250;
 
 // this.evisitor.idstring_eColor=310;
-this.evisitor.patternColor=190;
+this.evisitor.orderlistColor=170;
 this.evisitor.markColor=70;
 // this.evisitor.dataColor=130;
 // this.evisitor.eventColor=220;
@@ -99,5 +119,10 @@ this.evisitor.markColor=70;
 */
 
 /* Functions
+CutlineInputFunctions.JsonStr_pre = function(str) {
+    let tmp = eval(str)
+    return str;
+}
 
+CutlineInputFunctions.workspace = function(){return workspace}
 */

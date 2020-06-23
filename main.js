@@ -685,6 +685,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateA
     saveBitList.forEach((v,i)=>map[v]=i)
     let edgeargs=()=>[]
     if (gateArgs==null) {
+        // theta/pi phi/pi deltaplus deltaminus deltaminusoff
         edgeargs=(q1,q2)=>[1/2,1/6,0,0,0]
     } else {
         throw 'todo 待与实验侧约定格式'
