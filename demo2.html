@@ -13,10 +13,9 @@
 
 <body>
     <div>
-        <div id='insertHere'></div>
-        <br>
+        <div id='insertHere'></div><div id="blocklyDiv" style="height: 350px; width: 500px;"></div>
         <div>
-            <textarea name="binput" id="binput" cols="40" rows="6" spellcheck="false">{"type":"prog","data":[12,11,true,20,"[]","[]","[0.0016,0.0062,0.038]","true",[{"type":"orderlist","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"markmap","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"patternA","data":["A","#ff6600"]},{"type":"patternC","data":["C","#339999"]}]]}</textarea>
+            <textarea name="blocklyinput" id="blocklyinput" cols="40" rows="6" spellcheck="false">{"type":"prog","data":[12,11,true,20,"[]","[]","[0.0016,0.0062,0.038]","true",[{"type":"orderlist","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"markmap","data":["[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"]}],[{"type":"patternA","data":["A","#ff6600"]},{"type":"patternC","data":["C","#339999"]}]]}</textarea>
             <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
             <input type="button" id='Submit' onclick="submit()" value="Submit">
         </div>
@@ -65,6 +64,205 @@
     <script src="./random.js"></script>
     <script src="./main.js"></script>
     <script src="./page.js"></script>
+    <script src="antlr-blockly/Converter.bundle.min.js"></script>
+    <script>
+
+function initscriptfunc(params) {
+///insert-initscriptfunc///
+
+var toolbox = (function(){
+
+var toolboxXml=document.createElement('xml')
+
+// 调整这个obj来更改侧边栏和其中的方块
+// 可以直接填 '<block type="xxx">...</block>'
+// 标签 '<label text="标签文本"></label>'
+var toolboxObj = {
+  // 每个键值对作为一页
+  "statement" : [
+    // 所有语句块
+    CutlineInputBlocks["prog"].xmlText(),
+    CutlineInputBlocks["orderlist"].xmlText(),
+    CutlineInputBlocks["orderNone"].xmlText(),
+    CutlineInputBlocks["markQi"].xmlText(),
+    CutlineInputBlocks["markmap"].xmlText(),
+    CutlineInputBlocks["markNone"].xmlText(),
+    CutlineInputBlocks["patternA"].xmlText(),
+    CutlineInputBlocks["patternC"].xmlText(),
+    CutlineInputBlocks["patternNone"].xmlText(),
+  ],
+//   "value" : [
+//     // 所有值块
+//   ]
+}
+
+var getCategory = function(toolboxXml,name,custom){
+  var node = document.createElement('category');
+  node.setAttribute('name',name);
+  if(custom)node.setAttribute('custom',custom);
+  toolboxXml.appendChild(node);
+  return node;
+}
+
+var toolboxGap = '<sep gap="5"></sep>'
+
+for (var name in toolboxObj){
+  var custom = null;
+  if(name=='xxxxxx')custom='xxxxxx';
+  if(name=='zzzzzz')custom='zzzzzz';
+  getCategory(toolboxXml,name,custom).innerHTML = toolboxObj[name].join(toolboxGap);
+  var node = document.createElement('sep');
+  node.setAttribute('gap',5*3);
+  toolboxXml.appendChild(node);
+}
+
+return toolboxXml;
+})();
+
+
+var workspace = Blockly.inject('blocklyDiv',{
+media: 'antlr-blockly/media/',
+toolbox: toolbox,
+zoom:{
+  controls: true,
+  wheel: true,//false
+  startScale: 1.0,
+  maxScale: 3,
+  minScale: 0.3,
+  scaleSpeed: 1.08
+},
+trashcan: false,
+});
+
+function omitedcheckUpdateFunction(event) {
+console.log(event);
+try {
+  var code = Blockly.JavaScript.workspaceToCode(workspace);
+  blocklyinput.value = code;
+} catch (error) {
+  blocklyinput.value = String(error);
+  if (error instanceof OmitedError){
+    var blockName = error.blockName;
+    var varName = error.varName;
+    var block = error.block;
+  }
+  console.log(error);
+}
+}
+
+workspace.addChangeListener(omitedcheckUpdateFunction);
+
+workspace.addChangeListener(Blockly.Events.disableOrphans);
+//自动禁用任何未连接到根块的块
+
+
+CutlineInputFunctions.defaultCode = function (ruleName,args) {
+    var rule = CutlineInputBlocks[ruleName];
+    let values=args.filter(v=>v!=='\n')
+    for (let index = 0; index < values.length; index++) {
+        const value = values[index];
+        if (rule.argsType[index]==='statement') {
+            values[index]=eval('['+value+']')
+        }
+    }
+    console.log(values)
+    let ret
+    if (rule.type==='statement') {
+        ret=JSON.stringify({type:rule.json.type,data:values})+','
+    } else {
+        ret=JSON.stringify(values)
+    }
+    return ret
+}
+
+/**
+ * @class
+ */
+function CutlineBlocklyConverter(params) {
+    
+}
+CutlineBlocklyConverter.prototype.parse = function (obj,next) {
+    obj=JSON.parse(JSON.stringify(obj))
+    let rule = CutlineInputBlocks[obj.type]
+    for (let index = 0; index < obj.data.length; index++) {
+        const dobj = obj.data[index];
+        if (rule.argsType[index]==='statement') {
+            let snext=null
+            while (dobj.length) {
+                let ds=dobj.pop()
+                snext=this.parse(ds,snext)
+            }
+            obj.data[index]=snext
+        }
+    }
+    if (rule.type==='statement' && next!=null) {
+        obj.data.push(next)
+    }
+    return rule.xmlText(obj.data)
+}
+CutlineInputFunctions.parser=new CutlineBlocklyConverter()
+CutlineInputFunctions.parse=function(obj){
+    CutlineInputFunctions.workspace().clear();
+    xml_text = CutlineInputFunctions.parser.parse(obj);
+    xml = Blockly.Xml.textToDom('<xml>'+xml_text+'</xml>');
+    Blockly.Xml.domToWorkspace(xml, CutlineInputFunctions.workspace());
+}
+CutlineInputFunctions.parse(eval('('+blocklyinput.value+')'))
+
+///insert-initscriptfunc///
+}
+var initscript=initscriptfunc.toString().split('///insert-initscriptfunc///')[1]
+
+function func_Run(){
+    var loadjs = function(src,callback){
+        var script = document.createElement('script');
+        script.src = src;
+        document.body.appendChild(script);
+        script.onload = function () {
+            callback();
+        }
+    }
+
+    var lnum=[0];
+    var tcb = function(){
+        if(++lnum[0]!==3)return;
+        var script = document.createElement('script');
+        script.innerHTML = converter.mainFile[5]+initscript;
+        document.body.appendChild(script);
+    }
+
+    loadjs('antlr-blockly/blockly_compressed.js',function(){
+        loadjs('antlr-blockly/blocks_compressed.js',tcb);
+        loadjs('antlr-blockly/javascript_compressed.js',tcb);
+        loadjs('antlr-blockly/zh-hans.js',tcb);
+        //loadjs('en.js',tcb);
+    });
+}
+
+var grammerFile=''
+function runOne(callback){
+    converter = new Converter().init();
+    converter.generBlocks(grammerFile);
+    converter.renderGrammerName();
+    converter.generToolbox();
+    converter.generMainFile();
+    console.log(converter);
+    if(callback)callback();
+}
+
+var xhrg4=new XMLHttpRequest();
+xhrg4.onreadystatechange = function (){
+    if(xhrg4.readyState!=4) return;
+    if(xhrg4.status!=200) {
+        return;
+    }
+    grammerFile=xhrg4.responseText;
+    runOne(func_Run);
+}
+xhrg4.open('GET','CutlineInput.g4',true);
+xhrg4.send(null);
+
+    </script>
 </body>
 
 </html>
