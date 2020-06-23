@@ -5,6 +5,7 @@ cd cutline
 git submodule update --init --recursive antlr-blockly
 make
 python3 generateRandomNumber.py
+python3 circuit/gen.py
 
 ## 搜索切割线
 

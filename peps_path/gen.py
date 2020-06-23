@@ -16,9 +16,9 @@ def gen(n):
 22 18
 ''',f'sycamore{n}_cut.txt'
 
-if __name__ == "__main__":
-    ns=range(37,61)
-    for n in ns:
-        fcontent,fname=gen(n)
-        with open(fname,'w') as fid:
-            fid.write(fcontent)
+# if __name__ == "__main__":
+#     ns=range(37,61)
+#     for n in ns:
+#         fcontent,fname=gen(n)
+#         with open(fname,'w') as fid:
+#             fid.write(fcontent)
