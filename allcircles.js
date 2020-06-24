@@ -5,8 +5,7 @@ const execSync = require('child_process').execSync
 
 const fs = require('fs')
 
-// 'todo: get input from file';
-let input={"type":"prog","xsize":"12","ysize":"11","use00":true,"brokenBits":"[]","part1":"[]","depth":"20","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","search":"prune","generatingCircuit":[{"type":"generatingCircuitNone"}],"showMark":[{"type":"markNone"}],"showPattern":[{"type":"patternNone"}]};
+let input=JSON.parse(fs.readFileSync('in/allcircles.json',{encoding:'utf-8'}))
 
 let sd=new StructDataClass();
 sd.import(input,{part1:'[]'})
@@ -16,7 +15,7 @@ sd.generateCInput()
 fs.writeFileSync('in/allcircles.in',sd.CInput)
 
 // let retstr=fs.readFileSync('./path4.txt',{encoding:'utf-8'})
-let retstr=execSync('run2 in/allcircles.in').toString()
+let retstr=execSync('./run2 in/allcircles.in').toString()
 
 sd.parseCResult(retstr)
 
