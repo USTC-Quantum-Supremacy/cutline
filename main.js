@@ -400,7 +400,7 @@ StructDataClass.prototype.processCResult = function (params) {
     }
     let patternMin={};
     list.forEach((v,i,a)=>{
-        console.log(`${i+1} of ${a.length}`)
+        // console.log(`${i+1} of ${a.length}`)
         /** @type {StructDataClass} */
         let csd=v
         func.call(csd)

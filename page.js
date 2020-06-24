@@ -109,12 +109,12 @@ function processCResult_page(result,showall,target) {
 
     if (showall) {
         let list=[]
-        let newins=new this.constructor().import(this.input,{part1:'[]'})
+        let newins=new sd.constructor().import(sd.input,{part1:'[]'})
         for (let index = 0; index < Math.min(showall,result.length); index++) {
             const removeList = result[index];
             list.push(newins.copy().setSplit(removeList))
         }
-        let viewList=list.map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
+        let viewList=list.map(v=>new view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
         document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
         return;
     } 
@@ -122,7 +122,7 @@ function processCResult_page(result,showall,target) {
     let output = sd.processCResult()
     window.CResultOutput=output
     console.log(output)
-    let wedgestr='<br>'+JSON.stringify(Object.assign({},output,{instance:undefined}))+'<br>'
+    let wedgestr='<br>'+JSON.stringify(output.maxofmin)+'<br>'+JSON.stringify(output.min)+'<br>'
     let cal=eval(sd.input.errorRates)
     let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
     output.instance.calExpectation({e1,e2,er,d})
