@@ -25,13 +25,29 @@ generatingCircuits
 
 generatingCircuit
     :   'qubit number' Int 'elided' NormalStr? 'pattern' NormalStr BGNL 
+        'seed (cannot changed now)' Int BGNL
         'filename' NormalStr? BGNL
+        'bit indexes' BGNL
         orderlist
+        'peps path' BGNL
+        orderlist
+        'gateArgs' BGNL
+        gateArgs
 /* generatingCircuit
-name : ['qubitNumber','elided','pattern','filename','order']
-default : [60,'0','EFGH','circuit/sycamore60_20_EFGH.txt']
+name : ['qubitNumber','elided','pattern','seed','filename','order','pepsPath','gateArgs']
+default : [60,'0','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt']
 colour : this.generatingCircuitColor
-var code = CutlineInputFunctions.defaultCode('generatingCircuit',[qubitNumber,elided,pattern,filename,order]);
+var code = CutlineInputFunctions.defaultCode('generatingCircuit',[qubitNumber,elided,pattern,seed,filename,order,pepsPath,gateArgs]);
+      return code;
+*/;
+
+gateArgs
+    :   'unknow format' JsonStr
+/* gateArgs
+name : ['unknow']
+default : ['[0.5,0.1666666667,0,0,0]']
+colour : this.gateArgsColor
+var code = CutlineInputFunctions.defaultCode('gateArgs',[unknow]);
       return code;
 */;
 
@@ -136,7 +152,7 @@ this.evisitor.statementColor=300;
 // this.evisitor.entryColor=250;
 
 // this.evisitor.idstring_eColor=310;
-// this.evisitor.orderlistColor=170;
+this.evisitor.gateArgsColor=170;
 this.evisitor.markColor=70;
 this.evisitor.generatingCircuitColor=130;
 // this.evisitor.eventColor=220;

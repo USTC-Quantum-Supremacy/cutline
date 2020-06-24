@@ -14,6 +14,7 @@ var toolboxObj = {
   "statement" : [
     // 所有语句块
     CutlineInputBlocks["generatingCircuit"].xmlText(),
+    CutlineInputBlocks["gateArgs"].xmlText(),
     CutlineInputBlocks["markQi"].xmlText(),
     CutlineInputBlocks["orderlist"].xmlText(),
     CutlineInputBlocks["patternA"].xmlText(),
