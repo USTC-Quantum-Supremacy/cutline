@@ -99,7 +99,40 @@ function submit(params) {
     })
 }
 
-function processCNFResult(result,showall,target) {
+function processCResult_page(result,showall,target) {
+    /** @type {import('./main.js').StructDataClass} */
+    let sd=window.sd
+    if (result==null) {
+        result=sd.CReturnPaths
+    }
+    target=target?'resultlist2':'resultlist'
+
+    if (showall) {
+        let list=[]
+        let newins=new this.constructor().import(this.input,{part1:'[]'})
+        for (let index = 0; index < Math.min(showall,result.length); index++) {
+            const removeList = result[index];
+            list.push(newins.copy().setSplit(removeList))
+        }
+        let viewList=list.map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
+        document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
+        return;
+    } 
+
+    let output = sd.processCResult()
+    window.CResultOutput=output
+    console.log(output)
+    let wedgestr='<br>'+JSON.stringify(Object.assign({},output,{instance:undefined}))+'<br>'
+    let cal=eval(sd.input.errorRates)
+    let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
+    output.instance.calExpectation({e1,e2,er,d})
+
+    let view1=new window.view.constructor().init().importData(output.instance).generateBaseSVG().generateSVGCSS().generateSVG()
+
+    document.getElementById(target).innerHTML=view1.SVG+wedgestr+view1.getExpectation().expectation
+}
+
+function processCResult_pageold(result,showall,target) {
     if (result==null) {
         result=sd.CReturnPaths
     }
@@ -140,9 +173,9 @@ function processCNFResult(result,showall,target) {
     document.getElementById(target).innerHTML=viewList.map(v=>v.SVG+wedgestr+v.getExpectation().expectation).join('\n<br>\n')
 }
 
-function reRenderResult(params) {
-    processCNFResult()
-    processCNFResult(null,1,1)
+function reRenderResult(shownumber) {
+    processCResult_page()
+    processCResult_page(null,shownumber,1)
 }
 
 var lastinputstr=''

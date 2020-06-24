@@ -385,6 +385,50 @@ StructDataClass.prototype.parseCResult = function (resultStr) {
     return `${paths.length} paths found`
 }
 
+StructDataClass.prototype.processCResult = function (params) {
+    let list=[]
+    let result=this.CReturnPaths
+    let circles = this.circles 
+    // circles = this.circles 
+    let func= this.calCutLengthWithWedge
+    // func = this.calCutLengthWithWedge_bitString
+    /** @type {StructDataClass} */
+    let newins=new this.constructor().import(this.input,{part1:'[]'})
+    for (let index = 0; index < result.length; index++) {
+        const removeList = result[index];
+        list.push(newins.copy().setSplit(removeList))
+    }
+    let patternMin={};
+    list.forEach((v,i,a)=>{
+        console.log(`${i+1} of ${a.length}`)
+        /** @type {StructDataClass} */
+        let csd=v
+        func.call(csd)
+        circles.forEach(ps=>{
+            let pattern = ps[0]
+            let length=csd.wegde[pattern].length+0.01*csd.unbalance
+            if (patternMin[pattern]==null || length<patternMin[pattern].length) {
+                patternMin[pattern]={
+                    split:csd.removeList,
+                    lengthInfo:csd.wegde[pattern],
+                    length:length,
+                    pattern:ps,
+                }
+            }
+        })
+        delete a[i]
+    })
+
+    let pi=circles.map(ps=>patternMin[ps[0]].length).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+    let pattern=circles[pi][0]
+    let output={
+        maxofmin:patternMin[pattern],
+        min:patternMin,
+        instance:newins.setSplit(patternMin[pattern].split)
+    }
+    return output
+}
+
 /**
  * @returns {StructDataClass}
  */

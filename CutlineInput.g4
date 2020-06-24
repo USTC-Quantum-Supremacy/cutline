@@ -65,7 +65,7 @@ marks
     |   markNone
     ;
 
-markQi : 'qubit original index' 
+markQi : 'original qubit index' 
 /* markQi
 colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('markQi',[]);
