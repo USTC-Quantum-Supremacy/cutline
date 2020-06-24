@@ -123,9 +123,7 @@ function processCResult_page(result,showall,target) {
     window.CResultOutput=output
     console.log(output)
     let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
-    let cal=eval(sd.input.errorRates)
-    let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
-    output.instance.calExpectation({e1,e2,er,d})
+    output.instance.calExpectation()
 
     let view1=new window.view.constructor().init().importData(output.instance).generateBaseSVG().generateSVGCSS().generateSVG()
 

@@ -513,7 +513,10 @@ StructDataClass.prototype.setSplit = function (removeList) {
  * @param {number} params.er 读取
  * @param {number} params.d  深度
  */
-StructDataClass.prototype.calExpectation = function (params) {
+StructDataClass.prototype.calExpectation = function () {
+    let cal=eval(sd.input.errorRates)
+    let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
+    let params={e1,e2,er,d}
     let p=Object.assign({
         n1:this.unbalance/4+this.maxAreaCount/2,
         n2:-this.unbalance/4+this.maxAreaCount/2,
