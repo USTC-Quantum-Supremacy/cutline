@@ -389,7 +389,7 @@ StructDataClass.prototype.processCResult = function (params) {
     let list=[]
     let result=this.CReturnPaths
     let circles = this.circles 
-    // circles = this.circles 
+    // circles = this.bitStringCircles 
     let func= this.calCutLengthWithWedge
     // func = this.calCutLengthWithWedge_bitString
     /** @type {StructDataClass} */
@@ -687,7 +687,6 @@ StructDataClass.prototype.calCutLengthWithWedge = function (params) {
             cut:this.splitEdges.length,
             wegde:cwegde1+cwegde2,
             wegdes:[cwegde1,cwegde2],
-            pattern:JSON.parse(JSON.stringify(pattern)),
         }
     }
     this.wegde=wedge
@@ -708,7 +707,6 @@ StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
             cut:this.splitEdges.length,
             wegde:cwegde1+cwegde2,
             wegdes:[cwegde1,cwegde2],
-            // pattern:JSON.parse(JSON.stringify(pattern)),
         }
     }
     this.wegde=wedge

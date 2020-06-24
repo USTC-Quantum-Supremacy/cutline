@@ -102,12 +102,13 @@ function submit(params) {
 function processCResult_page(result,showall,target) {
     /** @type {import('./main.js').StructDataClass} */
     let sd=window.sd
-    if (result==null) {
-        result=sd.CReturnPaths
-    }
+    
     target=target?'resultlist2':'resultlist'
 
     if (showall) {
+        if (result==null) {
+            result=sd.CReturnPaths
+        }
         let list=[]
         let newins=new sd.constructor().import(sd.input,{part1:'[]'})
         for (let index = 0; index < Math.min(showall,result.length); index++) {
