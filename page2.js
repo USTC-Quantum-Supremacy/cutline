@@ -106,9 +106,10 @@ function processCNFResult(result,showall,target) {
     target=target?'resultlist2':'resultlist'
 
     let list=[]
+    let tsd=new sd.constructor().import(sd.input,{part1:'[]'})
     for (let index = 0; index < result.length; index++) {
         const removeList = result[index];
-        list.push(window.sd.copy().setSplit(removeList))
+        list.push(tsd.copy().setSplit(removeList))
     }
     window.slist=list
     let wedgestr=''
