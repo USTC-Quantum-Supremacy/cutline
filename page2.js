@@ -77,11 +77,11 @@ function xhrPost(url,data,callback) {
 }
 
 function enablesubmit(params) {
-    document.getElementById('Submit').disabled = false
+    document.getElementById('Search').disabled = false
 }
 
 function disablesubmit(params) {
-    document.getElementById('Submit').disabled = true
+    document.getElementById('Search').disabled = true
 }
 
 function submit(params) {
