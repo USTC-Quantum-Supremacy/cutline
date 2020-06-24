@@ -13,13 +13,12 @@ var toolboxObj = {
   // 每个键值对作为一页
   "statement" : [
     // 所有语句块
-    CutlineInputBlocks["prog"].xmlText(),
     CutlineInputBlocks["generatingCircuit"].xmlText(),
-    CutlineInputBlocks["generatingCircuitNone"].xmlText(),
     CutlineInputBlocks["markQi"].xmlText(),
     CutlineInputBlocks["orderlist"].xmlText(),
     CutlineInputBlocks["patternA"].xmlText(),
     CutlineInputBlocks["patternC"].xmlText(),
+    CutlineInputBlocks["prog"].xmlText(),
   ],
 //   "value" : [
 //     // 所有值块
