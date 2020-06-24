@@ -7,62 +7,54 @@ if (isNodejs) {
 var StructDataClass = cutlineMain.StructDataClass
 var VisualClass = cutlineMain.VisualClass
 
+
+function buildBlocks(params) {
+    try {
+        CutlineInputFunctions.parse(eval('('+document.querySelector('#blocklyinput').value+')'))
+    } catch (error) {
+        console.error(error)
+    }
+}
 function buildMainSVG(params) {
     if(typeof resultlist2)resultlist2.innerHTML=``
-    var xy=[12,11,1]
-    var choosen=[]
-    var removedStart=[]
-    var CInputFirstLine=''
-    if (typeof document !== "undefined") {
-        var inputstr=document.getElementById('circult').value
-        var xy=eval('['+inputstr.split('\n')[0]+']')
-        var choosen=eval('['+inputstr.split('\n')[1]+']')
-        var removedStart=eval('['+inputstr.split('\n')[2]+']')
-        var CInputFirstLine=inputstr.split('\n')[3]||''
-    }
-
+    
     var sd=new StructDataClass();
-    sd.init({xsize:xy[0],ysize:xy[1],use00:Boolean(xy[2]),CInputFirstLine:CInputFirstLine}).initmap().loadChoosen(choosen).pickMaxArea().loadRemovedStart(removedStart).pushPatterns().setSplit([]).generateCInput()
+    sd.import(eval('('+document.querySelector('#blocklyinput').value+')')).generateCInput()
     console.log(sd)
-
+    
     var view=new VisualClass();
     view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
     console.log(view)
+    
+    window.sd=sd
+    window.view=view
 
-    if (typeof document !== "undefined") {
-        window.sd=sd
-        window.view=view
-        // var node=document.createElement('div')
-        // node.innerHTML=view.SVG
-        // document.getElementById('insertHere').appendChild(node)
-        document.getElementById('insertHere').innerHTML=view.SVG
-        document.getElementById('formatedGateArray').innerText=sd.CInput
-        view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
-            /**
-             * @type {VisualClass}
-             */
-            let view=thisv
-            let choosen=view.data.choosen
-            let removedStart=view.data.removedStart
-            if (type==='choosen') {
-                if (choosen.indexOf(clickData)===-1) {
-                    choosen.push(clickData)
-                } else {
-                    choosen.splice(choosen.indexOf(clickData),1)
-                }
+    buildBlocks()
+    changePatten()
+
+    document.getElementById('insertHere').innerHTML=view.SVG
+    document.getElementById('formatedGateArray').innerText=sd.CInput
+    view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
+
+        let choosen=view.data.choosen
+        let removedStart=view.data.removedStart
+        if (type==='choosen') {
+            if (choosen.indexOf(clickData)===-1) {
+                choosen.push(clickData)
+            } else {
+                choosen.splice(choosen.indexOf(clickData),1)
             }
-            if (type==='removedStart') {
-                if (removedStart.indexOf(clickData)===-1) {
-                    removedStart.push(clickData)
-                } else {
-                    removedStart.splice(removedStart.indexOf(clickData),1)
-                }
+        }
+        if (type==='removedStart') {
+            if (removedStart.indexOf(clickData)===-1) {
+                removedStart.push(clickData)
+            } else {
+                removedStart.splice(removedStart.indexOf(clickData),1)
             }
-            document.getElementById('circult').value=`${view.data.xsize},${view.data.ysize},${view.data.use00}\n${choosen.join(',')}\n${removedStart.join(',')}\n`+document.getElementById('circult').value.split('\n').slice(3).join('\n')
-            buildMainSVG()
-        })
-    }
-    return [sd,view]
+        }
+        document.querySelector('#blocklyinput').value=JSON.stringify(sd.buildInput().input)
+        buildMainSVG()
+    })
 }
 buildMainSVG()
 
@@ -85,76 +77,41 @@ function xhrPost(url,data,callback) {
 }
 
 function enablesubmit(params) {
-    document.getElementById('Submit').disabled = false
+    document.getElementById('Search').disabled = false
 }
 
 function disablesubmit(params) {
-    document.getElementById('Submit').disabled = true
+    document.getElementById('Search').disabled = true
 }
 
 function submit(params) {
     disablesubmit()
     document.getElementById('postresult').innerHTML='waiting'
-    xhrPost('/',JSON.stringify({CInput:window.sd.CInput,prune:eval(isusingwegde.value)}),function (err,data) {
+    xhrPost('/',JSON.stringify({CInput:sd.CInput,prune:sd.input.search==='prune'}),function (err,data) {
         if (err) {
             console.log(err)
             document.getElementById('postresult').innerHTML=err
         } else {
-            document.getElementById('postresult').innerHTML=preProcessResult(data)
+            document.getElementById('postresult').innerHTML=sd.parseCResult(data)
             reRenderResult()
         }
-
         enablesubmit()
     })
 }
 
-function preProcessResult(resultStr) {
-    // 2 paths found
-    // shortest length & unbalance: 2,1
-    // qubits: 2, 1, 1, 2, 2, 3, 1, 4,
-    // start,end: 2 4 3 1
-    // ===2
-    // 2,1: 2, 1, 1, 2, 2, 3, 1, 4,
-    // 2,1: 2, 1, 1, 2, 3, 2, 2, 3, 1, 4,
-    try {
-        let check={}
-        let sd= window.sd
-        let last=[]
-        let str=resultStr.split('===')[1]
-        let lines=str.split('\n')
-        for (let ii = 1; ii <= ~~lines[0]; ii++) {
-            let a=eval('['+lines[ii].split(':')[1]+']')
-            let b=a.map((v,i,a)=>{ return {x:v-1,y:a[i+1]-1}}).filter((v,i)=>i%2==0).map(v=>sd.getxy(v).qi).sort()
-            if (check[JSON.stringify(b)]==null) {
-                check[JSON.stringify(b)]=1
-                last.push(b)
-            }
-        }
-        window.lastResult=last
-    } catch (error) {
-    }
-    return resultStr
-}
-
 function processCNFResult(result,showall,target) {
     if (result==null) {
-        result=window.lastResult
+        result=sd.CReturnPaths
     }
     target=target?'resultlist2':'resultlist'
 
-
     let list=[]
+    let tsd=new sd.constructor().import(sd.input,{part1:'[]'})
     for (let index = 0; index < result.length; index++) {
         const removeList = result[index];
-        list.push(window.sd.copy().setSplit(removeList))
+        list.push(tsd.copy().setSplit(removeList))
     }
     window.slist=list
-    let cal = document.getElementById('circult').value.split('\n')[4]
-    if (cal && !showall) {
-        cal=eval('['+cal+']')
-        let e1=cal[0],e2=cal[1],er=cal[2],d=cal[3];
-        list.map(v=>v.calExpectation({e1,e2,er,d}))
-    }
     let wedgestr=''
     if(!showall){
         list.map(v=>v.calCutLengthWithWedge())
@@ -173,6 +130,11 @@ function processCNFResult(result,showall,target) {
         console.log(window.ssd.wegde[window.spattern])
         console.log(window.pv)
     }
+    if (!showall) {
+        let cal=eval(sd.input.errorRates)
+        let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
+        list.map(v=>v.calExpectation({e1,e2,er,d}))
+    }
     let viewList=list.slice(0,500).map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
 
     document.getElementById(target).innerHTML=viewList.map(v=>v.SVG+wedgestr+v.getExpectation().expectation).join('\n<br>\n')
@@ -183,17 +145,35 @@ function reRenderResult(params) {
     processCNFResult(null,1,1)
 }
 
+var lastinputstr=''
+var delaydo=null
+function trigger(event) {
+    if (document.querySelector('#blocklyinput').value===lastinputstr) {
+        
+    } else {
+        lastinputstr=document.querySelector('#blocklyinput').value
+        blocklyDone()
+    }
+    // console.log(event)
+    // if(event.type==="change"){
+    //     if (delaydo!=null) {
+    //         clearTimeout(delaydo)
+    //     }
+    //     delaydo=setTimeout(v=>{buildMainSVG();delaydo=null},2000)
+    // }
+}
+
+function blocklyDone(params) {
+    sd.input=JSON.parse(document.querySelector('#blocklyinput').value)
+    changePatten()
+}
+
 function changePatten(params) {
     resultlist2.innerHTML=``
-    patternColor.innerHTML=`
-        #insertHere .qline.pattern${patternSelect.value} {
-            stroke: blue;
-            stroke-width: 20;
-        }
-
-        #insertHere .qline.pattern${patternSelect2.value} {
-            stroke: green;
-            stroke-width: 20;
-        }
-    `
+    patternColor.innerHTML=sd.input.showPattern.filter(v=>v.type!=="patternNone").map(v=>`
+    #insertHere .qline.pattern${v.pattern} {
+        stroke: ${v.color};
+        stroke-width: 20;
+    }
+    `).join('')
 }
