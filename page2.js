@@ -105,19 +105,12 @@ function processCNFResult(result,showall,target) {
     }
     target=target?'resultlist2':'resultlist'
 
-
     let list=[]
     for (let index = 0; index < result.length; index++) {
         const removeList = result[index];
         list.push(window.sd.copy().setSplit(removeList))
     }
     window.slist=list
-    let cal = document.getElementById('circult').value.split('\n')[4]
-    if (cal && !showall) {
-        cal=eval('['+cal+']')
-        let e1=cal[0],e2=cal[1],er=cal[2],d=cal[3];
-        list.map(v=>v.calExpectation({e1,e2,er,d}))
-    }
     let wedgestr=''
     if(!showall){
         list.map(v=>v.calCutLengthWithWedge())
@@ -135,6 +128,11 @@ function processCNFResult(result,showall,target) {
         console.log(window.ssd)
         console.log(window.ssd.wegde[window.spattern])
         console.log(window.pv)
+    }
+    if (!showall) {
+        let cal=eval('['+sd.input.errorRates+']')
+        let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
+        list.map(v=>v.calExpectation({e1,e2,er,d}))
     }
     let viewList=list.slice(0,500).map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
 

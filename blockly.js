@@ -1,58 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Demo</title>
-    <style id="patternColor">
-        
-    </style>
-</head>
-
-<body>
-    <div>
-        <div style="width: 500px;float: left;" id='insertHere'></div><div id="blocklyDiv" style="height: 450px; width: 500px;float: left;"></div>
-        <br style="clear: both;">
-        <div>
-            <textarea name="blocklyinput" id="blocklyinput" cols="40" rows="6" spellcheck="false">{"type":"prog","xsize":"12","ysize":"11","use00":true,"brokenBits":"[]","part1":"[]","depth":"20","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","search":"prune","generatingCircuit":[{"type":"generatingCircuitNone"}],"showMark":[{"type":"orderlist","order":"[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"}],"showPattern":[{"type":"patternNone"}]}
-            </textarea>
-            <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
-            <input type="button" id='Search' onclick="submit()" value="Search">
-            <input type="button" id='reRenderResult' onclick="reRenderResult()" value="ReRenderResult">
-        </div>
-        <div style="display: none;"> 
-
-            <textarea name="circult" id="circult" cols="40" rows="6" spellcheck="false">12,11,1
-
-
-
-0.0016,0.0062,0.038,20
-
-            </textarea>
-            <br>
-            
-            <select id="isusingwegde">
-                <option value="true">Min(cut length)</option>
-                <option value="false">Min(cut length *2 - wegde)</option>
-            </select>
-            
-            <br>
-            
-        </div>
-        <div id='resultlist' style="font-family:monospace;"></div>
-        <pre id='postresult' style="font-family:monospace;"></pre>
-        <hr>
-        <div id='resultlist2' style="font-family:monospace;"></div>
-        <p>xsize ysize _ndeep _edeep _max _min _q0x _q0y</p>
-        <pre id='formatedGateArray' style="font-family:monospace;"></pre>
-    </div>
-    <script src="./random.js"></script>
-    <script src="./main.js"></script>
-    <script src="./page2.js"></script>
-    <script src="antlr-blockly/Converter.bundle.min.js"></script>
-    <script>
 
 function initscriptfunc(params) {
 ///insert-initscriptfunc///
@@ -210,7 +155,15 @@ window.buildBlocks&&window.buildBlocks()
 
 ///insert-initscriptfunc///
 }
+
 var initscript=initscriptfunc.toString().split('///insert-initscriptfunc///')[1]
+
+
+/////////////////////////////
+/////////////////////////////
+/////////////////////////////
+/////////////////////////////
+
 
 function func_Run(){
     var loadjs = function(src,callback){
@@ -260,8 +213,3 @@ xhrg4.onreadystatechange = function (){
 }
 xhrg4.open('GET','CutlineInput.g4',true);
 xhrg4.send(null);
-
-    </script>
-</body>
-
-</html>
