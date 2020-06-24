@@ -2,6 +2,34 @@
 function initscriptfunc(params) {
 ///insert-initscriptfunc///
 
+/**
+ * @class
+ */
+function CutlineBlocklyConverter(params) {
+}
+CutlineBlocklyConverter.prototype.parse = function (obj,next) {
+    let rule = CutlineInputBlocks[obj.type]
+    let input = []
+    for (let index = 0; index < rule.args.length; index++) {
+        const dobj = obj[rule.args[index]];
+        if (rule.argsType[index]==='statement') {
+            let snext=null
+            while (dobj.length) {
+                let ds=dobj.pop()
+                snext=this.parse(ds,snext)
+            }
+            input.push(snext)
+        } else {
+            input.push(dobj)
+        }
+    }
+    if (rule.type==='statement' && next!=null) {
+        input.push(next)
+    }
+    return rule.xmlText(input)
+}
+CutlineInputFunctions.parser=new CutlineBlocklyConverter()
+
 var toolbox = (function(){
 
 var toolboxXml=document.createElement('xml')
@@ -17,8 +45,10 @@ var toolboxObj = {
     // CutlineInputBlocks["gateArgs"].xmlText(),
     CutlineInputBlocks["markQi"].xmlText(),
     CutlineInputBlocks["orderlist"].xmlText(),
-    CutlineInputBlocks["patternA"].xmlText(),
-    CutlineInputBlocks["patternC"].xmlText(),
+    CutlineInputFunctions.parser.parse({"type":"patternA","pattern":"I","color":"#ff9900"}),
+    CutlineInputFunctions.parser.parse({"type":"patternA","pattern":"J","color":"#3333ff"}),
+    CutlineInputFunctions.parser.parse({"type":"patternC","pattern":"C","color":"#009900"}),
+    CutlineInputFunctions.parser.parse({"type":"patternC","pattern":"D","color":"#cc0000"}),
     CutlineInputBlocks["prog"].xmlText(),
   ],
 //   "value" : [
@@ -118,34 +148,7 @@ CutlineInputFunctions.defaultCode = function (ruleName,args) {
     return ret
 }
 
-/**
- * @class
- */
-function CutlineBlocklyConverter(params) {
-    
-}
-CutlineBlocklyConverter.prototype.parse = function (obj,next) {
-    let rule = CutlineInputBlocks[obj.type]
-    let input = []
-    for (let index = 0; index < rule.args.length; index++) {
-        const dobj = obj[rule.args[index]];
-        if (rule.argsType[index]==='statement') {
-            let snext=null
-            while (dobj.length) {
-                let ds=dobj.pop()
-                snext=this.parse(ds,snext)
-            }
-            input.push(snext)
-        } else {
-            input.push(dobj)
-        }
-    }
-    if (rule.type==='statement' && next!=null) {
-        input.push(next)
-    }
-    return rule.xmlText(input)
-}
-CutlineInputFunctions.parser=new CutlineBlocklyConverter()
+
 CutlineInputFunctions.parse=function(obj){
     CutlineInputFunctions.workspace().clear();
     xml_text = CutlineInputFunctions.parser.parse(obj);
