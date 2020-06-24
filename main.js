@@ -85,7 +85,7 @@ StructDataClass.prototype.buildInput = function (params) {
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
-    this.buildInput();
+    if (!this.input) this.buildInput();
     this.getPatternSize()
     return this
 }

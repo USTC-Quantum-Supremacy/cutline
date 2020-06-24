@@ -4,9 +4,10 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         'broken bits' JsonStr BGNL
         'part1 indexes' JsonStr BGNL
         'depth' Number_List BGNL
-        'e1 e2 er' JsonStr BGNL
-        'removed entrances' JsonStr BGNL
-        'search' Search_List BGNL
+        'search' BGNL
+        '> e1 e2 er' JsonStr BGNL
+        '> removed entrances' JsonStr BGNL
+        '>' Search_List BGNL
         'generating circuit ~1' BGNL generatingCircuits
         'show mark ~1(only for mark)' BGNL marks
         'show pattern ~n' BGNL patterns
