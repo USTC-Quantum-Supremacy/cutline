@@ -85,14 +85,7 @@ StructDataClass.prototype.buildInput = function (params) {
 
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
-    if (!this.input) this.buildInput();
-    if(this.xsize===12 && this.ysize===11 && this.use00===true){
-        this.orderList=[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]
-    }
-    if (this.orderList) {
-        this.orderMap={}
-        this.orderList.forEach((v,i)=>this.orderMap[v]=i)
-    }
+    this.buildInput();
     this.getPatternSize()
     return this
 }
@@ -129,6 +122,21 @@ StructDataClass.prototype.initmap=function (params) {
         }
     }
     this.bitCount=qindex;
+    this.buildMarkMap()
+    return this
+}
+
+StructDataClass.prototype.buildMarkMap = function (params) {
+    let markOption=this.input.showMark.filter(v=>v.type!=='markNone')[0]
+    if (!markOption) return this;
+    if (markOption.type==='markQi') {
+        this.markList=Array.from({length:this.bitCount}).map((v,i)=>i)
+    }
+    if (markOption.type==='orderlist') {
+        this.markList=eval(markOption.order)
+    }
+    this.markMap={}
+    this.markList.forEach((v,i)=>this.markMap[v]=i)
     return this
 }
 
@@ -351,6 +359,30 @@ ${this._cost2()}`
     }
     this.constructor.prototype.CInput=text
     return this
+}
+
+StructDataClass.prototype.parseCResult = function (resultStr) {
+    // 2 paths found
+    // shortest length & unbalance: 2,1
+    // qubits: 2, 1, 1, 2, 2, 3, 1, 4,
+    // start,end: 2 4 3 1
+    // ===2
+    // 2,1: 2, 1, 1, 2, 2, 3, 1, 4,
+    // 2,1: 2, 1, 1, 2, 3, 2, 2, 3, 1, 4,
+    let check={}
+    let paths=[]
+    let str=resultStr.split('===')[1]
+    let lines=str.split('\n')
+    for (let ii = 1; ii <= ~~lines[0]; ii++) {
+        let a=eval('['+lines[ii].split(':')[1]+']')
+        let b=a.map((v,i,a)=>{ return {x:v-1,y:a[i+1]-1}}).filter((v,i)=>i%2==0).map(v=>this.getxy(v).qi).sort()
+        if (check[JSON.stringify(b)]==null) {
+            check[JSON.stringify(b)]=1
+            paths.push(b)
+        }
+    }
+    this.constructor.prototype.CReturnPaths=paths
+    return `${paths.length} paths found`
 }
 
 /**
@@ -861,8 +893,8 @@ VisualClass.prototype.generateBaseSVG = function (params) {
         points.push(this.point(this.data.qi2xy(qindex),qindex,this.ptStrokeColor,this.ptFillColor))
 
         // QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,qindex,this.markFontSizeQ))
-        if (this.data.orderMap) {
-            QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,this.data.orderMap[qindex],this.markFontSizeQ))
+        if (this.data.markMap && this.data.markMap[qindex]!=null) {
+            QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,this.data.markMap[qindex],this.markFontSizeQ))
         }
 
         let pts=_f(this.data.qi2xy(qindex))

@@ -30,6 +30,7 @@ function buildMainSVG(params) {
     window.view=view
 
     buildBlocks()
+    changePatten()
 
     document.getElementById('insertHere').innerHTML=view.SVG
     document.getElementById('formatedGateArray').innerText=sd.CInput
@@ -91,45 +92,16 @@ function submit(params) {
             console.log(err)
             document.getElementById('postresult').innerHTML=err
         } else {
-            document.getElementById('postresult').innerHTML=preProcessResult(data)
+            document.getElementById('postresult').innerHTML=sd.parseCResult(data)
             reRenderResult()
         }
-
         enablesubmit()
     })
 }
 
-function preProcessResult(resultStr) {
-    // 2 paths found
-    // shortest length & unbalance: 2,1
-    // qubits: 2, 1, 1, 2, 2, 3, 1, 4,
-    // start,end: 2 4 3 1
-    // ===2
-    // 2,1: 2, 1, 1, 2, 2, 3, 1, 4,
-    // 2,1: 2, 1, 1, 2, 3, 2, 2, 3, 1, 4,
-    try {
-        let check={}
-        let sd= window.sd
-        let last=[]
-        let str=resultStr.split('===')[1]
-        let lines=str.split('\n')
-        for (let ii = 1; ii <= ~~lines[0]; ii++) {
-            let a=eval('['+lines[ii].split(':')[1]+']')
-            let b=a.map((v,i,a)=>{ return {x:v-1,y:a[i+1]-1}}).filter((v,i)=>i%2==0).map(v=>sd.getxy(v).qi).sort()
-            if (check[JSON.stringify(b)]==null) {
-                check[JSON.stringify(b)]=1
-                last.push(b)
-            }
-        }
-        window.lastResult=last
-    } catch (error) {
-    }
-    return resultStr
-}
-
 function processCNFResult(result,showall,target) {
     if (result==null) {
-        result=window.lastResult
+        result=sd.CReturnPaths
     }
     target=target?'resultlist2':'resultlist'
 
@@ -184,15 +156,16 @@ function trigger(event) {
         blocklyDone()
     }
     // console.log(event)
-    if(event.type==="change"){
-        if (delaydo!=null) {
-            clearTimeout(delaydo)
-        }
-        delaydo=setTimeout(v=>{buildMainSVG();delaydo=null},400)
-    }
+    // if(event.type==="change"){
+    //     if (delaydo!=null) {
+    //         clearTimeout(delaydo)
+    //     }
+    //     delaydo=setTimeout(v=>{buildMainSVG();delaydo=null},2000)
+    // }
 }
 
 function blocklyDone(params) {
+    sd.input=JSON.parse(document.querySelector('#blocklyinput').value)
     changePatten()
 }
 

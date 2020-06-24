@@ -16,10 +16,10 @@
         <div style="width: 500px;float: left;" id='insertHere'></div><div id="blocklyDiv" style="height: 450px; width: 500px;float: left;"></div>
         <br style="clear: both;">
         <div>
-            <textarea name="blocklyinput" id="blocklyinput" cols="40" rows="6" spellcheck="false">{"type":"prog","xsize":"12","ysize":"11","use00":true,"brokenBits":"[]","part1":"[]","depth":"20","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","search":"prune","generatingCircuit":[{"type":"generatingCircuitNone"}],"showMark":[{"type":"markNone"}],"showPattern":[{"type":"patternNone"}]}
+            <textarea name="blocklyinput" id="blocklyinput" cols="40" rows="6" spellcheck="false">{"type":"prog","xsize":"12","ysize":"11","use00":true,"brokenBits":"[]","part1":"[]","depth":"20","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","search":"prune","generatingCircuit":[{"type":"generatingCircuitNone"}],"showMark":[{"type":"orderlist","order":"[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"}],"showPattern":[{"type":"patternNone"}]}
             </textarea>
             <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
-            <input type="button" id='Search' onclick="submit()" value="Submit">
+            <input type="button" id='Search' onclick="submit()" value="Search">
             <input type="button" id='reRenderResult' onclick="reRenderResult()" value="ReRenderResult">
         </div>
         <div style="display: none;"> 
@@ -68,7 +68,13 @@ var toolboxObj = {
   // 每个键值对作为一页
   "statement" : [
     // 所有语句块
-
+    CutlineInputBlocks["prog"].xmlText(),
+    CutlineInputBlocks["generatingCircuit"].xmlText(),
+    CutlineInputBlocks["generatingCircuitNone"].xmlText(),
+    CutlineInputBlocks["markQi"].xmlText(),
+    CutlineInputBlocks["orderlist"].xmlText(),
+    CutlineInputBlocks["patternA"].xmlText(),
+    CutlineInputBlocks["patternC"].xmlText(),
   ],
 //   "value" : [
 //     // 所有值块
@@ -104,7 +110,7 @@ media: 'antlr-blockly/media/',
 toolbox: toolbox,
 zoom:{
   controls: true,
-  wheel: true,//false
+  wheel: false,//false
   startScale: 1.0,
   maxScale: 3,
   minScale: 0.3,
@@ -112,6 +118,16 @@ zoom:{
 },
 trashcan: false,
 });
+
+document.getElementById('blocklyDiv').onmousewheel = function(e){
+  //console.log(e);
+  e.preventDefault();
+  var hvScroll = e.shiftKey?'hScroll':'vScroll';
+  var mousewheelOffsetValue=20/380*workspace.scrollbar[hvScroll].handleLength_*3;
+  workspace.scrollbar[hvScroll].handlePosition_+=( ((e.deltaY||0)+(e.detail||0)) >0?mousewheelOffsetValue:-mousewheelOffsetValue);
+  workspace.scrollbar[hvScroll].onScroll_();
+  // workspace.setScale(workspace.scale);
+}
 
 function omitedcheckUpdateFunction(event) {
 try {
@@ -190,7 +206,7 @@ CutlineInputFunctions.parse=function(obj){
     xml = Blockly.Xml.textToDom('<xml>'+xml_text+'</xml>');
     Blockly.Xml.domToWorkspace(xml, CutlineInputFunctions.workspace());
 }
-// CutlineInputFunctions.parse(eval('('+blocklyinput.value+')'))
+window.buildBlocks&&window.buildBlocks()
 
 ///insert-initscriptfunc///
 }

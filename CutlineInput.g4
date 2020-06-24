@@ -9,10 +9,10 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         'search' Search_List BGNL
         'generating circuit ~1' BGNL generatingCircuits
         'show mark ~1(only for mark)' BGNL marks
-        'show pattern ~2' BGNL patterns
+        'show pattern ~n' BGNL patterns
 /* prog
 name : ['xsize','ysize','use00','brokenBits','part1','depth','errorRates','removedEntrances','search','generatingCircuit','showMark','showPattern']
-default : ['12','11',true,'[]','[]','20','[0.0016,0.0062,0.038]','[]','true']
+default : ['12','11',true,'[]','[]','20','[0.0016,0.0062,0.038]','[]','prune']
 var code = CutlineInputFunctions.defaultCode('prog',[xsize,ysize,use00,brokenBits,part1,depth,errorRates,removedEntrances,search,generatingCircuit,showMark,showPattern]);
       return code;
 */;
@@ -25,7 +25,6 @@ generatingCircuits
 generatingCircuit
     :   'qubit number' Int 'elided' NormalStr? 'pattern' NormalStr BGNL 
         'filename' NormalStr? BGNL
-        'order' BGNL
         orderlist
 /* generatingCircuit
 name : ['qubitNumber','elided','pattern','filename','order']
@@ -36,7 +35,7 @@ var code = CutlineInputFunctions.defaultCode('generatingCircuit',[qubitNumber,el
 */;
 
 generatingCircuitNone
-    :   'No'
+    :   'pass'
 /* generatingCircuitNone
 colour : this.generatingCircuitColor
 var code = CutlineInputFunctions.defaultCode('generatingCircuitNone',[]);
@@ -49,7 +48,7 @@ marks
     |   markNone
     ;
 
-markQi : 'qubit index' 
+markQi : 'qubit original index' 
 /* markQi
 colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('markQi',[]);
@@ -65,7 +64,7 @@ var code = CutlineInputFunctions.defaultCode('orderlist',[order]);
       return code;
 */;
 
-markNone : 'No' 
+markNone : 'pass' 
 /* markNone
 colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('markNone',[]);
@@ -94,7 +93,7 @@ var code = CutlineInputFunctions.defaultCode('patternC',[pattern,color]);
       return code;
 */;
 
-patternNone : 'No' ;
+patternNone : 'pass' ;
 
 
 statExprSplit : '=== statement ^ === expression v ===' ;
