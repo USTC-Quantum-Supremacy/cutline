@@ -122,55 +122,14 @@ function processCResult_page(result,showall,target) {
     let output = sd.processCResult()
     window.CResultOutput=output
     console.log(output)
-    let wedgestr='<br>'+JSON.stringify(output.maxofmin)+'<br>'+JSON.stringify(output.min)+'<br>'
+    let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
     let cal=eval(sd.input.errorRates)
     let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
     output.instance.calExpectation({e1,e2,er,d})
 
     let view1=new window.view.constructor().init().importData(output.instance).generateBaseSVG().generateSVGCSS().generateSVG()
 
-    document.getElementById(target).innerHTML=view1.SVG+wedgestr+view1.getExpectation().expectation
-}
-
-function processCResult_pageold(result,showall,target) {
-    if (result==null) {
-        result=sd.CReturnPaths
-    }
-    target=target?'resultlist2':'resultlist'
-
-    let list=[]
-    let tsd=new sd.constructor().import(sd.input,{part1:'[]'})
-    for (let index = 0; index < result.length; index++) {
-        const removeList = result[index];
-        list.push(tsd.copy().setSplit(removeList))
-    }
-    window.slist=list
-    let wedgestr=''
-    if(!showall){
-        list.map(v=>v.calCutLengthWithWedge())
-        let pv=list[0].circles.map((ps,ii,arr)=>{
-            let pattern = ps[0]
-            let mini=list.map(v=>v.wegde[pattern].length+0.01*v.unbalance).reduce((iMax, x, i, arr) => x < arr[iMax] ? i : iMax, 0)
-            return [list[mini].wegde[pattern].length,mini,pattern]
-        })
-        let pi=pv.map(v=>v[0]).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
-        list=[list[pv[pi][1]]]
-        window.pv=pv
-        window.ssd=list[0]
-        window.spattern=pv[pi][2]
-        wedgestr='<br>'+JSON.stringify(window.ssd.wegde[window.spattern])+'<br>'
-        console.log(window.ssd)
-        console.log(window.ssd.wegde[window.spattern])
-        console.log(window.pv)
-    }
-    if (!showall) {
-        let cal=eval(sd.input.errorRates)
-        let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
-        list.map(v=>v.calExpectation({e1,e2,er,d}))
-    }
-    let viewList=list.slice(0,500).map(v=>new window.view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
-
-    document.getElementById(target).innerHTML=viewList.map(v=>v.SVG+wedgestr+v.getExpectation().expectation).join('\n<br>\n')
+    document.getElementById(target).innerHTML=view1.SVG+view1.getExpectation().expectation+wedgestr
 }
 
 function reRenderResult(shownumber) {
