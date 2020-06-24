@@ -14,7 +14,7 @@ var toolboxObj = {
   "statement" : [
     // 所有语句块
     CutlineInputBlocks["generatingCircuit"].xmlText(),
-    CutlineInputBlocks["gateArgs"].xmlText(),
+    // CutlineInputBlocks["gateArgs"].xmlText(),
     CutlineInputBlocks["markQi"].xmlText(),
     CutlineInputBlocks["orderlist"].xmlText(),
     CutlineInputBlocks["patternA"].xmlText(),
@@ -36,15 +36,16 @@ var getCategory = function(toolboxXml,name,custom){
 
 var toolboxGap = '<sep gap="5"></sep>'
 
-for (var name in toolboxObj){
-  var custom = null;
-  if(name=='xxxxxx')custom='xxxxxx';
-  if(name=='zzzzzz')custom='zzzzzz';
-  getCategory(toolboxXml,name,custom).innerHTML = toolboxObj[name].join(toolboxGap);
-  var node = document.createElement('sep');
-  node.setAttribute('gap',5*3);
-  toolboxXml.appendChild(node);
-}
+// for (var name in toolboxObj){
+//   var custom = null;
+//   if(name=='xxxxxx')custom='xxxxxx';
+//   if(name=='zzzzzz')custom='zzzzzz';
+//   getCategory(toolboxXml,name,custom).innerHTML = toolboxObj[name].join(toolboxGap);
+//   var node = document.createElement('sep');
+//   node.setAttribute('gap',5*3);
+//   toolboxXml.appendChild(node);
+// }
+toolboxXml.innerHTML = toolboxObj.statement.join(toolboxGap);
 
 return toolboxXml;
 })();
@@ -56,7 +57,7 @@ toolbox: toolbox,
 zoom:{
   controls: true,
   wheel: false,//false
-  startScale: 1.0,
+  startScale: 0.8,
   maxScale: 3,
   minScale: 0.3,
   scaleSpeed: 1.08
@@ -64,15 +65,15 @@ zoom:{
 trashcan: false,
 });
 
-document.getElementById('blocklyDiv').onmousewheel = function(e){
-  //console.log(e);
-  e.preventDefault();
-  var hvScroll = e.shiftKey?'hScroll':'vScroll';
-  var mousewheelOffsetValue=20/380*workspace.scrollbar[hvScroll].handleLength_*3;
-  workspace.scrollbar[hvScroll].handlePosition_+=( ((e.deltaY||0)+(e.detail||0)) >0?mousewheelOffsetValue:-mousewheelOffsetValue);
-  workspace.scrollbar[hvScroll].onScroll_();
-  // workspace.setScale(workspace.scale);
-}
+// document.getElementById('blocklyDiv').onmousewheel = function(e){
+//   //console.log(e);
+//   e.preventDefault();
+//   var hvScroll = e.shiftKey?'hScroll':'vScroll';
+//   var mousewheelOffsetValue=20/380*workspace.scrollbar[hvScroll].handleLength_*3;
+//   workspace.scrollbar[hvScroll].handlePosition_+=( ((e.deltaY||0)+(e.detail||0)) >0?mousewheelOffsetValue:-mousewheelOffsetValue);
+//   workspace.scrollbar[hvScroll].onScroll_();
+//   // workspace.setScale(workspace.scale);
+// }
 
 function omitedcheckUpdateFunction(event) {
 try {
