@@ -41,14 +41,13 @@ var toolboxObj = {
   // 每个键值对作为一页
   "statement" : [
     // 所有语句块
-    CutlineInputBlocks["generatingCircuit"].xmlText(),
-    // CutlineInputBlocks["gateArgs"].xmlText(),
     CutlineInputBlocks["markQi"].xmlText(),
     CutlineInputBlocks["orderlist"].xmlText(),
     CutlineInputFunctions.parser.parse({"type":"patternA","pattern":"I","color":"#ff9900"}),
     CutlineInputFunctions.parser.parse({"type":"patternA","pattern":"J","color":"#3333ff"}),
     CutlineInputFunctions.parser.parse({"type":"patternC","pattern":"C","color":"#009900"}),
     CutlineInputFunctions.parser.parse({"type":"patternC","pattern":"D","color":"#cc0000"}),
+    CutlineInputBlocks["generatingCircuit"].xmlText(),
     CutlineInputBlocks["prog"].xmlText(),
   ],
 //   "value" : [
