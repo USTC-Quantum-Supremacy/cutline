@@ -68,6 +68,6 @@ sd.getBitStringCircles()
 
 let output = processCResult.call(sd)
 
-console.log(output.min)
+// console.log(output.min)
 console.log(output.maxofmin)
 

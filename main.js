@@ -797,8 +797,8 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
  */
 StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateArgs) {
     let text=[saveBitList.length]
-    let map={}
-    saveBitList.forEach((v,i)=>map[v]=i)
+    let existCheck={}
+    saveBitList.forEach((v,i)=>existCheck[v]=i)
     let edgeargs=()=>[]
     if (gateArgs==null) {
         // theta/pi phi/pi deltaplus deltaminus deltaminusoff
@@ -812,22 +812,45 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateA
             for (const gi in layer) {
                 if (layer.hasOwnProperty(gi)) {
                     const gate = layer[gi];
-                    if (map[gate.qi]==null) continue;
+                    if (existCheck[gate.qi]==null) continue;
                     let gatestr=['x_1_2','y_1_2','hz_1_2'][gate.type]
-                    text.push(`${layerno} ${gatestr} ${map[gate.qi]}`)
+                    text.push(`${layerno} ${gatestr} ${gate.qi}`)
                 }
             }
         } else {
             for (const gi in layer) {
                 if (layer.hasOwnProperty(gi)) {
                     const gate = layer[gi];
-                    if (map[gate.q1]==null || map[gate.q2]==null) continue;
-                    text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${map[gate.q1]} ${map[gate.q2]}`)
+                    if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
+                    text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${gate.q1} ${gate.q2}`)
                 }
             }
         }
     }
     return text.join('\n')
+}
+
+
+StructDataClass.prototype.generateCircuit = function (outputFunc) {
+    let circuitInput=this.input.generatingCircuit.filter(v=>v.type!=='generatingCircuitNone')[0]
+    if (circuitInput) {
+        let depth=~~this.input.depth
+        let circle=circuitInput.pattern
+        let orderList=eval(circuitInput.order[0].order)
+        let qubitNumber=circuitInput.qubitNumber
+        if (qubitNumber>orderList.length) {
+            throw 'qubitNumber bigger than the length of bit indexes'
+        }
+        let simulationFilename=circuitInput.simulationFilename
+        let mapFilename=circuitInput.mapFilename
+        let cutFilename=circuitInput.cutFilename
+        let circuitProto = this.generateCircuitProto(circle,depth)
+        let circuit = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber))
+        if (outputFunc) {
+            outputFunc({depth,circle,orderList,qubitNumber,simulationFilename,mapFilename,cutFilename,circuitProto,circuit})
+        }
+    }
+    return this
 }
 
 /**

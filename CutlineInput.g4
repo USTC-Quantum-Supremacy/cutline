@@ -26,7 +26,9 @@ generatingCircuits
 generatingCircuit
     :   'qubit number' Int 'elided' NormalStr? 'pattern' NormalStr BGNL 
         'seed (cannot changed now)' Int BGNL
-        'filename' NormalStr? BGNL
+        'simulationFilename' NormalStr? BGNL
+        'cutFilename' NormalStr? BGNL
+        'mapFilename' NormalStr? BGNL
         'bit indexes' BGNL
         orderlist
         'peps path' BGNL
@@ -34,10 +36,10 @@ generatingCircuit
         'gateArgs' BGNL
         gateArgs
 /* generatingCircuit
-name : ['qubitNumber','elided','pattern','seed','filename','order','pepsPath','gateArgs']
-default : [60,'0','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt']
+name : ['qubitNumber','elided','pattern','seed','simulationFilename','cutFilename','mapFilename','order','pepsPath','gateArgs']
+default : [60,'0','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','peps_path/sycamore60_cut.txt','peps_path/sycamore.txt']
 colour : this.generatingCircuitColor
-var code = CutlineInputFunctions.defaultCode('generatingCircuit',[qubitNumber,elided,pattern,seed,filename,order,pepsPath,gateArgs]);
+var code = CutlineInputFunctions.defaultCode('generatingCircuit',[qubitNumber,elided,pattern,seed,simulationFilename,cutFilename,mapFilename,order,pepsPath,gateArgs]);
       return code;
 */;
 

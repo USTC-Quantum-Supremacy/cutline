@@ -7,5 +7,6 @@ run2
 random.js
 ./syc*.txt
 /circuit/syc*.txt
+/peps_path/syc*.txt
 test.txt
 text.txt
