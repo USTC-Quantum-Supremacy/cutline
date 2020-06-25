@@ -31,7 +31,7 @@ generatingCircuit
         '> cut' NormalStr? BGNL
         '> map' NormalStr? BGNL
         '> experiment(unknown now)' NormalStr? BGNL
-        'bit indexes' BGNL
+        'order (bit indexes)' BGNL
         orderlist
         'peps cut' JsonStr BGNL
         'peps path' BGNL

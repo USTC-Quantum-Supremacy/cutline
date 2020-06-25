@@ -20,9 +20,13 @@ function randn(n,s) {
     if (s==null) return ~~(n*rand());
     return s+ ~~((n-s)*rand())
 }
+function reset(params) {
+    current=0
+}
 
 random.rand=rand;
 random.randn=randn;
+random.reset=reset;
 return random;
 })()
 if (typeof exports === "undefined") exports = {};

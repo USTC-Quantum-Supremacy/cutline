@@ -753,6 +753,7 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
  * @param {Number} depth 
  */
 StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
+    rand.reset()
     circle=Array.from(circle)
     let proto={circle,depth,layer:[]}
     let pushSingleLayer=()=>{

@@ -8,6 +8,7 @@ random.js
 ./syc*.txt
 /circuit/syc*.txt
 /peps_path/syc*.txt
+peps_path/inputs.json
 test.txt
 text.txt
 circuit.zip
