@@ -5,7 +5,6 @@ cd cutline
 git submodule update --init --recursive antlr-blockly
 make
 python3 generateRandomNumber.py
-python3 circuit/gen.py
 
 ## 搜索切割线
 
@@ -33,3 +32,8 @@ HGEFEFHG: GE,FH
 
 按层的话 `2^(左下右上) * 2^(左上右下)` 种
 
+## generate
+
+
+node generateCircuit.js
+7z a circuit peps_path circuit.zip

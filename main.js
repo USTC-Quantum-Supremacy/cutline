@@ -830,6 +830,23 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateA
     return text.join('\n')
 }
 
+StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber,pepsPath,pepsCut) {
+    let qindexs=orderList.slice(0,qubitNumber)
+    let Aindexes=[]
+    let Bindexes=[]
+    for (let qi = 0; qi < this.bitCount; qi++) {
+        const qubit = this.qubit(qi);
+        if (qubit.area2===2 && qindexs.indexOf(qi)!==-1) {
+            Aindexes.push(qi)
+        }
+        if (qubit.area2===1 && qindexs.indexOf(qi)!==-1) {
+            Bindexes.push(qi)
+        }
+    }
+    let cutText=`${qubitNumber}\n\n${Aindexes.join('\n')}\n\n${Bindexes.join('\n')}\n\n${pepsPath.join('\n')}\n\n${pepsCut.map((v,i)=>v+(i%2?'\n':' ')).join('')}`
+    let mapText=`${orderList.map((v,i)=>v+' '+(i+1)).join('\n')}\n`
+    return {cutText,mapText}
+}
 
 StructDataClass.prototype.generateCircuit = function (outputFunc) {
     let circuitInput=this.input.generatingCircuit.filter(v=>v.type!=='generatingCircuitNone')[0]
@@ -841,13 +858,16 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         if (qubitNumber>orderList.length) {
             throw 'qubitNumber bigger than the length of bit indexes'
         }
+        let pepsPath=eval(circuitInput.pepsPath[0].order)
+        let pepsCut=eval(circuitInput.pepsCut)
         let simulationFilename=circuitInput.simulationFilename
         let mapFilename=circuitInput.mapFilename
         let cutFilename=circuitInput.cutFilename
         let circuitProto = this.generateCircuitProto(circle,depth)
         let circuit = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber))
+        let {cutText,mapText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut)
         if (outputFunc) {
-            outputFunc({depth,circle,orderList,qubitNumber,simulationFilename,mapFilename,cutFilename,circuitProto,circuit})
+            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,mapFilename,cutFilename,circuitProto,circuit,cutText,mapText})
         }
     }
     return this

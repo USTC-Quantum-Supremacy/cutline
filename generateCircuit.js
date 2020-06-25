@@ -22,9 +22,15 @@ let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'
 let sd=new StructDataClass();
 sd.import(input)
 sd.generateCircuit(args=>{
-    if (args.simulationFilename==null) {
-        console.log(args.circuit)
-    } else {
+    if (args.simulationFilename) {
         fs.writeFileSync(args.simulationFilename,args.circuit)
+    } else {
+        console.log(args.circuit)
+    }
+    if (args.mapFilename) {
+        fs.writeFileSync(args.mapFilename,args.mapText)
+    }
+    if (args.cutFilename) {
+        fs.writeFileSync(args.cutFilename,args.cutText)
     }
 })
