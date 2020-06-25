@@ -36,4 +36,4 @@ HGEFEFHG: GE,FH
 
 
 node generateCircuit.js
-7z a circuit peps_path circuit.zip
+7z a circuit.zip circuit peps_path
