@@ -849,6 +849,10 @@ StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber
     return {cutText,mapText}
 }
 
+/**
+ * it is a sync process
+ * @param {*} outputFunc sync callback
+ */
 StructDataClass.prototype.generateCircuit = function (outputFunc) {
     let circuitInput=this.input.generatingCircuit.filter(v=>v.type!=='generatingCircuitNone')[0]
     if (circuitInput) {
