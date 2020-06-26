@@ -21,8 +21,8 @@ let inputs=[tplInput]
 
 let peps=JSON.parse(fs.readFileSync('peps_path/reverted.json',{encoding:'utf-8'}))
 let tasks=[
-    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8],p:'EFGH',c:'',m:'',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
-    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
+    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'EFGH',c:'',m:'',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
+    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
     {n:[20,25,30,35,40,45,50,55,60],d:[2,3],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
     {n:[60,66],d:[20],p:'EFGH',c:'',m:'',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
     {n:[60,66],d:[20],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
