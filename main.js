@@ -684,7 +684,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let depth=~~this.input.depth
         let cwegde1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc))
         let cwegde2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
-        let wedge=0
+        let cwedge=0
         let cut=0
         // 暂时默认模式都是ABCDCDAB式的
         let i2p=index=>['pa','pb','pc','pd','pc','pd','pa','pb'][index%8]
@@ -692,16 +692,16 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         for (let index = 0; index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
             if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {
-                wedge+=cwegde1
+                cwedge+=cwegde1
             }
             if (index>=1 && i2p(index-1)==='pd' && i2p(index)==='pa') {
-                wedge+=cwegde2
+                cwedge+=cwegde2
             }
         }
         wedge[pattern[0]]={
-            length:cut-wegde,
+            length:cut-cwegde,
             cut:cut,
-            wegde:wegde,
+            wegde:cwegde,
             wegdes:[cwegde1,cwegde2],
         }
     }
