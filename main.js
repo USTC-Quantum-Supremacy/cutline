@@ -540,11 +540,11 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     if (big && m3) patterns.push('G');
     if (big && m1) patterns.push('H');
     if (!this.use00) {
-        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===6?1:0).join(''))) patterns.push('I');
-        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===6?0:1).join(''))) patterns.push('J');
+        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?1:0).join(''))) patterns.push('I');
+        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?0:1).join(''))) patterns.push('J');
     } else {
-        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===3?1:0).join(''))) patterns.push('I');
-        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===3?0:1).join(''))) patterns.push('J');
+        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?1:0).join(''))) patterns.push('I');
+        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?0:1).join(''))) patterns.push('J');
     }
     
     return patterns
