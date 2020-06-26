@@ -672,6 +672,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let [pb,pc,pd,pa]=[pattern[1][0],pattern[1][1],pattern[2][0],pattern[2][1]]
         let ps={pb,pc,pd,pa}
         let cutLengthOfPattern={pb:0,pc:0,pd:0,pa:0}
+        let edges=this.splitEdges
         for (const key in cutLengthOfPattern) {
             for (let ii = 0; ii < edges.length; ii++) {
                 const ei = this.edge(edges[ii])
