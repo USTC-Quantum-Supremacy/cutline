@@ -93,7 +93,7 @@ function submit(params) {
             document.getElementById('postresult').innerHTML=err
         } else {
             document.getElementById('postresult').innerHTML=sd.parseCResult(data)
-            reRenderResult(500)
+            document.getElementById('reRenderResult').onclick()
         }
         enablesubmit()
     })
