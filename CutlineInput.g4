@@ -129,7 +129,7 @@ statExprSplit : '=== statement ^ === expression v ===' ;
 Number_List : 'dynamic'|'12' /* Number_List function(){return Array.from({length:29}).map((v,i)=>[i+2+'',i+2+''])}*/;
 PatternA_List : 'A'|'B'|'G'|'H'|'I'|'J' ;
 PatternC_List : 'C'|'D'|'E'|'F' ;
-Search_List : 'Min(CutLength)'|'Min(CutLength*2-wegde)'
+Search_List : 'Min(CutLength)'|'Min(CutLength*2-wedge)'
     /*Search_List ['prune','notprune']*/ ;
 
 MulDivAddSub_List : '*'|'/'|'+'|'-' ;

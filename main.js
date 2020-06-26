@@ -682,8 +682,8 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
             }
         }
         let depth=~~this.input.depth
-        let cwegde1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc))
-        let cwegde2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
+        let cwedge1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc))
+        let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
         let cwedge=0
         let cut=0
         // 暂时默认模式都是ABCDCDAB式的
@@ -692,20 +692,20 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         for (let index = 0; index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
             if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {
-                cwedge+=cwegde1
+                cwedge+=cwedge1
             }
             if (index>=1 && i2p(index-1)==='pd' && i2p(index)==='pa') {
-                cwedge+=cwegde2
+                cwedge+=cwedge2
             }
         }
         wedge[pattern[0]]={
-            length:cut-cwegde,
+            length:cut-cwedge,
             cut:cut,
-            wegde:cwegde,
-            wegdes:[cwegde1,cwegde2],
+            wedge:cwedge,
+            wedges:[cwedge1,cwedge2],
         }
     }
-    this.wegde=wedge
+    this.wedge=wedge
     return this
 }
 
@@ -744,11 +744,11 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
         func.call(csd)
         circles.forEach(ps=>{
             let pattern = ps[0]
-            let length=csd.wegde[pattern].length+0.01*csd.unbalance
+            let length=csd.wedge[pattern].length+0.01*csd.unbalance
             if (patternMin[pattern]==null || length<patternMin[pattern].length) {
                 patternMin[pattern]={
                     split:csd.removeList,
-                    lengthInfo:csd.wegde[pattern],
+                    lengthInfo:csd.wedge[pattern],
                     length:length,
                     pattern:ps,
                 }
