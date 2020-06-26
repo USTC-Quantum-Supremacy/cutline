@@ -129,7 +129,7 @@ patternDefine : 'define' NormalStr ':' NormalStr
 /* patternDefine
 name : ['pattern','bitString']
 default : ['M','1_0100100100']
-if (pattern in ['A','B','C','D','E','F','G','H']) {
+if (['A','B','C','D','E','F','G','H'].indexOf(pattern)!==-1) {
     throw 'can not cover A~H'
 }
 var code = CutlineInputFunctions.defaultCode('patternDefine',[pattern,bitString]);
