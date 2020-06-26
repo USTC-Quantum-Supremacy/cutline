@@ -117,18 +117,19 @@ function processCResult_page(result,showall,target) {
         }
         let viewList=list.map(v=>new view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
         document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
-        return;
-    } 
 
-    let output = sd.processCResult()
-    window.CResultOutput=output
-    console.log(output)
-    let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
-    output.instance.calExpectation()
+    } else {
 
-    let view1=new window.view.constructor().init().importData(output.instance).generateBaseSVG().generateSVGCSS().generateSVG()
-
-    document.getElementById(target).innerHTML=view1.SVG+view1.getExpectation().expectation+wedgestr
+        let output = sd.processCResult()
+        window.CResultOutput=output
+        console.log(output)
+        let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
+        output.instance.calExpectation()
+        
+        let view1=new window.view.constructor().init().importData(output.instance).generateBaseSVG().generateSVGCSS().generateSVG()
+        
+        document.getElementById(target).innerHTML=view1.SVG+view1.getExpectation().expectation+wedgestr
+    }
 }
 
 function reRenderResult(shownumber) {

@@ -385,13 +385,13 @@ StructDataClass.prototype.parseCResult = function (resultStr) {
     return `${paths.length} paths found`
 }
 
-StructDataClass.prototype.processCResult = function (params) {
+StructDataClass.prototype._processCResult = function (circles,func,showProgress) {
     let list=[]
     let result=this.CReturnPaths
-    let circles = this.circles 
-    // circles = this.bitStringCircles 
-    let func= this.calCutLengthWithWedge
-    // func = this.calCutLengthWithWedge_bitString
+    // let circles = this.circles 
+    // let circles = this.bitStringCircles 
+    // let func= this.calCutLengthWithWedge
+    // let func = this.calCutLengthWithWedge_bitString
     /** @type {StructDataClass} */
     let newins=new this.constructor().import(this.input,{part1:'[]'})
     for (let index = 0; index < result.length; index++) {
@@ -400,7 +400,7 @@ StructDataClass.prototype.processCResult = function (params) {
     }
     let patternMin={};
     list.forEach((v,i,a)=>{
-        // console.log(`${i+1} of ${a.length}`)
+        if(showProgress)console.log(`${i+1} of ${a.length}`);
         /** @type {StructDataClass} */
         let csd=v
         func.call(csd)
@@ -427,6 +427,20 @@ StructDataClass.prototype.processCResult = function (params) {
         instance:newins.setSplit(patternMin[pattern].split)
     }
     return output
+}
+
+StructDataClass.prototype.processCResult = function (params) {
+    let circles = this.circles 
+    let func= this.calCutLengthWithWedge
+    let showProgress=false
+    return this._processCResult(circles,func,showProgress)
+}
+
+StructDataClass.prototype.processCResult_bitString = function (params) {
+    let circles = this.bitStringCircles 
+    let func= this.calCutLengthWithWedge_bitString
+    let showProgress=true
+    return this._processCResult(circles,func,showProgress)
 }
 
 /**
@@ -673,10 +687,8 @@ StructDataClass.prototype.calWedge = function (pf1,pf2) {
     return count
 }
 
-StructDataClass.prototype.calCutLengthWithWedge = function (params) {
+StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
     this.getPotentialWedgeList()
-    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
-    let patterns=this.circles
     let wedge={}
     for (let pi = 0; pi < patterns.length; pi++) {
         const pattern = patterns[pi];
@@ -693,23 +705,17 @@ StructDataClass.prototype.calCutLengthWithWedge = function (params) {
     return this
 }
 
+StructDataClass.prototype.calCutLengthWithWedge = function (params) {
+    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
+    let patterns=this.circles
+    this._calCutLengthWithWedge(pf,patterns)
+    return this
+}
+
 StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
-    this.getPotentialWedgeList()
     let pf=(edge,pattern)=>this.checkBitStringPattern(this.qi2xy(edge.q1),this.qi2xy(edge.q2),pattern)
     let patterns=this.bitStringCircles
-    let wedge={}
-    for (let pi = 0; pi < patterns.length; pi++) {
-        const pattern = patterns[pi];
-        let cwegde1=this.calWedge(e=>pf(e,pattern[1][0]),e=>pf(e,pattern[1][1]))
-        let cwegde2=this.calWedge(e=>pf(e,pattern[2][0]),e=>pf(e,pattern[2][0]))
-        wedge[pattern[0]]={
-            length:this.splitEdges.length*2-cwegde1+cwegde2,
-            cut:this.splitEdges.length,
-            wegde:cwegde1+cwegde2,
-            wegdes:[cwegde1,cwegde2],
-        }
-    }
-    this.wegde=wedge
+    this._calCutLengthWithWedge(pf,patterns)
     return this
 }
 
