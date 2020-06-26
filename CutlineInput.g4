@@ -96,6 +96,8 @@ var code = CutlineInputFunctions.defaultCode('markNone',[]);
 patterns
     :   patternA
     |   patternC
+    |   patternNormal
+    |   patternDefine
     |   patternNone
     ;
 
@@ -115,6 +117,25 @@ var code = CutlineInputFunctions.defaultCode('patternC',[pattern,color]);
       return code;
 */;
 
+patternNormal : 'show' NormalStr Colour
+/* patternNormal
+name : ['pattern','color']
+default : ['M','#993399']
+var code = CutlineInputFunctions.defaultCode('patternNormal',[pattern,color]);
+      return code;
+*/;
+
+patternDefine : 'define' NormalStr ':' NormalStr
+/* patternDefine
+name : ['pattern','bitString']
+default : ['M','1_0100100100']
+if (pattern in ['A','B','C','D','E','F','G','H']) {
+    throw 'can not cover A~H'
+}
+var code = CutlineInputFunctions.defaultCode('patternDefine',[pattern,bitString]);
+      return code;
+*/;
+
 patternNone : 'pass' ;
 
 
@@ -128,7 +149,7 @@ statExprSplit : '=== statement ^ === expression v ===' ;
 
 Number_List : 'dynamic'|'12' /* Number_List function(){return Array.from({length:29}).map((v,i)=>[i+2+'',i+2+''])}*/;
 PatternA_List : 'A'|'B'|'G'|'H'|'I'|'J' ;
-PatternC_List : 'C'|'D'|'E'|'F' ;
+PatternC_List : 'C'|'D'|'E'|'F'|'K'|'L' ;
 Search_List : 'Min(CutLength)'|'Min(CutLength*2-wedge)'
     /*Search_List ['prune','notprune']*/ ;
 

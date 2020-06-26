@@ -162,7 +162,7 @@ function blocklyDone(params) {
 
 function changePatten(params) {
     resultlist2.innerHTML=``
-    patternColor.innerHTML=sd.input.showPattern.filter(v=>v.type!=="patternNone").map(v=>`
+    patternColor.innerHTML=sd.input.showPattern.filter(v=>["patternNone","patternDefine"].indexOf(v.type)===-1).map(v=>`
     #insertHere .qline.pattern${v.pattern} {
         stroke: ${v.color};
         stroke-width: 20;

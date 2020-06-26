@@ -30,7 +30,7 @@ StructDataClass.prototype.qi2xy_dict=[]
 StructDataClass.prototype.removeList=[]
 StructDataClass.prototype.splitEdges=[]
 StructDataClass.prototype.CInputFirstLine=''
-StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H','I','J']
+StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H','I','J','K','L']
 StructDataClass.prototype.circles=[
     ['ABCDCDAB','BC','DA'],
     ['BACDCDBA','AC','DB'],
@@ -40,7 +40,7 @@ StructDataClass.prototype.circles=[
     ['HGCDCDHG','GC','DH'],
     ['GHEFEFGH','HE','FG'],
     ['HGEFEFHG','GE','FH'],
-    ['IJCDCDIJ','JC','DI'],
+    ['IJKLKLIJ','JK','LI'],
 ]
 StructDataClass.prototype.bitStringCircles=(()=>{
     let pa='0000000100'
@@ -60,10 +60,13 @@ StructDataClass.prototype.import = function (input,cover,params) {
         ysize:~~input.ysize,
         use00:input.use00,
     },params))
+    .getPatternSize()
     .initmap()
+    .buildMarkMap()
     .loadChoosen(eval(input.brokenBits||'[]'))
     .pickMaxArea()
     .loadRemovedStart(eval(input.removedEntrances||'[]'))
+    .definePattern(input.showPattern||[])
     .pushPatterns()
     .setSplit(eval(input.part1||'[]'))
     return this
@@ -93,7 +96,7 @@ StructDataClass.prototype.buildInput = function (params) {
 StructDataClass.prototype.init = function (params) {
     Object.assign(this,params)
     if (!this.input) this.buildInput();
-    this.getPatternSize()
+    this.patternsDefinition={}
     return this
 }
 
@@ -141,7 +144,6 @@ StructDataClass.prototype.initmap=function (params) {
         }
     }
     this.bitCount=qindex;
-    this.buildMarkMap()
     return this
 }
 
@@ -518,9 +520,7 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     }
     let patterns=[]
     if (o1.x>o2.x) {
-        let _t=o1;
-        o1=o2
-        o2=_t
+        [o1,o2]=[o2,o1]
     }
     let eq=(modbase,a)=>o1.x%modbase===a[0]&&o1.y%modbase===a[1]&&o2.x%modbase===a[2]&&o2.y%modbase===a[3]
     let ld = eq(2,[0,1,1,0])
@@ -539,15 +539,31 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
     if (small && s3) patterns.push('F');
     if (big && m3) patterns.push('G');
     if (big && m1) patterns.push('H');
-    if (!this.use00) {
-        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?1:0).join(''))) patterns.push('I');
-        if (this.checkBitStringPattern(o1,o2,'0_'+Array.from({length:this.asize}).map((v,i)=>i===7?0:1).join(''))) patterns.push('J');
-    } else {
-        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?1:0).join(''))) patterns.push('I');
-        if (this.checkBitStringPattern({x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1},'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?0:1).join(''))) patterns.push('J');
+    let [c1,c2]=this.use00?[{x:o1.x,y:o1.y-1},{x:o2.x,y:o2.y-1}]:[o1,o2]
+    for (const key in this.patternsDefinition) {
+        if (this.patternsDefinition.hasOwnProperty(key)) {
+            const bitString = this.patternsDefinition[key];
+            if (this.checkBitStringPattern(c1,c2,bitString)) patterns.push(key);
+        }
     }
-    
     return patterns
+}
+
+StructDataClass.prototype.definePattern = function (patternDefines) {
+    patternDefines=[
+        {"type":"patternDefine","pattern":"I","bitString":'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?1:0).join('')},
+        {"type":"patternDefine","pattern":"J","bitString":'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?0:1).join('')},
+        {"type":"patternDefine","pattern":"K","bitString":'1_'+Array.from({length:this.asize}).map((v,i)=>0).join('')},
+        {"type":"patternDefine","pattern":"L","bitString":'1_'+Array.from({length:this.asize}).map((v,i)=>1).join('')},
+    ].concat(patternDefines).filter(v=>v.type==="patternDefine")
+    this.patterns=Array.from(this.patterns)
+    patternDefines.forEach(p=>{
+        if (this.patterns.indexOf(p.pattern)===-1) {
+            this.patterns.push(p.pattern)
+        }
+        this.patternsDefinition[p.pattern]=p.bitString
+    })
+    return this
 }
 
 StructDataClass.prototype.pushPatterns = function (params) {
@@ -573,11 +589,8 @@ StructDataClass.prototype.checkBitStringPattern = function (o1,o2,pattern) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
     }
-    let patterns=[]
     if (o1.x>o2.x) {
-        let _t=o1;
-        o1=o2
-        o2=_t
+        [o1,o2]=[o2,o1]
     }
     let big = o1.y>o2.y // 左下右上 A类
     let small = o1.y<o2.y // 左上右下 C类
