@@ -482,36 +482,6 @@ StructDataClass.prototype.setSplit = function (removeList) {
     return this
 }
 
-/**
- * 计算一些预期的数
- * @param {Object} params
- * @param {number} params.e1 单比特
- * @param {number} params.e2 双比特
- * @param {number} params.er 读取
- * @param {number} params.d  深度
- */
-StructDataClass.prototype.calExpectation = function () {
-    let cal=eval(sd.input.errorRates)
-    let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
-    let params={e1,e2,er,d}
-    let p=Object.assign({
-        n1:this.unbalance/4+this.maxAreaCount/2,
-        n2:-this.unbalance/4+this.maxAreaCount/2,
-        n:this.maxAreaCount,
-        c:this.splitEdges.length,
-        b:this.maxAreaEdgeCount
-    },params)
-    let f=((1-p.e1)**p.n * (1-p.e2)**(p.b/4))**p.d * (1-p.er)**p.n
-    let r2=9/f/f
-    let r3=r2/(0.6*1000000/200)
-    let cu=(2**p.n1+2**p.n2)*4**(p.d/4*p.c)*f
-    let cg=2.37684487542793e+29*0.00224
-    let r6=cu/cg
-    this.expectation=[f,r2,r3,cu,cg,r6]
-    this.expectation_describe=['f','count','time','SFA_u','SFA_g','SFA_u/SFA_g']
-    return this
-}
-
 StructDataClass.prototype.calPatterns = function (o1,o2) {
     // 待重构为用checkBitStringPattern实现
     if (this.use00) {
@@ -772,10 +742,12 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
 
     let pi=circles.map(ps=>patternMin[ps[0]].length).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
     let pattern=circles[pi][0]
+    newins.setSplit(patternMin[pattern].split)
+    newins.patternMaxMin=patternMin[pattern]
     let output={
         maxofmin:patternMin[pattern],
         min:patternMin,
-        instance:newins.setSplit(patternMin[pattern].split)
+        instance:newins
     }
     return output
 }
@@ -792,6 +764,36 @@ StructDataClass.prototype.processCResult_bitString = function (params) {
     let func= this.calCutLengthWithWedge_bitString
     let showProgress=true
     return this._processCResult(circles,func,showProgress)
+}
+
+/**
+ * 计算一些预期的数
+ * @param {Object} params
+ * @param {number} params.e1 单比特
+ * @param {number} params.e2 双比特
+ * @param {number} params.er 读取
+ * @param {number} params.d  深度
+ */
+StructDataClass.prototype.calExpectation = function () {
+    let cal=eval(sd.input.errorRates)
+    let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
+    let params={e1,e2,er,d}
+    let p=Object.assign({
+        n1:this.unbalance/4+this.maxAreaCount/2,
+        n2:-this.unbalance/4+this.maxAreaCount/2,
+        n:this.maxAreaCount,
+        c:this.patternMaxMin.lengthInfo.length,
+        b:this.maxAreaEdgeCount
+    },params)
+    let f=((1-p.e1)**p.n * (1-p.e2)**(p.b/4))**p.d * (1-p.er)**p.n
+    let r2=9/f/f
+    let r3=r2/(0.6*1000000/200)
+    let cu=(2**p.n1+2**p.n2)*4**(p.c)*f
+    let cg=2.37684487542793e+29*0.00224
+    let r6=cu/cg
+    this.expectation=[f,r2,r3,cu,cg,r6]
+    this.expectation_describe=['f','count','time','SFA_u','SFA_g','SFA_u/SFA_g']
+    return this
 }
 
 /**
