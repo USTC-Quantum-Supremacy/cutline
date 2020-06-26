@@ -5,6 +5,13 @@ if (typeof document === "undefined") {
 }
 
 /**
+ * check if a edge is a pattern
+ * @callback EdgeToIsPattern
+ * @param {Object} edge edge
+ * @returns {Boolean}
+ */
+
+/**
  * @class
  */
 function StructDataClass() {
@@ -659,12 +666,6 @@ StructDataClass.prototype.getPotentialWedgeList = function (params) {
 }
 
 /**
- * check if a edge is a pattern
- * @callback EdgeToIsPattern
- * @param {Object} edge edge
- * @returns {Boolean}
- */
-/**
  * @param {EdgeToIsPattern} pf1 
  * @param {EdgeToIsPattern} pf2 
  */
@@ -692,8 +693,9 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
     let wedge={}
     for (let pi = 0; pi < patterns.length; pi++) {
         const pattern = patterns[pi];
-        let cwegde1=this.calWedge(e=>pf(e,pattern[1][0]),e=>pf(e,pattern[1][1]))
-        let cwegde2=this.calWedge(e=>pf(e,pattern[2][0]),e=>pf(e,pattern[2][0]))
+        let [pb,pc,pd,pa]=[pattern[1][0],pattern[1][1],pattern[2][0],pattern[2][1]]
+        let cwegde1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc))
+        let cwegde2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
         wedge[pattern[0]]={
             length:this.splitEdges.length*2-cwegde1+cwegde2,
             cut:this.splitEdges.length,
