@@ -686,14 +686,14 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let wedge=0
         let cut=0
         // 暂时默认模式都是ABCDCDAB式的
-        let pi=index=>['pa','pb','pc','pd','pc','pd','pa','pb'][index%8]
-        // pi=index=>['pa','pb','pc','pd'][index%f] // EFGH式的
+        let i2p=index=>['pa','pb','pc','pd','pc','pd','pa','pb'][index%8]
+        // i2p=index=>['pa','pb','pc','pd'][index%f] // EFGH式的
         for (let index = 0; index < depth; index++) {
-            cut+=cutLengthOfPattern[pi(index)]
-            if (index>=1 && pi(index-1)==='pb' && pi(index)==='pc') {
+            cut+=cutLengthOfPattern[i2p(index)]
+            if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {
                 wedge+=cwegde1
             }
-            if (index>=1 && pi(index-1)==='pd' && pi(index)==='pa') {
+            if (index>=1 && i2p(index-1)==='pd' && i2p(index)==='pa') {
                 wedge+=cwegde2
             }
         }
