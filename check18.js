@@ -128,6 +128,6 @@ let calCutLengthWithWedge_bitString = function (params) {
 ;(()=>{
     let func= calCutLengthWithWedge_bitString
     sd.getBitStringCircles()
-    let output=_processCResult.apply(sd,[circles,func,false])
+    let output=sd._processCResult(circles,func,false)
     console.log(output.maxofmin)
 })();
