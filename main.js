@@ -5,13 +5,6 @@ if (typeof document === "undefined") {
 }
 
 /**
- * check if a edge is a pattern
- * @callback EdgeToIsPattern
- * @param {Object} edge edge
- * @returns {Boolean}
- */
-
-/**
  * @class
  */
 function StructDataClass() {
@@ -623,8 +616,8 @@ StructDataClass.prototype.getPotentialWedgeList = function (params) {
 }
 
 /**
- * @param {EdgeToIsPattern} pf1 
- * @param {EdgeToIsPattern} pf2 
+ * @param {(edge)=>Boolean} pf1 
+ * @param {(edge)=>Boolean} pf2 
  */
 StructDataClass.prototype.calWedge = function (pf1,pf2) {
     let count=0
@@ -726,11 +719,13 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
         circles.forEach(ps=>{
             let pattern = ps[0]
             let length=csd.wedge[pattern].length+0.01*csd.unbalance
+            let length_max=csd.wedge[pattern].length-0.01*csd.unbalance
             if (patternMin[pattern]==null || length<patternMin[pattern].length) {
                 patternMin[pattern]={
                     split:csd.removeList,
                     lengthInfo:csd.wedge[pattern],
-                    length:length,
+                    length:length, // for min
+                    length_max:length_max, // for max
                     pattern:ps,
                 }
             }
@@ -738,7 +733,7 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
         delete a[i]
     })
 
-    let pi=circles.map(ps=>patternMin[ps[0]].length).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+    let pi=circles.map(ps=>patternMin[ps[0]].length_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
     let pattern=circles[pi][0]
     newins.setSplit(patternMin[pattern].split)
     newins.patternMaxMin=patternMin[pattern]
