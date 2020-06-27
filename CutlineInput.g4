@@ -9,7 +9,7 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         '> removed entrances' JsonStr BGNL
         '>' Search_List BGNL
         'show mark ~1(only for mark)' BGNL marks
-        'show pattern ~n' BGNL patterns
+        'show and define pattern ~n' BGNL patterns
         'generating circuit ~1' BGNL generatingCircuits
 /* prog
 name : ['xsize','ysize','use00','brokenBits','part1','depth','errorRates','removedEntrances','search','showMark','showPattern','generatingCircuit']

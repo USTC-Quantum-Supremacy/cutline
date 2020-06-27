@@ -179,9 +179,7 @@ StructDataClass.prototype.edge=function (q1,q2) {
         q1=q1[0]
     }
     if (q1>q2) {
-        let t=q1
-        q1=q2
-        q2=t
+        [q1,q2]=[q2,q1]
     }
     let key=q1+'_'+q2
     if (this.edge_dict[key]==null) {
@@ -766,25 +764,16 @@ StructDataClass.prototype.processCResult_bitString = function (params) {
     return this._processCResult(circles,func,showProgress)
 }
 
-/**
- * 计算一些预期的数
- * @param {Object} params
- * @param {number} params.e1 单比特
- * @param {number} params.e2 双比特
- * @param {number} params.er 读取
- * @param {number} params.d  深度
- */
 StructDataClass.prototype.calExpectation = function () {
     let cal=eval(sd.input.errorRates)
     let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
-    let params={e1,e2,er,d}
     let p=Object.assign({
         n1:this.unbalance/4+this.maxAreaCount/2,
         n2:-this.unbalance/4+this.maxAreaCount/2,
         n:this.maxAreaCount,
         c:this.patternMaxMin.lengthInfo.length,
         b:this.maxAreaEdgeCount
-    },params)
+    },{e1,e2,er,d})
     let f=((1-p.e1)**p.n * (1-p.e2)**(p.b/4))**p.d * (1-p.er)**p.n
     let r2=9/f/f
     let r3=r2/(0.6*1000000/200)
