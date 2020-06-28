@@ -10,9 +10,20 @@ let input=JSON.parse(fs.readFileSync('in/check18.json',{encoding:'utf-8'}))
 let sd=new StructDataClass();
 sd.import(input,{part1:'[]'})
 
+let unbalanceSearch=12
 
 sd.generateCInput()
-fs.writeFileSync('in/check18.in',sd.CInput)
+let CInput=sd.CInput.split('\n')
+let CArgs=CInput[0].split(' ').map(v=>~~v)
+while (CArgs[4]-CArgs[5]<=unbalanceSearch) {
+    CArgs[4]++
+    CArgs[5]--
+}
+CArgs[4]--
+CArgs[5]++
+CInput[0]=CArgs.join(' ')
+
+fs.writeFileSync('in/check18.in',CInput.join('\n'))
 let retstr;
 try {
     retstr=execSync('./run2 in/check18.in').toString()
@@ -71,13 +82,13 @@ let _calCutLengthWithWedge = function (pf,patterns) {
         let cwedge=0
         let cut=0
         // 
-        let tplpattern='ABCDCDABABCDCDABCB'
+        let tplpattern=this.input.searchPattern
         let i2pmap={}
-        i2pmap[tplpattern[0]]='pa'
-        i2pmap[tplpattern[1]]='pb'
-        i2pmap[tplpattern[2]]='pc'
-        i2pmap[tplpattern[3]]='pd'
-        let i2p=index=>i2pmap[tplpattern[index]]
+        i2pmap[0]='pa'
+        i2pmap[1]='pb'
+        i2pmap[2]='pc'
+        i2pmap[3]='pd'
+        let i2p=index=>i2pmap[tplpattern[index%tplpattern.length]]
         for (let index = 0; index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
             if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {
@@ -104,13 +115,61 @@ let calCutLengthWithWedge = function (params) {
     _calCutLengthWithWedge.apply(this,[pf,patterns])
     return this
 }
+let _processCResult = function (circles,func,showProgress) {
+    let list=[]
+    let result=this.CReturnPaths
+    // let circles = this.circles 
+    // let circles = this.bitStringCircles 
+    // let func= this.calCutLengthWithWedge
+    // let func = this.calCutLengthWithWedge_bitString
+    /** @type {import('./main.js').StructDataClass} */
+    let newins=new this.constructor().import(this.input,{part1:'[]'})
+    for (let index = 0; index < result.length; index++) {
+        const removeList = result[index];
+        list.push(newins.copy().setSplit(removeList))
+    }
+    let patternMin={};
+    list.forEach((v,i,a)=>{
+        if(showProgress)console.log(`${i+1} of ${a.length}`);
+        /** @type {import('./main.js').StructDataClass} */
+        let csd=v
+        func.call(csd)
+        circles.forEach(ps=>{
+            let pattern = ps[0]
+            let search_min=csd.wedge[pattern].length+Math.log2(2**(csd.unbalance/4+csd.maxAreaCount/2)+2**(-csd.unbalance/4+csd.maxAreaCount/2))/2-Math.log2(2**Math.ceil(csd.maxAreaCount/2)+2**Math.floor(csd.maxAreaCount/2))/2
+            let search_max=search_min
+            if (patternMin[pattern]==null || search_min<patternMin[pattern].search_min) {
+                patternMin[pattern]={
+                    split:csd.removeList,
+                    lengthInfo:csd.wedge[pattern],
+                    search_min:search_min, // for min
+                    search_max:search_max, // for max
+                    unbalance:csd.unbalance,
+                    pattern:ps,
+                }
+            }
+        })
+        delete a[i]
+    })
+
+    let pi=circles.map(ps=>patternMin[ps[0]].length_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+    let pattern=circles[pi][0]
+    newins.setSplit(patternMin[pattern].split)
+    newins.patternMaxMin=patternMin[pattern]
+    let output={
+        maxofmin:patternMin[pattern],
+        min:patternMin,
+        instance:newins
+    }
+    return output
+}
 
 ;(()=>{
     let func= calCutLengthWithWedge
     let pattern = sd.input.generatingCircuit[0].pattern
     let circles = [[pattern,pattern.slice(1,3),pattern.slice(5,7)]]
     sd.constructor.prototype.circles=circles
-    let output=sd._processCResult(circles,func,false)
+    let output=_processCResult.apply(sd,[circles,func,false])
     console.log(output.maxofmin)
 })();
 //// 所有pattern搜18层 ////////////////////////////////////////////////////////////
@@ -129,6 +188,6 @@ let calCutLengthWithWedge_bitString = function (params) {
     let func= calCutLengthWithWedge_bitString
     sd.getBitStringCircles()
     let circles = sd.bitStringCircles 
-    let output=sd._processCResult(circles,func,true)
+    let output=_processCResult.apply(sd,[circles,func,true])
     console.log(output.maxofmin)
 })();

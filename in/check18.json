@@ -1,10 +1,10 @@
 {
     "type": "prog",
-    "xsize": "12",
+    "xsize": "11",
     "ysize": "11",
-    "use00": true,
-    "brokenBits": "[0,5,11,59,60,65]",
-    "part1": "[1,12,13,14,18,19,2,24,25,26,3,30,31,36,37,38,42,43,48,49,50,54,55,56,6,61,62,63,7,8]",
+    "use00": false,
+    "brokenBits": "[]",
+    "part1": "[]",
     "depth": "18",
     "searchPattern": "012323010123230121",
     "errorRates": "[0.0016,0.0062,0.038]",
@@ -19,22 +19,42 @@
         {
             "type": "patternDefine",
             "pattern": "I",
-            "bitString": "0_0000011100"
+            "bitString": "0_0000011111"
         },
         {
             "type": "patternDefine",
             "pattern": "J",
-            "bitString": "0_1111100011"
+            "bitString": "0_1111100000"
         },
         {
             "type": "patternDefine",
             "pattern": "K",
-            "bitString": "1_0111100000"
+            "bitString": "1_1111100000"
         },
         {
             "type": "patternDefine",
             "pattern": "L",
-            "bitString": "1_1000011111"
+            "bitString": "1_0000011111"
+        },
+        {
+            "type": "patternA",
+            "pattern": "I",
+            "color": "#ff9900"
+        },
+        {
+            "type": "patternA",
+            "pattern": "J",
+            "color": "#3333ff"
+        },
+        {
+            "type": "patternC",
+            "pattern": "K",
+            "color": "#009900"
+        },
+        {
+            "type": "patternC",
+            "pattern": "L",
+            "color": "#cc0000"
         }
     ],
     "generatingCircuit": [
