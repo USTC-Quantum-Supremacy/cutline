@@ -36,8 +36,8 @@ function buildMainSVG(params) {
     document.getElementById('formatedGateArray').innerText=sd.CInput
     view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
 
-        let choosen=view.data.choosen
-        let removedStart=view.data.removedStart
+        let choosen=thisv.data.choosen
+        let removedStart=thisv.data.removedStart
         if (type==='choosen') {
             if (choosen.indexOf(clickData)===-1) {
                 choosen.push(clickData)
@@ -52,7 +52,7 @@ function buildMainSVG(params) {
                 removedStart.splice(removedStart.indexOf(clickData),1)
             }
         }
-        document.querySelector('#blocklyinput').value=JSON.stringify(sd.buildInput().input)
+        document.querySelector('#blocklyinput').value=JSON.stringify(sd.buildInput().input,null,4)
         buildMainSVG()
     })
 }

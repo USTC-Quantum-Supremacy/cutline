@@ -108,8 +108,13 @@ trashcan: false,
 
 function omitedcheckUpdateFunction(event) {
 try {
+  if (["delete","create","move","finished_loading"].indexOf(event.type)!==-1) return;
   var code = Blockly.JavaScript.workspaceToCode(workspace);
-  blocklyinput.value = code.slice(0,-1);
+  try {
+    blocklyinput.value = JSON.stringify(eval('['+code+']')[0],null,4)
+  } catch (error) {
+    blocklyinput.value = code.slice(0,-1);
+  }
   window.trigger&&window.trigger(event)
 } catch (error) {
   blocklyinput.value = String(error);
