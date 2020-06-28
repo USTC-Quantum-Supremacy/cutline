@@ -19,7 +19,7 @@ function buildMainSVG(params) {
     if(typeof resultlist2)resultlist2.innerHTML=``
     
     var sd=new StructDataClass();
-    sd.import(eval('('+document.querySelector('#blocklyinput').value+')')).generateCInput()
+    sd.import(eval('('+document.querySelector('#blocklyinput').value+')'))
     console.log(sd)
     
     var view=new VisualClass();
@@ -29,11 +29,11 @@ function buildMainSVG(params) {
     window.sd=sd
     window.view=view
 
+    showCircuit()
     buildBlocks()
     changePatten()
 
     document.getElementById('insertHere').innerHTML=view.SVG
-    document.getElementById('formatedGateArray').innerText=sd.CInput
     view.bindSVGClick(document.getElementById('insertHere').children[0],function(clickData,thisv,type){
 
         let choosen=thisv.data.choosen
@@ -87,16 +87,9 @@ function disablesubmit(params) {
 function submit(params) {
     disablesubmit()
     document.getElementById('postresult').innerHTML='waiting'
-    xhrPost('/',JSON.stringify({CInput:sd.CInput,prune:sd.input.search==='prune'}),function (err,data) {
-        if (err) {
-            console.log(err)
-            document.getElementById('postresult').innerHTML=err
-        } else {
-            document.getElementById('postresult').innerHTML=sd.parseCResult(data)
-            document.getElementById('reRenderResult').onclick()
-        }
-        enablesubmit()
-    })
+    document.getElementById('postresult').innerHTML=sd.searchPath()
+    document.getElementById('reRenderResult').onclick()
+    enablesubmit()
 }
 
 function processCResult_page(result,showall,target) {

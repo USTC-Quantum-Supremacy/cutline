@@ -12,26 +12,19 @@ sd.import(input,{part1:'[]'})
 
 let unbalanceSearch=20
 
-sd.generateCInput()
-let CInput=sd.CInput.split('\n')
-let CArgs=CInput[0].split(' ').map(v=>~~v)
-while (CArgs[4]-CArgs[5]<=unbalanceSearch) {
-    CArgs[4]++
-    CArgs[5]--
-}
-CArgs[4]--
-CArgs[5]++
-CInput[0]=CArgs.join(' ')
+;(()=>{
+    let [ta,tb]=[sd._max(),sd._min()];
+    while (ta-tb<=unbalanceSearch) {
+        ta++
+        tb--
+    }
+    ta--
+    tb++
+    sd._max=()=>ta
+    sd._min=()=>tb
+})();
 
-fs.writeFileSync('in/check18.in',CInput.join('\n'))
-let retstr;
-try {
-    retstr=execSync('./run2 in/check18.in').toString()
-} catch (error) {
-    retstr=execSync('run2 in/check18.in').toString()
-}
-
-sd.parseCResult(retstr)
+sd.searchPath()
 
 // // 生成线路,cut,map,paths
 // let generateFormatPaths = function (params) {
@@ -176,7 +169,7 @@ let _processCResult = function (circles,func,showProgress) {
 
 sd=new StructDataClass();
 sd.import(input,{part1:'[]'})
-sd.parseCResult(retstr)
+
 /** @type {()=>import('./main.js').StructDataClass} */
 let calCutLengthWithWedge_bitString = function (params) {
     let pf=(edge,pattern)=>this.checkBitStringPattern(this.qi2xy(edge.q1),this.qi2xy(edge.q2),pattern)

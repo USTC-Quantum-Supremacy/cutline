@@ -42,6 +42,7 @@ var toolboxObj = {
   "statement" : [
     // 所有语句块
     CutlineInputBlocks["markQi"].xmlText(),
+    CutlineInputBlocks["orderlist"].xmlText(['[5,16,27,38,49,60,0,11,22,33,44,55,6,17,28,39,50,61,1,12,23,34,45,56,7,18,29,40,51,62,2,13,24,35,46,57,8,19,30,41,52,63,3,14,25,36,47,58,9,20,31,42,53,64,4,15,26,37,48,59,10,21,32,43,54,65]']),
     CutlineInputBlocks["orderlist"].xmlText(),
     CutlineInputFunctions.parser.parse({"type":"patternA","pattern":"I","color":"#ff9900"}),
     CutlineInputFunctions.parser.parse({"type":"patternA","pattern":"J","color":"#3333ff"}),
