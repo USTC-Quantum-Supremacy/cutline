@@ -10,7 +10,7 @@ let input=JSON.parse(fs.readFileSync('in/check18.json',{encoding:'utf-8'}))
 let sd=new StructDataClass();
 sd.import(input,{part1:'[]'})
 
-let unbalanceSearch=12
+let unbalanceSearch=20
 
 sd.generateCInput()
 let CInput=sd.CInput.split('\n')
