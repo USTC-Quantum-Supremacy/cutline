@@ -5,6 +5,7 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         'part1 indexes' JsonStr BGNL
         'depth' Number_List BGNL
         'search' BGNL
+        '> pattern' NormalStr? BGNL
         '> e1 e2 er' JsonStr BGNL
         '> removed entrances' JsonStr BGNL
         '>' Search_List BGNL
@@ -12,9 +13,12 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         'show and define pattern ~n' BGNL patterns
         'generating circuit ~1' BGNL generatingCircuits
 /* prog
-name : ['xsize','ysize','use00','brokenBits','part1','depth','errorRates','removedEntrances','search','showMark','showPattern','generatingCircuit']
-default : ['12','11',true,'[]','[]','20','[0.0016,0.0062,0.038]','[]','prune']
-var code = CutlineInputFunctions.defaultCode('prog',[xsize,ysize,use00,brokenBits,part1,depth,errorRates,removedEntrances,search,showMark,showPattern,generatingCircuit]);
+name : ['xsize','ysize','use00','brokenBits','part1','depth','searchPattern','errorRates','removedEntrances','search','showMark','showPattern','generatingCircuit']
+default : ['12','11',true,'[]','[]','20','01232301','[0.0016,0.0062,0.038]','[]','prune']
+if (searchPattern==='') {
+    throw "examples: 01232301, 0123, 012323010123230121"
+}
+var code = CutlineInputFunctions.defaultCode('prog',[xsize,ysize,use00,brokenBits,part1,depth,searchPattern,errorRates,removedEntrances,search,showMark,showPattern,generatingCircuit]);
       return code;
 */;
 

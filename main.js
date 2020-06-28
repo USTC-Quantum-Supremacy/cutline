@@ -48,6 +48,7 @@ StructDataClass.prototype.bitStringCircles=(()=>{
 StructDataClass.prototype.import = function (input,cover,params) {
     input = Object.assign({},input,cover)
     this.input=input
+    input=this.fixInput().input
     this.init(Object.assign({
         xsize:~~input.xsize,
         ysize:~~input.ysize,
@@ -56,12 +57,22 @@ StructDataClass.prototype.import = function (input,cover,params) {
     .getPatternSize()
     .initmap()
     .buildMarkMap()
-    .loadChoosen(eval(input.brokenBits||'[]'))
+    .loadChoosen(eval(input.brokenBits))
     .pickMaxArea()
-    .loadRemovedStart(eval(input.removedEntrances||'[]'))
-    .definePattern(input.showPattern||[])
+    .loadRemovedStart(eval(input.removedEntrances))
+    .definePattern(input.showPattern)
     .pushPatterns()
-    .setSplit(eval(input.part1||'[]'))
+    .setSplit(eval(input.part1))
+    return this
+}
+
+StructDataClass.prototype.fixInput = function () {
+    let input = this.input
+    input.searchPattern=input.searchPattern||'01232301'
+    input.brokenBits=input.brokenBits||'[]'
+    input.removedEntrances=input.removedEntrances||'[]'
+    input.showPattern=input.showPattern||[]
+    input.part1=input.part1||'[]'
     return this
 }
 
@@ -75,6 +86,7 @@ StructDataClass.prototype.buildInput = function (params) {
         brokenBits:JSON.stringify(this.choosen||[]),
         part1:JSON.stringify(this.removeList||[]),
         depth:(this.input.depth||'20')+'',
+        searchPattern:this.input.searchPattern||'01232301',
         errorRates:(this.input.errorRates||'[0.0016,0.0062,0.038]')+'',
         removedEntrances:JSON.stringify(this.removedStart||[]),
         search:(this.input.search||'prune')+'',
@@ -660,9 +672,14 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
         let cwedge=0
         let cut=0
-        // 暂时默认模式都是ABCDCDAB式的
-        let i2p=index=>['pa','pb','pc','pd','pc','pd','pa','pb'][index%8]
-        // i2p=index=>['pa','pb','pc','pd'][index%f] // EFGH式的
+        //
+        let tplpattern=this.input.searchPattern
+        let i2pmap={}
+        i2pmap[0]='pa'
+        i2pmap[1]='pb'
+        i2pmap[2]='pc'
+        i2pmap[3]='pd'
+        let i2p=index=>i2pmap[tplpattern[index%tplpattern.length]]
         for (let index = 0; index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
             if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {

@@ -1,1 +1,28 @@
-{"type":"prog","xsize":"12","ysize":"11","use00":true,"brokenBits":"[]","part1":"[]","depth":"8","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","search":"prune","showMark":[{"type":"markNone"}],"showPattern":[{"type":"patternNone"}],"generatingCircuit":[{"type":"generatingCircuitNone"}]}
+{
+    "type": "prog",
+    "xsize": "12",
+    "ysize": "11",
+    "use00": true,
+    "brokenBits": "[]",
+    "part1": "[]",
+    "depth": "8",
+    "searchPattern": "01232301",
+    "errorRates": "[0.0016,0.0062,0.038]",
+    "removedEntrances": "[]",
+    "search": "prune",
+    "showMark": [
+        {
+            "type": "markNone"
+        }
+    ],
+    "showPattern": [
+        {
+            "type": "patternNone"
+        }
+    ],
+    "generatingCircuit": [
+        {
+            "type": "generatingCircuitNone"
+        }
+    ]
+}
