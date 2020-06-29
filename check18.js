@@ -101,13 +101,7 @@ let _calCutLengthWithWedge = function (pf,patterns) {
     this.wedge=wedge
     return this
 }
-/** @type {()=>import('./main.js').StructDataClass} */
-let calCutLengthWithWedge = function (params) {
-    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
-    let patterns=this.circles
-    _calCutLengthWithWedge.apply(this,[pf,patterns])
-    return this
-}
+
 let _processCResult = function (circles,func,showProgress) {
     let list=[]
     let result=this.CReturnPaths
@@ -145,7 +139,7 @@ let _processCResult = function (circles,func,showProgress) {
         delete a[i]
     })
 
-    let pi=circles.map(ps=>patternMin[ps[0]].length_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+    let pi=circles.map(ps=>patternMin[ps[0]].search_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
     let pattern=circles[pi][0]
     newins.setSplit(patternMin[pattern].split)
     newins.patternMaxMin=patternMin[pattern]
@@ -155,6 +149,14 @@ let _processCResult = function (circles,func,showProgress) {
         instance:newins
     }
     return output
+}
+
+/** @type {()=>import('./main.js').StructDataClass} */
+let calCutLengthWithWedge = function (params) {
+    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
+    let patterns=this.circles
+    _calCutLengthWithWedge.apply(this,[pf,patterns])
+    return this
 }
 
 ;(()=>{
