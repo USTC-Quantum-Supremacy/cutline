@@ -1098,6 +1098,30 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
     } else {
         throw 'todo 待与实验侧约定格式'
     }
+    // pickup cut for elided
+    let savedCuts=[]
+    let savedCut=proto.cut
+    for (let layerno = 0; elided!=null && layerno < proto.layer.length; layerno++) {
+        const layer = proto.layer[layerno];
+        if (layerno%2==0) {
+        } else {
+            for (const gi in layer) {
+                if (layer.hasOwnProperty(gi)) {
+                    const gate = layer[gi];
+                    if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
+                    if (gate.cut!=null)savedCuts.push(gate.cut)
+                }
+            }
+        }
+    }
+    if (elided!=null && savedCuts.length>elided) {
+        // elided 0 ~ delete length ~ savedCuts[length-1]
+        // elided 1 ~ delete length-1 ~ savedCuts[length-1 -1]
+        // elided length-1 ~ delete 1 ~ savedCuts[0]
+        // elided length ~ delete 0 ~ proto.cut
+        savedCut=savedCuts[savedCuts.length-1-elided]
+    }
+    // generate
     for (let layerno = 0; layerno < proto.layer.length; layerno++) {
         const layer = proto.layer[layerno];
         if (layerno%2==0) {
@@ -1114,7 +1138,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
                 if (layer.hasOwnProperty(gi)) {
                     const gate = layer[gi];
                     if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
-                    if (elided!=null && gate.cut!=null && gate.cut<proto.cut-elided) continue;
+                    if (elided!=null && gate.cut!=null && gate.cut<=savedCut) continue;
                     text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${gate.q1} ${gate.q2}`)
                 }
             }
