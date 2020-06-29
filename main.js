@@ -422,7 +422,7 @@ StructDataClass.prototype.parseCResult = function (resultStr) {
 StructDataClass.prototype.searchPath=function () {
     let xsize,ysize,ndeep,edeep,max,min,q0x,q0y,prune,area,cost,start,end,cost2;
     let gg={xsize,ysize,ndeep,edeep,max,min,q0x,q0y,prune,area,cost,start,end,cost2}
-    scanInput=(gg)=>{
+    let scanInput=(gg)=>{
         gg.xsize=this.xsize+2
         gg.ysize=this.ysize+2
         gg.ndeep=this._ndeep()
