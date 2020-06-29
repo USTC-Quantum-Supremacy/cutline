@@ -177,29 +177,9 @@ var initscript=initscriptfunc.toString().split('///insert-initscriptfunc///')[1]
 
 
 function func_Run(){
-    var loadjs = function(src,callback){
-        var script = document.createElement('script');
-        script.src = src;
-        document.body.appendChild(script);
-        script.onload = function () {
-            callback();
-        }
-    }
-
-    var lnum=[0];
-    var tcb = function(){
-        if(++lnum[0]!==3)return;
-        var script = document.createElement('script');
-        script.innerHTML = converter.mainFile[5]+initscript;
-        document.body.appendChild(script);
-    }
-
-    loadjs('antlr-blockly/blockly_compressed.js',function(){
-        loadjs('antlr-blockly/blocks_compressed.js',tcb);
-        loadjs('antlr-blockly/javascript_compressed.js',tcb);
-        loadjs('antlr-blockly/zh-hans.js',tcb);
-        //loadjs('en.js',tcb);
-    });
+    var script = document.createElement('script');
+    script.innerHTML = converter.mainFile[5]+initscript;
+    document.body.appendChild(script);
 }
 
 function runOne(callback){
