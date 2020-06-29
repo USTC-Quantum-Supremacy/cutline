@@ -1046,7 +1046,7 @@ StructDataClass.prototype.calExpectation = function () {
 StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
     rand.reset()
     circle=Array.from(circle)
-    let proto={circle,depth,layer:[]}
+    let proto={circle,depth,layer:[],cut:0}
     let pushSingleLayer=()=>{
         let gates={}
         let layerno=proto.layer.length
@@ -1071,7 +1071,7 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
             const edge = this.edge(this.maxAreaEdges[eindex]);
             let pattern = circle[((layerno-1)/2)%circle.length]
             if (!pf(edge,pattern)) continue;
-            gates[eindex]={q1:edge.q1,q2:edge.q2}
+            gates[eindex]={q1:edge.q1,q2:edge.q2,cut:edge.isSplitEdge?proto.cut++:null}
         }
         proto.layer.push(gates)
     }
@@ -1087,7 +1087,7 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
  * 
  * @param {{String:Number[]}} gateArgs 
  */
-StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateArgs) {
+StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elided,gateArgs) {
     let text=[saveBitList.length]
     let existCheck={}
     saveBitList.forEach((v,i)=>existCheck[v]=i)
@@ -1114,6 +1114,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,gateA
                 if (layer.hasOwnProperty(gi)) {
                     const gate = layer[gi];
                     if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
+                    if (elided!=null && gate.cut!=null && gate.cut<proto.cut-elided) continue;
                     text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${gate.q1} ${gate.q2}`)
                 }
             }
@@ -1159,11 +1160,12 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         let simulationFilename=circuitInput.simulationFilename
         let mapFilename=circuitInput.mapFilename
         let cutFilename=circuitInput.cutFilename
+        let elided=circuitInput.elided===''?null:~~circuitInput.elided
         let circuitProto = this.generateCircuitProto(circle,depth)
-        let circuit = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber))
+        let circuit = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber),elided)
         let {cutText,mapText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut)
         if (outputFunc) {
-            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,mapFilename,cutFilename,circuitProto,circuit,cutText,mapText})
+            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,mapFilename,cutFilename,elided,circuitProto,circuit,cutText,mapText})
         }
     }
     return this
