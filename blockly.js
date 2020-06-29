@@ -202,7 +202,6 @@ function func_Run(){
     });
 }
 
-var grammerFile=''
 function runOne(callback){
     converter = new Converter().init();
     converter.generBlocks(grammerFile);
@@ -213,14 +212,16 @@ function runOne(callback){
     if(callback)callback();
 }
 
-var xhrg4=new XMLHttpRequest();
-xhrg4.onreadystatechange = function (){
-    if(xhrg4.readyState!=4) return;
-    if(xhrg4.status!=200) {
-        return;
-    }
-    grammerFile=xhrg4.responseText;
-    runOne(func_Run);
-}
-xhrg4.open('GET','CutlineInput.g4',true);
-xhrg4.send(null);
+// var grammerFile=''
+// var xhrg4=new XMLHttpRequest();
+// xhrg4.onreadystatechange = function (){
+//     if(xhrg4.readyState!=4) return;
+//     if(xhrg4.status!=200) {
+//         return;
+//     }
+//     grammerFile=xhrg4.responseText;
+//     runOne(func_Run);
+// }
+// xhrg4.open('GET','CutlineInput.g4',true);
+// xhrg4.send(null);
+runOne(func_Run);

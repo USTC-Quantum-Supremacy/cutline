@@ -3,10 +3,11 @@
 git clone
 cd cutline
 git submodule update --init --recursive antlr-blockly
-make
 python3 generateRandomNumber.py
 
 ## 搜索切割线
+
+c程序已放弃, 在js中实现
 
 1. 在剪枝的情况下看看一共有多少路径 main.cc run
 1. 在不剪枝的情况下看看一共有多少路径 mainall.cc run2

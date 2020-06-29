@@ -9,3 +9,9 @@ with open('random.js','w') as fid:
     fid.write(sourcestr.split('/// random list start ///')[0])
     fid.write(randstr)
     fid.write(sourcestr.split('/// random list end ///')[1])
+
+with open('CutlineInput.g4') as fid:
+    sourceg4=fid.read()
+with open('CutlineInput.g4.js','w') as fid:
+    fid.write('window.grammerFile=')
+    fid.write(json.dumps(sourceg4))
