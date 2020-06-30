@@ -1,11 +1,11 @@
 {
     "type": "prog",
     "xsize": "11",
-    "ysize": "11",
+    "ysize": "12",
     "use00": false,
     "brokenBits": "[]",
     "part1": "[]",
-    "depth": "18",
+    "depth": "16",
     "searchPattern": "012323010123230121",
     "errorRates": "[0.0016,0.0062,0.038]",
     "removedEntrances": "[]",
@@ -60,7 +60,7 @@
     "generatingCircuit": [
         {
             "type": "generatingCircuit",
-            "qubitNumber": 60,
+            "qubitNumber": 66,
             "elided": "0",
             "pattern": "IJKLKLIJIJKLKLIJKJ",
             "seed": 13874234,

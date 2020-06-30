@@ -10,7 +10,7 @@ let input=JSON.parse(fs.readFileSync('in/check18.json',{encoding:'utf-8'}))
 let sd=new StructDataClass();
 sd.import(input,{part1:'[]'})
 
-let unbalanceSearch=20
+let unbalanceSearch=14
 
 ;(()=>{
     let [ta,tb]=[sd._max(),sd._min()];
@@ -52,55 +52,7 @@ sd.searchPath()
 
 //// 指定pattern搜18层 ////////////////////////////////////////////////////////////
 /** @type {(pf,patterns)=>import('./main.js').StructDataClass} */
-let _calCutLengthWithWedge = function (pf,patterns) {
-    this.getPotentialWedgeList()
-    let wedge={}
-    for (let pi = 0; pi < patterns.length; pi++) {
-        const pattern = patterns[pi];
-        let [pb,pc,pd,pa]=[pattern[1][0],pattern[1][1],pattern[2][0],pattern[2][1]]
-        let ps={pb,pc,pd,pa}
-        let cutLengthOfPattern={pb:0,pc:0,pd:0,pa:0}
-        let edges=this.splitEdges
-        for (const key in cutLengthOfPattern) {
-            for (let ii = 0; ii < edges.length; ii++) {
-                const ei = this.edge(edges[ii])
-                if (pf(ei,ps[key])) {
-                    cutLengthOfPattern[key]++
-                }
-            }
-        }
-        let depth=~~this.input.depth
-        let cwedge1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc))
-        let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
-        let cwedge=0
-        let cut=0
-        // 
-        let tplpattern=this.input.searchPattern
-        let i2pmap={}
-        i2pmap[0]='pa'
-        i2pmap[1]='pb'
-        i2pmap[2]='pc'
-        i2pmap[3]='pd'
-        let i2p=index=>i2pmap[tplpattern[index%tplpattern.length]]
-        for (let index = 0; index < depth; index++) {
-            cut+=cutLengthOfPattern[i2p(index)]
-            if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {
-                cwedge+=cwedge1
-            }
-            if (index>=1 && i2p(index-1)==='pd' && i2p(index)==='pa') {
-                cwedge+=cwedge2
-            }
-        }
-        wedge[pattern[0]]={
-            length:cut-cwedge,
-            cut:cut,
-            wedge:cwedge,
-            wedges:[cwedge1,cwedge2],
-        }
-    }
-    this.wedge=wedge
-    return this
-}
+let _calCutLengthWithWedge = sd._calCutLengthWithWedge
 
 let _processCResult = function (circles,func,showProgress) {
     let list=[]

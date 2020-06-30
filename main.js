@@ -913,7 +913,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
         let cwedge=0
         let cut=0
-        //
+        // 
         let tplpattern=this.input.searchPattern
         let i2pmap={}
         i2pmap[0]='pa'
