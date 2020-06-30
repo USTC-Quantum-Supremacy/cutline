@@ -872,23 +872,28 @@ StructDataClass.prototype.getPotentialWedgeList = function (params) {
  * @param {(edge)=>Boolean} pf1 
  * @param {(edge)=>Boolean} pf2 
  */
-StructDataClass.prototype.calWedge = function (pf1,pf2) {
+StructDataClass.prototype.calWedge = function (pf1,pf2,used) {
     let count=0
     let edges=this.splitEdges
-    let used={}
     let list=this.potentialWedgeList
+    used=used==null?{}:used
     for (let index = 0; index < list.length; index++) {
         const li = list[index];
         if (used[li[0]] || used[li[1]]) continue;
-        let ei=this.edge(edges[li[0]])
-        let ej=this.edge(edges[li[1]])
-        if (pf1(ei)&&pf2(ej) || pf1(ej)&&pf2(ei)) {
+        let e0=this.edge(edges[li[0]])
+        let e1=this.edge(edges[li[1]])
+        if (pf1(e0)&&pf2(e1)) {
             used[li[0]]=1
+            used[li[1]]=2
+            count++
+        }
+        if (pf1(e1)&&pf2(e0)) {
+            used[li[0]]=2
             used[li[1]]=1
             count++
         }
     }
-    return count
+    return {count,used}
 }
 
 StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
@@ -909,8 +914,8 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
             }
         }
         let depth=~~this.input.depth
-        let cwedge1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc))
-        let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa))
+        let cwedge1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc)).count
+        let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa)).count
         let cwedge=0
         let cut=0
         // 
@@ -934,6 +939,9 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
             length:cut-cwedge,
             cut:cut,
             wedge:cwedge,
+            DCD:0,
+            start:cutLengthOfPattern[i2p(0)],
+            end:cutLengthOfPattern[i2p(depth-1)],
             wedges:[cwedge1,cwedge2],
         }
     }
