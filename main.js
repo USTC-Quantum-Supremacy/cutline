@@ -905,17 +905,19 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let ps={pb,pc,pd,pa}
         let cutLengthOfPattern={pb:0,pc:0,pd:0,pa:0}
         let edges=this.splitEdges
-        for (const key in cutLengthOfPattern) {
-            for (let ii = 0; ii < edges.length; ii++) {
-                const ei = this.edge(edges[ii])
+        for (let ii = 0; ii < edges.length; ii++) {
+            const ei = this.edge(edges[ii])
+            for (const key in cutLengthOfPattern) {
                 if (pf(ei,ps[key])) {
+                    ei.p=key
                     cutLengthOfPattern[key]++
+                    break
                 }
             }
         }
         let depth=~~this.input.depth
-        let cwedge1=this.calWedge(e=>pf(e,pb),e=>pf(e,pc)).count
-        let cwedge2=this.calWedge(e=>pf(e,pd),e=>pf(e,pa)).count
+        let {count:cwedge1}=this.calWedge(e=>e.p=='pb',e=>e.p=='pc')
+        let {count:cwedge2}=this.calWedge(e=>e.p=='pd',e=>e.p=='pa')
         let cwedge=0
         let cut=0
         // 
@@ -941,7 +943,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
             wedge:cwedge,
             DCD:0,
             start:cutLengthOfPattern[i2p(0)],
-            end:cutLengthOfPattern[i2p(depth-1)],
+            end:cutLengthOfPattern[i2p(depth-1)],// 还需要排除wedge和dcd
             wedges:[cwedge1,cwedge2],
         }
     }
