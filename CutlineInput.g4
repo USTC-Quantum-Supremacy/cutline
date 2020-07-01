@@ -84,7 +84,7 @@ var code = CutlineInputFunctions.defaultCode('markQi',eval('['+CutlineInputBlock
 orderlist : 'order' JsonStr 
 /* orderlist
 name : ['order']
-default : ['[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]']
+default : ['[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]']
 colour : this.markColor
 var code = CutlineInputFunctions.defaultCode('orderlist',eval('['+CutlineInputBlocks['orderlist'].args.join(',')+']'));
       return code;
