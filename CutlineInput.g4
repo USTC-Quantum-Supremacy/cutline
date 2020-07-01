@@ -8,13 +8,14 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         '> pattern' NormalStr? BGNL
         '> e1 e2 er' JsonStr BGNL
         '> removed entrances' JsonStr BGNL
+        '> n1-n2 no bigger than' Int BGNL
         '>' Search_List BGNL
         'show mark ~1(only for mark)' BGNL marks
         'show and define pattern ~n' BGNL patterns
         'generating circuit ~1' BGNL generatingCircuits
 /* prog
-name : ['xsize','ysize','use00','brokenBits','part1','depth','searchPattern','errorRates','removedEntrances','search','showMark','showPattern','generatingCircuit']
-default : ['12','11',true,'[]','[]','20','01232301','[0.0016,0.0062,0.038]','[]','prune']
+name : ['xsize','ysize','use00','brokenBits','part1','depth','searchPattern','errorRates','removedEntrances','balancedRange','search','showMark','showPattern','generatingCircuit']
+default : ['12','11',true,'[]','[]','20','01232301','[0.0016,0.0062,0.038]','[]',6,'prune']
 if (searchPattern==='') {
     throw "examples: 01232301, 0123, 012323010123230121"
 }

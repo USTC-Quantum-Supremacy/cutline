@@ -6,23 +6,13 @@ const execSync = require('child_process').execSync
 const fs = require('fs')
 
 let input=JSON.parse(fs.readFileSync('in/check18.json',{encoding:'utf-8'}))
-
+console.log(JSON.stringify(input,null,4))
 let sd=new StructDataClass();
-sd.import(input,{part1:'[]'})
 
 let unbalanceSearch=14
 
-;(()=>{
-    let [ta,tb]=[sd._max(),sd._min()];
-    while (ta-tb<=unbalanceSearch) {
-        ta++
-        tb--
-    }
-    ta--
-    tb++
-    sd._max=()=>ta
-    sd._min=()=>tb
-})();
+sd.import(input,{part1:'[]',balancedRange: unbalanceSearch})
+
 
 sd.searchPath()
 
@@ -50,58 +40,12 @@ sd.searchPath()
 // fs.writeFileSync('output/check18.txt',JSON.stringify({circuit,cutText,mapText,paths}))
 
 
-//// 指定pattern搜18层 ////////////////////////////////////////////////////////////
 /** @type {(pf,patterns)=>import('./main.js').StructDataClass} */
 let _calCutLengthWithWedge = sd._calCutLengthWithWedge
 
-let _processCResult = function (circles,func,showProgress) {
-    let list=[]
-    let result=this.CReturnPaths
-    // let circles = this.circles 
-    // let circles = this.bitStringCircles 
-    // let func= this.calCutLengthWithWedge
-    // let func = this.calCutLengthWithWedge_bitString
-    /** @type {import('./main.js').StructDataClass} */
-    let newins=new this.constructor().import(this.input,{part1:'[]'})
-    for (let index = 0; index < result.length; index++) {
-        const removeList = result[index];
-        list.push(newins.copy().setSplit(removeList))
-    }
-    let patternMin={};
-    list.forEach((v,i,a)=>{
-        if(showProgress)console.log(`${i+1} of ${a.length}`);
-        /** @type {import('./main.js').StructDataClass} */
-        let csd=v
-        func.call(csd)
-        circles.forEach(ps=>{
-            let pattern = ps[0]
-            let search_min=csd.wedge[pattern].length+Math.log2(2**(csd.unbalance/4+csd.maxAreaCount/2)+2**(-csd.unbalance/4+csd.maxAreaCount/2))/2-Math.log2(2**Math.ceil(csd.maxAreaCount/2)+2**Math.floor(csd.maxAreaCount/2))/2
-            let search_max=search_min
-            if (patternMin[pattern]==null || search_min<patternMin[pattern].search_min) {
-                patternMin[pattern]={
-                    split:csd.removeList,
-                    lengthInfo:csd.wedge[pattern],
-                    search_min:search_min, // for min
-                    search_max:search_max, // for max
-                    unbalance:csd.unbalance,
-                    pattern:ps,
-                }
-            }
-        })
-        delete a[i]
-    })
+let _processCResult = sd._processCResult 
 
-    let pi=circles.map(ps=>patternMin[ps[0]].search_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
-    let pattern=circles[pi][0]
-    newins.setSplit(patternMin[pattern].split)
-    newins.patternMaxMin=patternMin[pattern]
-    let output={
-        maxofmin:patternMin[pattern],
-        min:patternMin,
-        instance:newins
-    }
-    return output
-}
+//// 指定pattern搜18层 ////////////////////////////////////////////////////////////
 
 /** @type {()=>import('./main.js').StructDataClass} */
 let calCutLengthWithWedge = function (params) {
@@ -122,7 +66,7 @@ let calCutLengthWithWedge = function (params) {
 //// 所有pattern搜18层 ////////////////////////////////////////////////////////////
 
 sd=new StructDataClass();
-sd.import(input,{part1:'[]'})
+sd.import(input,{part1:'[]',balancedRange: unbalanceSearch})
 
 /** @type {()=>import('./main.js').StructDataClass} */
 let calCutLengthWithWedge_bitString = function (params) {

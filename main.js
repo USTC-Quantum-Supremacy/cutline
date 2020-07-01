@@ -89,6 +89,7 @@ StructDataClass.prototype.buildInput = function (params) {
         searchPattern:this.input.searchPattern||'01232301',
         errorRates:(this.input.errorRates||'[0.0016,0.0062,0.038]')+'',
         removedEntrances:JSON.stringify(this.removedStart||[]),
+        balancedRange:this.input.balancedRange==null?6:this.input.balancedRange,
         search:(this.input.search||'prune')+'',
         generatingCircuit:this.input.generatingCircuit||[],
         showMark:this.input.showMark||[],
@@ -293,7 +294,7 @@ StructDataClass.prototype.pickMaxArea = function (params) {
         }
     }
     this.maxArea=~~mai
-    this.maxAreaCount=man
+    this.n=man
     // 统计边
     let edges = []
     let currentCount=0
@@ -356,10 +357,10 @@ StructDataClass.prototype._edeep=function (params) {
     return this.choosen.length*2 
 }
 StructDataClass.prototype._max=function (params) {
-    return this.maxAreaCount-this._min()
+    return Math.floor((this.n+this.input.balancedRange)/2)
 }
 StructDataClass.prototype._min=function (params) {
-    return ~~(this.maxAreaCount/2-2.5)
+    return Math.ceil((this.n-this.input.balancedRange)/2)
 }
 StructDataClass.prototype._q0x=function (params) {
     return this.qi2xy(0).x+1
@@ -697,9 +698,11 @@ StructDataClass.prototype.setSplit = function (removeList) {
             }
         }
     }
-    if (removeList.length===0 || removeList.length===this.maxAreaCount) {
+    if (removeList.length===0 || removeList.length===this.n) {
         this.splitEdges=[]
-        this.unbalance=this.maxAreaCount*2
+        this.unbalance=this.n*2
+        this.n1=this.n
+        this.n2=0
         return this
     }
     // 找max并算失衡值
@@ -715,13 +718,15 @@ StructDataClass.prototype.setSplit = function (removeList) {
         }
     }
     let area2s=mk.split('_').map(v=>area2[~~v])
-    let unbalance=Math.abs(2*area2s[0]-this.maxAreaCount)+Math.abs(2*area2s[1]-this.maxAreaCount)
+    let unbalance=Math.abs(2*area2s[0]-this.n)+Math.abs(2*area2s[1]-this.n)
     for (let ei = 0; ei < edgemap[mk].length; ei++) {
         const edge = edgemap[mk][ei];
         this.edge(edge).isSplitEdge=1
     }
     this.splitEdges=edgemap[mk]
     this.unbalance=unbalance
+    this.n1=this.unbalance/4+this.n/2
+    this.n2=-this.unbalance/4+this.n/2
     //
     return this
 }
@@ -896,6 +901,25 @@ StructDataClass.prototype.calWedge = function (pf1,pf2,used) {
     return {count,used}
 }
 
+StructDataClass.prototype.getPotentialDCDList = function (params) {
+    let list = []
+    let edges=this.splitEdges
+    let _f = this.getAdjacent
+    for (let ii = 0; ii < edges.length; ii++) {
+        const ei = this.edge(edges[ii])
+        let pts=_f(this.qi2xy(qindex))
+        for (let index = 0,pt; pt=pts[index]; index++) {
+            
+        }
+    }
+    // let pts=_f(this.qi2xy(qindex))
+    this.potentialDCDList=list
+    return this
+}
+
+/**
+ * @param {(edge,pattern)=>Boolean} pf
+ */
 StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
     this.getPotentialWedgeList()
     let wedge={}
@@ -941,9 +965,9 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
             length:cut-cwedge,
             cut:cut,
             wedge:cwedge,
-            DCD:0,
+            DCD_unfinished:0,
             start:cutLengthOfPattern[i2p(0)],
-            end:cutLengthOfPattern[i2p(depth-1)],// 还需要排除wedge和dcd
+            end_unfinished:cutLengthOfPattern[i2p(depth-1)],// 还需要排除wedge和dcd
             wedges:[cwedge1,cwedge2],
         }
     }
@@ -986,14 +1010,17 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
         func.call(csd)
         circles.forEach(ps=>{
             let pattern = ps[0]
-            let length=csd.wedge[pattern].length+0.01*csd.unbalance
-            let length_max=csd.wedge[pattern].length-0.01*csd.unbalance
-            if (patternMin[pattern]==null || length<patternMin[pattern].length) {
+            let search_min=csd.wedge[pattern].length+Math.log2(2**(csd.n1)+2**(csd.n2))/2-Math.log2(2**Math.ceil(csd.n/2)+2**Math.floor(csd.n/2))/2
+            let search_max=search_min
+            if (patternMin[pattern]==null || search_min<patternMin[pattern].search_min) {
                 patternMin[pattern]={
                     split:csd.removeList,
                     lengthInfo:csd.wedge[pattern],
-                    length:length, // for min
-                    length_max:length_max, // for max
+                    search_min:search_min, // for min
+                    search_max:search_max, // for max
+                    unbalance:csd.unbalance,
+                    n1:csd.n1,
+                    n2:csd.n2,
                     pattern:ps,
                 }
             }
@@ -1001,7 +1028,7 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
         delete a[i]
     })
 
-    let pi=circles.map(ps=>patternMin[ps[0]].length_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
+    let pi=circles.map(ps=>patternMin[ps[0]].search_max).reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0)
     let pattern=circles[pi][0]
     newins.setSplit(patternMin[pattern].split)
     newins.patternMaxMin=patternMin[pattern]
@@ -1031,9 +1058,9 @@ StructDataClass.prototype.calExpectation = function () {
     let cal=eval(sd.input.errorRates)
     let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
     let p=Object.assign({
-        n1:this.unbalance/4+this.maxAreaCount/2,
-        n2:-this.unbalance/4+this.maxAreaCount/2,
-        n:this.maxAreaCount,
+        n1:this.n1,
+        n2:this.n2,
+        n:this.n,
         c:this.patternMaxMin.lengthInfo.length,
         b:this.maxAreaEdgeCount
     },{e1,e2,er,d})
