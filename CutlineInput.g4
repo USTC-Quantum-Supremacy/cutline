@@ -17,7 +17,7 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
 name : ['xsize','ysize','use00','brokenBits','part1','depth','searchPattern','errorRates','removedEntrances','balancedRange','search','showMark','showPattern','generatingCircuit']
 default : ['12','11',true,'[]','[]','20','01232301','[0.0016,0.0062,0.038]','[]',6,'prune']
 if (searchPattern==='') {
-    throw "examples: 01232301, 0123, 012323010123230121"
+    throw "examples: 01232301, 0123, 012323010123230121, 012323010123230103"
 }
 var code = CutlineInputFunctions.defaultCode('prog',eval('['+CutlineInputBlocks['prog'].args.join(',')+']'));
       return code;

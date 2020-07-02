@@ -13,3 +13,9 @@ run2:
 	./run input2.txt
 run3:
 	./run2 input3.txt
+win:
+	python generateRandomNumber.py
+linux:
+	python3 generateRandomNumber.py
+	node generateCircuit.js
+	7z a circuit.zip circuit peps_path

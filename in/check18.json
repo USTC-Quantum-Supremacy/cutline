@@ -1,7 +1,7 @@
 {
     "type": "prog",
     "xsize": "11",
-    "ysize": "12",
+    "ysize": "11",
     "use00": false,
     "brokenBits": "[]",
     "part1": "[]",
@@ -20,22 +20,22 @@
         {
             "type": "patternDefine",
             "pattern": "I",
-            "bitString": "0_0000011111"
-        },
-        {
-            "type": "patternDefine",
-            "pattern": "J",
             "bitString": "0_1111100000"
         },
         {
             "type": "patternDefine",
+            "pattern": "J",
+            "bitString": "0_0000011111"
+        },
+        {
+            "type": "patternDefine",
             "pattern": "K",
-            "bitString": "1_1111100000"
+            "bitString": "1_0000011111"
         },
         {
             "type": "patternDefine",
             "pattern": "L",
-            "bitString": "1_0000011111"
+            "bitString": "1_1111100000"
         },
         {
             "type": "patternA",

@@ -6,12 +6,21 @@ const execSync = require('child_process').execSync
 const fs = require('fs')
 
 let input=JSON.parse(fs.readFileSync('in/check18.json',{encoding:'utf-8'}))
-console.log(JSON.stringify(input,null,4))
 let sd=new StructDataClass();
 
-let unbalanceSearch=14
+let balancedRange=14
+let searchPattern='012323010123230121'
+searchPattern='012323010123230103'
 
-sd.import(input,{part1:'[]',balancedRange: unbalanceSearch})
+
+input.generatingCircuit[0].pattern=Array.from(searchPattern).map(v=>('IJKL')[v]).join('')
+input.depth=searchPattern.length+''
+input.part1='[]'
+input.balancedRange=balancedRange
+input.searchPattern=searchPattern
+console.log(JSON.stringify(sd.input,null,4))
+
+sd.import(input)
 
 
 sd.searchPath()
@@ -66,7 +75,7 @@ let calCutLengthWithWedge = function (params) {
 //// 所有pattern搜18层 ////////////////////////////////////////////////////////////
 
 sd=new StructDataClass();
-sd.import(input,{part1:'[]',balancedRange: unbalanceSearch})
+sd.import(input)
 
 /** @type {()=>import('./main.js').StructDataClass} */
 let calCutLengthWithWedge_bitString = function (params) {
