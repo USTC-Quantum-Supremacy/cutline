@@ -920,6 +920,26 @@ StructDataClass.prototype.getPotentialDCDList = function (params) {
 }
 
 /**
+ * @param {(edge)=>Boolean} pf
+ */
+StructDataClass.prototype.calDCD = function (pf,used0,used2) {
+    let count=0
+    let edges=this.splitEdges
+    let list=this.potentialDCDList
+    let used={}
+    for (let index = 0; index < list.length; index++) {
+        const li = list[index];
+        if (used0[li] || used2[li]) continue;
+        let ei=this.edge(edges[li])
+        if (pf(ei)) {
+            used[li]=true
+            count++
+        }
+    }
+    return {count,used}
+}
+
+/**
  * @param {(edge,pattern)=>Boolean} pf
  */
 StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
@@ -943,11 +963,11 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
             }
         }
         let depth=~~this.input.depth
-        let {count:cwedge1}=this.calWedge(e=>e.p=='pb',e=>e.p=='pc')
-        let {count:cwedge2}=this.calWedge(e=>e.p=='pd',e=>e.p=='pa')
         let cwedge=0
+        let DCD=0
         let cut=0
-        // 
+        let start=0
+        let end=0
         let tplpattern=this.input.searchPattern
         let i2pmap={}
         i2pmap[0]='pa'
@@ -955,23 +975,62 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         i2pmap[2]='pc'
         i2pmap[3]='pd'
         let i2p=index=>i2pmap[tplpattern[index%tplpattern.length]]
+        let toCheckWedge=(p0,p1)=>{
+            if (['pa','pb'].indexOf(p0)!==-1 && ['pc','pd'].indexOf(p1)!==-1) return true;
+            if (['pa','pb'].indexOf(p1)!==-1 && ['pc','pd'].indexOf(p0)!==-1) return true;
+            return false
+        }
+        let toCheckDCD=(p0,p1,p2)=>{
+            if (p0!==p2) return false;
+            if ({pb:'pa',pc:'pd',pd:'pc',pa:'pb'}[p0]===p1) {
+                return true;
+            }
+            return false
+        }
+        // 
+        let useds={0:{}}
         for (let index = 0; index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
-            if (index>=1 && i2p(index-1)==='pb' && i2p(index)==='pc') {
-                cwedge+=cwedge1
+            if (index==0) continue;
+            let p0=i2p(index),p1=i2p(index-1)
+            useds[index]={}
+            if (toCheckWedge(p0,p1)) {
+                let {count,used}=this.calWedge(e=>e.p==p1,e=>e.p==p0,Object.assign({},useds[index-1]))
+                cwedge+=count
+                for (const key in used) {
+                    const element = used[key];
+                    if (element===1) {
+                        useds[index-1][key]=true
+                    } else if (element===2) {
+                        useds[index][key]=true
+                    }
+                }
             }
-            if (index>=1 && i2p(index-1)==='pd' && i2p(index)==='pa') {
-                cwedge+=cwedge2
+            if (index==1) continue;
+            let p2=i2p(index-2)
+            if (toCheckDCD(p0,p1,p2)) {
+                let {count,used}=this.calDCD(e=>e.p==p0,useds[index],useds[index-2])
+                DCD+=count
+                Object.assign(useds[index],used)
+                Object.assign(useds[index-2],used)
+            }
+        }
+        for (let ii = 0; ii < edges.length; ii++) {
+            const ei = this.edge(edges[ii])
+            if (ei.p==i2p(0) && !useds[0][ii]) {
+                start++
+            }
+            if (ei.p==i2p(depth-1) && !useds[depth-1][ii]) {
+                end++
             }
         }
         wedge[pattern[0]]={
-            length:cut-cwedge,
+            length:cut-cwedge-DCD-start/2-end/2,
             cut:cut,
             wedge:cwedge,
-            DCD_unfinished:0,
-            start:cutLengthOfPattern[i2p(0)],
-            end_unfinished:cutLengthOfPattern[i2p(depth-1)],// 还需要排除wedge和dcd
-            wedges:[cwedge1,cwedge2],
+            DCD:DCD,
+            start:start,
+            end:end,
         }
     }
     this.wedge=wedge
