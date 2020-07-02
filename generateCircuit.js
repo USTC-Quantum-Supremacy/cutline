@@ -29,6 +29,16 @@ let tasks=[
     {n:[37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',m:'',s:''},
     {n:[66],d:[1],p:'IJCDCDIJ',c:'',m:'peps_path/sycamore.txt',s:''},
 ]
+
+/* 
+elided 4 layer 待加入生成
+12：ABCDCDABABCD;   
+14: ABCDCDABABCDCB;
+16：ABCDCDABABCDCDAB; 
+18：ABCDCDABABCDCDABCB
+
+*/
+
 inputs=[]
 tasks.forEach(t=>{
     t.n.forEach(n=>{

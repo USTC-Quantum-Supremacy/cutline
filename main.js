@@ -907,10 +907,12 @@ StructDataClass.prototype.getPotentialDCDList = function (params) {
     let _f = this.getAdjacent
     for (let ii = 0; ii < edges.length; ii++) {
         const ei = this.edge(edges[ii])
-        let pts=_f(this.qi2xy(qindex))
-        for (let index = 0,pt; pt=pts[index]; index++) {
-            
-        }
+        let [o1,o2]=[ei.q1,ei.q2].map(v=>this.qi2xy(v))
+        let [s1,s2]=[[o1,o2],[o2,o1]].map(v=>{
+            let [u1,u2]=v
+            return this.getxy({x:2*u1.x-u2.x,y:2*u1.y-u2.y}).area2||0
+        })
+        if(s1*s2===0)list.push(ii)
     }
     // let pts=_f(this.qi2xy(qindex))
     this.potentialDCDList=list
@@ -922,6 +924,7 @@ StructDataClass.prototype.getPotentialDCDList = function (params) {
  */
 StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
     this.getPotentialWedgeList()
+    this.getPotentialDCDList()
     let wedge={}
     for (let pi = 0; pi < patterns.length; pi++) {
         const pattern = patterns[pi];

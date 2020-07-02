@@ -115,6 +115,7 @@ function processCResult_page(result,showall,target) {
 
         let output = sd.processCResult()
         window.CResultOutput=output
+        window.ssd=output.instance
         console.log(output)
         let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
         output.instance.calExpectation()
