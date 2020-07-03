@@ -1,12 +1,12 @@
-const cutlineMain = require('./main.js')
-const StructDataClass = cutlineMain.StructDataClass
+// const cutlineMain = require('./main.js')
+// const StructDataClass = cutlineMain.StructDataClass
 
 const execSync = require('child_process').execSync
 
 const fs = require('fs')
 
-let inputTPL=JSON.parse(fs.readFileSync('in/check18.json',{encoding:'utf-8'}))
-let sd=new StructDataClass();
+let inputTPL=JSON.parse(fs.readFileSync('in/tasks_allcircles.json',{encoding:'utf-8'}))
+// let sd=new StructDataClass();
 
 
 let tasks=[
@@ -92,6 +92,7 @@ let dotask = async (tasks)=>{
         input.part1='[]'
         input.balancedRange=balancedRange
         input.searchPattern=searchPattern
+        input.xsize=xsize
 
         fs.writeFileSync('in/allcircles.json',JSON.stringify(input,null,4),{encoding:'utf-8'})
         await delay(50)
