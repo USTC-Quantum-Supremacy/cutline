@@ -97,10 +97,14 @@ let dotask = async (tasks)=>{
         fs.writeFileSync('in/allcircles.json',JSON.stringify(input,null,4),{encoding:'utf-8'})
         await delay(50)
         execSync(`screen -dmS ${screenName} -L -Logfile output/${screenName}.log node allcircles.js`)
+        // execSync(`screen -S ${screenName} -X quit`)
         await delay(50)
     }
 }
 dotask(tasks)
 /* 
+    submit (will kill the screen when it finish)
 screen -dmS abc -L -Logfile output/abc.log node allcircles.js
+    give up
+screen -S abc -X quit
 */
