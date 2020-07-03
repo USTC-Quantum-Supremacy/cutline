@@ -25,15 +25,43 @@ StructDataClass.prototype.splitEdges=[]
 StructDataClass.prototype.CInputFirstLine=''
 StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H','I','J','K','L']
 StructDataClass.prototype.circles=[
-    ['ABCDCDAB','BC','DA'],
-    ['BACDCDBA','AC','DB'],
-    ['ABEFEFAB','BE','FA'],
-    ['BAEFEFBA','AE','FB'],
-    ['GHCDCDGH','HC','DG'],
-    ['HGCDCDHG','GC','DH'],
-    ['GHEFEFGH','HE','FG'],
-    ['HGEFEFHG','GE','FH'],
-    ['IJKLKLIJ','JK','LI'],
+    ['ABCDCDAB','ABCD'],
+    ['BACDCDBA','BACD'],
+    ['ABEFEFAB','ABEF'],
+    ['BAEFEFBA','BAEF'],
+    ['GHCDCDGH','GHCD'],
+    ['HGCDCDHG','HGCD'],
+    ['GHEFEFGH','GHEF'],
+    ['HGEFEFHG','HGEF'],
+
+    ['ABDCDCAB','ABDC'],
+    ['BADCDCBA','BADC'],
+    ['ABFEFEAB','ABFE'],
+    ['BAFEFEBA','BAFE'],
+    ['GHDCDCGH','GHDC'],
+    ['HGDCDCHG','HGDC'],
+    ['GHFEFEGH','GHFE'],
+    ['HGFEFEHG','HGFE'],
+
+    ['CDABABCD','CDAB'],
+    ['CDBABACD','CDBA'],
+    ['EFABABEF','EFAB'],
+    ['EFBABAEF','EFBA'],
+    ['CDGHGHCD','CDGH'],
+    ['CDHGHGCD','CDHG'],
+    ['EFGHGHEF','EFGH'],
+    ['EFHGHGEF','EFHG'],
+
+    ['DCABABDC','DCAB'],
+    ['DCBABADC','DCBA'],
+    ['FEABABFE','FEAB'],
+    ['FEBABAFE','FEBA'],
+    ['DCGHGHDC','DCGH'],
+    ['DCHGHGDC','DCHG'],
+    ['FEGHGHFE','FEGH'],
+    ['FEHGHGFE','FEHG'],
+
+    ['IJKLKLIJ','IJKL'],
 ]
 StructDataClass.prototype.bitStringCircles=(()=>{
     let pa='0000000100'
@@ -41,7 +69,7 @@ StructDataClass.prototype.bitStringCircles=(()=>{
     let pc='0000000000'
     let pd='1111111111'
     return [
-        [pa+'_'+pc,['0_'+pb,'1_'+pc],['1_'+pd,'0_'+pa]]
+        ['0_'+pa+'_1_'+pc,['0_'+pa,'0_'+pb,'1_'+pc,'1_'+pd]]
     ]
 })()
 
@@ -834,17 +862,17 @@ StructDataClass.prototype.getBitStringCircles = function (params) {
     let asize=this.asize
     let csize=this.csize
     let circles=[]
-    for (let ai = 0; ai < 2**(asize-1); ai++) {
+    for (let ai = 0; ai < 2**asize; ai++) {
         let pa=(ai+2**asize).toString(2).slice(1)
         let pb=(-1-ai+2*2**asize).toString(2).slice(1)
-        for (let ci = 0; ci < 2**(csize-1); ci++) {
+        for (let ci = 0; ci < 2**csize; ci++) {
             let pc=(ci+2**csize).toString(2).slice(1)
             let pd=(-1-ci+2*2**csize).toString(2).slice(1)
-            // ['ABCDCDAB','BC','DA'],
-            // ['BACDCDBA','AC','DB'],
+            // ['ABCDCDAB','ABCD'],
+            // ['CDABABCD','CDAB'],
             circles.push(
-                [pa+'_'+pc,['0_'+pb,'1_'+pc],['1_'+pd,'0_'+pa]],
-                [pb+'_'+pc,['0_'+pa,'1_'+pc],['1_'+pd,'0_'+pb]]
+                ['0_'+pa+'_1_'+pc,['0_'+pa,'0_'+pb,'1_'+pc,'1_'+pd]],
+                ['1_'+pc+'_0_'+pa,['1_'+pc,'1_'+pd,'0_'+pa,'0_'+pb]],
             )
         }
     }
@@ -948,9 +976,9 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
     let wedge={}
     for (let pi = 0; pi < patterns.length; pi++) {
         const pattern = patterns[pi];
-        let [pb,pc,pd,pa]=[pattern[1][0],pattern[1][1],pattern[2][0],pattern[2][1]]
-        let ps={pb,pc,pd,pa}
-        let cutLengthOfPattern={pb:0,pc:0,pd:0,pa:0}
+        let [pa,pb,pc,pd]=Array.from(pattern[1])
+        let ps={pa,pb,pc,pd}
+        let cutLengthOfPattern={pa:0,pb:0,pc:0,pd:0}
         let edges=this.splitEdges
         for (let ii = 0; ii < edges.length; ii++) {
             const ei = this.edge(edges[ii])
@@ -982,7 +1010,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         }
         let toCheckDCD=(p0,p1,p2)=>{
             if (p0!==p2) return false;
-            if ({pb:'pa',pc:'pd',pd:'pc',pa:'pb'}[p0]===p1) {
+            if ({pa:'pb',pb:'pa',pc:'pd',pd:'pc'}[p0]===p1) {
                 return true;
             }
             return false

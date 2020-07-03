@@ -4,6 +4,7 @@ run
 run2
 /in/*.in
 /output/*.txt
+/output/*.log
 random.js
 ./syc*.txt
 /circuit/syc*.txt

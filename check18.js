@@ -55,7 +55,7 @@ let _calCutLengthWithWedge = sd._calCutLengthWithWedge
 
 let _processCResult = sd._processCResult 
 
-//// 指定pattern搜18层 ////////////////////////////////////////////////////////////
+//// 指定pattern ////////////////////////////////////////////////////////////
 
 /** @type {()=>import('./main.js').StructDataClass} */
 let calCutLengthWithWedge = function (params) {
@@ -68,12 +68,12 @@ let calCutLengthWithWedge = function (params) {
 ;(()=>{
     let func= calCutLengthWithWedge
     let pattern = sd.input.generatingCircuit[0].pattern
-    let circles = [[pattern,pattern.slice(1,3),pattern.slice(5,7)]]
+    let circles = [[pattern,pattern.slice(0,4)]]
     sd.constructor.prototype.circles=circles
     let output=_processCResult.apply(sd,[circles,func,false])
     console.log(output.maxofmin)
 })();
-//// 所有pattern搜18层 ////////////////////////////////////////////////////////////
+//// 所有pattern ////////////////////////////////////////////////////////////
 
 sd=new StructDataClass();
 sd.import(input)
