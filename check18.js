@@ -18,7 +18,8 @@ input.depth=searchPattern.length+''
 input.part1='[]'
 input.balancedRange=balancedRange
 input.searchPattern=searchPattern
-console.log(JSON.stringify(sd.input,null,4))
+
+console.log(JSON.stringify(input,null,4))
 
 sd.import(input)
 

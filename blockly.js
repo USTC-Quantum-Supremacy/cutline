@@ -51,7 +51,187 @@ var toolboxObj = {
     CutlineInputBlocks["patternDefine"].xmlText(),
     CutlineInputBlocks["patternNormal"].xmlText(),
     CutlineInputBlocks["generatingCircuit"].xmlText(),
-    CutlineInputBlocks["prog"].xmlText(),
+    '<label text="60bit"></label>',
+    CutlineInputFunctions.parser.parse({
+      "type": "prog",
+      "xsize": "11",
+      "ysize": "11",
+      "use00": false,
+      "brokenBits": "[]",
+      "part1": "[]",
+      "depth": "18",
+      "searchPattern": "012323010123230103",
+      "errorRates": "[0.0016,0.008,0.038]",
+      "removedEntrances": "[]",
+      "balancedRange": 6,
+      "search": "notprune",
+      "showMark": [
+          {
+              "type": "markQi"
+          }
+      ],
+      "showPattern": [
+          {
+              "type": "patternDefine",
+              "pattern": "I",
+              "bitString": "0_1011100010"
+          },
+          {
+              "type": "patternDefine",
+              "pattern": "J",
+              "bitString": "0_0100011101"
+          },
+          {
+              "type": "patternDefine",
+              "pattern": "K",
+              "bitString": "1_0100011101"
+          },
+          {
+              "type": "patternDefine",
+              "pattern": "L",
+              "bitString": "1_1011100010"
+          },
+          {
+              "type": "patternA",
+              "pattern": "I",
+              "color": "#ff9900"
+          },
+          {
+              "type": "patternA",
+              "pattern": "J",
+              "color": "#3333ff"
+          },
+          {
+              "type": "patternC",
+              "pattern": "K",
+              "color": "#009900"
+          },
+          {
+              "type": "patternC",
+              "pattern": "L",
+              "color": "#cc0000"
+          }
+      ],
+      "generatingCircuit": [
+          {
+              "type": "generatingCircuitNone"
+          }
+      ]
+    }),
+    '<label text="66bit"></label>',
+    CutlineInputFunctions.parser.parse({
+      "type": "prog",
+      "xsize": "12",
+      "ysize": "11",
+      "use00": false,
+      "brokenBits": "[]",
+      "part1": "[]",
+      "depth": "16",
+      "searchPattern": "01232301",
+      "errorRates": "[0.0016,0.008,0.038]",
+      "removedEntrances": "[]",
+      "balancedRange": 6,
+      "search": "notprune",
+      "showMark": [
+          {
+              "type": "markQi"
+          }
+      ],
+      "showPattern": [
+          {
+              "type": "patternDefine",
+              "pattern": "I",
+              "bitString": "0_0000000000"
+          },
+          {
+              "type": "patternDefine",
+              "pattern": "J",
+              "bitString": "0_1111111111"
+          },
+          {
+              "type": "patternDefine",
+              "pattern": "K",
+              "bitString": "1_0000001100"
+          },
+          {
+              "type": "patternDefine",
+              "pattern": "L",
+              "bitString": "1_1111110011"
+          },
+          {
+              "type": "patternA",
+              "pattern": "I",
+              "color": "#ff9900"
+          },
+          {
+              "type": "patternA",
+              "pattern": "J",
+              "color": "#3333ff"
+          },
+          {
+              "type": "patternC",
+              "pattern": "K",
+              "color": "#009900"
+          },
+          {
+              "type": "patternC",
+              "pattern": "L",
+              "color": "#cc0000"
+          }
+      ],
+      "generatingCircuit": [
+          {
+              "type": "generatingCircuitNone"
+          }
+      ]
+    }),
+    '<label text="google"></label>',
+    CutlineInputFunctions.parser.parse({
+      "type": "prog",
+      "xsize": "12",
+      "ysize": "9",
+      "use00": true,
+      "brokenBits": "[3]",
+      "part1": "[]",
+      "depth": "20",
+      "searchPattern": "01232301",
+      "errorRates": "[0.0016,0.0062,0.038]",
+      "removedEntrances": "[]",
+      "balancedRange": 6,
+      "search": "notprune",
+      "generatingCircuit": [
+          {
+              "type": "generatingCircuitNone"
+          }
+      ],
+      "showMark": [
+          {
+              "type": "markQi"
+          }
+      ],
+      "showPattern": [
+          {
+              "type": "patternA",
+              "pattern": "A",
+              "color": "#ff9900"
+          },
+          {
+              "type": "patternA",
+              "pattern": "B",
+              "color": "#3333ff"
+          },
+          {
+              "type": "patternC",
+              "pattern": "C",
+              "color": "#009900"
+          },
+          {
+              "type": "patternC",
+              "pattern": "D",
+              "color": "#cc0000"
+          }
+      ]
+    }),
   ],
 //   "value" : [
 //     // 所有值块
