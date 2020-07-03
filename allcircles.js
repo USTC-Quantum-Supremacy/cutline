@@ -26,7 +26,7 @@ sd.searchPath()
 //     let newins=new this.constructor().import(this.input,{part1:'[]'})
 //     for (let index = 0; index < result.length; index++) {
 //         const removeList = result[index];
-//         list.push(newins.copy().setSplit(removeList).splitEdges)
+//         list.push(newins.copyThis().setSplit(removeList).splitEdges)
 //     }
 //     return list
 // }
@@ -47,7 +47,7 @@ let _processCResult = sd._processCResult
 
 /** @type {()=>import('./main.js').StructDataClass} */
 let calCutLengthWithWedge = function (params) {
-    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
+    let pf=(edge,pattern)=>edge.isPattern[pattern]
     let patterns=this.circles
     _calCutLengthWithWedge.apply(this,[pf,patterns])
     return this

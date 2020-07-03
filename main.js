@@ -146,25 +146,50 @@ StructDataClass.prototype.getPatternSize = function (params) {
     return this
 }
 
+/**
+ * 深拷贝一个对象
+ */
+StructDataClass.prototype.clone = function (data) {
+    if (data==null) return null;
+    // array
+    if (data instanceof Array) {
+        var copy = [];
+        for (var i in data) {
+            copy[i] = this.clone(data[i]);
+        }
+        return copy;
+    }
+    // object
+    if (data instanceof Object) {
+        var copy = {};
+        for (var i in data) {
+            if (data.hasOwnProperty(i) && !(data instanceof Function))
+                copy[i] = this.clone(data[i]);
+        }
+        return copy;
+    }
+    return data;
+}
+
 StructDataClass.prototype.initmap=function (params) {
-    this.map=Array.from({length:this.xsize+2}).map(v=>Array.from({length:this.ysize+2}).map(v=>JSON.parse(JSON.stringify(this.defaultElement))))
+    this.map=Array.from({length:this.xsize+2}).map(v=>Array.from({length:this.ysize+2}).map(v=>this.clone(this.defaultElement)))
     this.edge_dict={}
     // 移除unused
     for (let yindex = 0; yindex < this.ysize+2; yindex++) {
         for (let xindex = 0; xindex < this.xsize+2; xindex++) {
             if ((xindex+yindex)%2===~~this.use00) { //(0+0)%2 === 1 ~> false
-                this.map[xindex][yindex]=JSON.parse(JSON.stringify(this.unusedElement))
+                this.map[xindex][yindex]=this.clone(this.unusedElement)
             }
         }
     }
     // 移除边界
     for (let index = 0; index < this.xsize+2; index++) {
         this.map[index][0]=this.boundaryElement
-        this.map[index][this.ysize+1]=JSON.parse(JSON.stringify(this.boundaryElement))
+        this.map[index][this.ysize+1]=this.clone(this.boundaryElement)
     }
     for (let index = 0; index < this.ysize+2; index++) {
         this.map[0][index]=this.boundaryElement
-        this.map[this.xsize+1][index]=JSON.parse(JSON.stringify(this.boundaryElement))
+        this.map[this.xsize+1][index]=this.clone(this.boundaryElement)
     }
     // 标qi序号
     let qindex=0;
@@ -215,11 +240,13 @@ StructDataClass.prototype.edge=function (q1,q2) {
     if (q1>q2) {
         [q1,q2]=[q2,q1]
     }
-    let key=q1+'_'+q2
-    if (this.edge_dict[key]==null) {
-        this.edge_dict[key]={q1,q2}
+    if (this.edge_dict[q1]==null) {
+        this.edge_dict[q1]={}
     }
-    return this.edge_dict[key]
+    if (this.edge_dict[q1][q2]==null) {
+        this.edge_dict[q1][q2]={q1,q2}
+    }
+    return this.edge_dict[q1][q2]
 }
 
 StructDataClass.prototype.getAdjacent=function (o) {
@@ -682,9 +709,10 @@ StructDataClass.prototype.searchPath=function () {
 /**
  * @returns {StructDataClass}
  */
-StructDataClass.prototype.copy = function (params) {
+StructDataClass.prototype.copyThis = function (params) {
     let copy=new this.constructor()
-    Object.assign(copy,JSON.parse(JSON.stringify(this)))
+    .import(this.input)
+    // Object.assign(copy,this.clone(this))
     return copy
 }
 
@@ -708,6 +736,13 @@ StructDataClass.prototype.setSplit = function (removeList) {
             area2[1]++
         }
     }
+    if (removeList.length===0 || removeList.length===this.n) {
+        this.splitEdges=[]
+        this.unbalance=this.n*2
+        this.n1=this.n
+        this.n2=0
+        return this
+    }
     // 不同色则加边
     let edgemap={}
     for (let qindex = 0; qindex < this.bitCount; qindex++) {
@@ -725,13 +760,6 @@ StructDataClass.prototype.setSplit = function (removeList) {
                 edgemap[key].push(edge)
             }
         }
-    }
-    if (removeList.length===0 || removeList.length===this.n) {
-        this.splitEdges=[]
-        this.unbalance=this.n*2
-        this.n1=this.n
-        this.n2=0
-        return this
     }
     // 找max并算失衡值
     let mk;
@@ -819,7 +847,8 @@ StructDataClass.prototype.pushPatterns = function (params) {
         let patterns = this.calPatterns(this.qi2xy(edge.q1),this.qi2xy(edge.q2))
         for (let pi = 0; pi < patterns.length; pi++) {
             const pattern = patterns[pi];
-            edge['isPattern_'+pattern]=1
+            if (edge.isPattern==null) edge.isPattern={};
+            edge.isPattern[pattern]=1
         }
     }
     return this
@@ -997,11 +1026,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
         let start=0
         let end=0
         let tplpattern=this.input.searchPattern
-        let i2pmap={}
-        i2pmap[0]='pa'
-        i2pmap[1]='pb'
-        i2pmap[2]='pc'
-        i2pmap[3]='pd'
+        let i2pmap=['pa','pb','pc','pd']
         let i2p=index=>i2pmap[tplpattern[index%tplpattern.length]]
         let toCheckWedge=(p0,p1)=>{
             if (['pa','pb'].indexOf(p0)!==-1 && ['pc','pd'].indexOf(p1)!==-1) return true;
@@ -1066,7 +1091,7 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
 }
 
 StructDataClass.prototype.calCutLengthWithWedge = function (params) {
-    let pf=(edge,pattern)=>edge['isPattern_'+pattern]
+    let pf=(edge,pattern)=>edge.isPattern[pattern]
     let patterns=this.circles
     this._calCutLengthWithWedge(pf,patterns)
     return this
@@ -1090,7 +1115,7 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
     let newins=new this.constructor().import(this.input,{part1:'[]'})
     for (let index = 0; index < result.length; index++) {
         const removeList = result[index];
-        list.push(newins.copy().setSplit(removeList))
+        list.push(newins.copyThis().setSplit(removeList))
     }
     let patternMin={};
     list.forEach((v,i,a)=>{
@@ -1193,7 +1218,7 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
     let pushDoubleLayer=()=>{
         let gates={}
         let layerno=proto.layer.length
-        let pf=(edge,pattern)=>edge['isPattern_'+pattern]
+        let pf=(edge,pattern)=>edge.isPattern[pattern]
         for (let eindex = 0; eindex < this.maxAreaEdges.length; eindex++) {
             const edge = this.edge(this.maxAreaEdges[eindex]);
             let pattern = circle[((layerno-1)/2)%circle.length]
@@ -1409,7 +1434,7 @@ VisualClass.prototype.calPatterns = function (q1,q2) {
     let patterns=[]
     for (let pi = 0; pi < this.data.patterns.length; pi++) {
         const pattern = this.data.patterns[pi];
-        if (edge['isPattern_'+pattern]) {
+        if (edge.isPattern[pattern]) {
             patterns.push(pattern)
         }
     }

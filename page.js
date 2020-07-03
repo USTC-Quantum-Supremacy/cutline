@@ -103,10 +103,11 @@ function processCResult_page(result,showall,target) {
             result=sd.CReturnPaths
         }
         let list=[]
+        /** @type {import('./main.js').StructDataClass} */
         let newins=new sd.constructor().import(sd.input,{part1:'[]'})
         for (let index = 0; index < Math.min(showall,result.length); index++) {
             const removeList = result[index];
-            list.push(newins.copy().setSplit(removeList))
+            list.push(newins.copyThis().setSplit(removeList))
         }
         let viewList=list.map(v=>new view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
         document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
