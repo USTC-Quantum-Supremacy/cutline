@@ -1442,7 +1442,7 @@ VisualClass.prototype.calPatterns = function (q1,q2) {
     let patterns=[]
     for (let pi = 0; pi < this.data.patterns.length; pi++) {
         const pattern = this.data.patterns[pi];
-        if (edge.isPattern[pattern]) {
+        if (edge.isPattern && edge.isPattern[pattern]) {
             patterns.push(pattern)
         }
     }
