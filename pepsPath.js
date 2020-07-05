@@ -114,13 +114,13 @@ while队列非空
  * 
  * edgeMax 最大的边数
  * Queue 优先队列,次数小的先出队
- * Map 点集->计算次数
+ * Map 存是否已经使用过
  * 把所有({边界点},[边界点],0)加入队列
  * while队列非空
  * >取队首 (点集,顺序,次数)
- * >如果map(点集)非空 且 次数大于map(点集)或贪心的次数
+ * >如果map(点集)非空
  * >>continue
- * >map(点集)设为次数
+ * >map(点集)设为true
  * >如果:全满
  * >>得到结果(顺序,次数)
  * >否则:对于每个满足前提的扩张新点:
@@ -141,8 +141,8 @@ let searchPepsOrder=function (edgeDimension) {
     let n = this.n
 
     let mainBFS=()=>{
-        /** 存计算次数 */
-        let map1={}
+        /** 存是否已经使用过 */
+        let map1=Object.create(null)
         /** 优先队列,次数小的先出队 [(点集,顺序,次数)...] */
         let queue={
             data:new PriorityQueue().init((a,b)=>b[2]-a[2],1000000),
@@ -158,8 +158,8 @@ let searchPepsOrder=function (edgeDimension) {
         while (queue.size()) {
             let [area,order,times]=queue.shift()
             let key=area.join('')
-            if (map1[key]!=null && times>=map1[key]) continue;
-            map1[key]=times
+            if (map1[key]===true) continue;
+            map1[key]=true
             if (order.length===n) {
                 return {times,order}
             } else {
@@ -172,9 +172,16 @@ let searchPepsOrder=function (edgeDimension) {
         }
         return {times:null,order:[]}
     }
+    /**
+     * @returns {Number[]} [pt...]
+     */
     let initalBoundaryPoints = ()=>{
 
     }
+    /**
+     * @param {Number[]} area
+     * @returns {Number[][]} [(pt,times)...]
+     */
     let newPoints = (area)=>{
 
     }
