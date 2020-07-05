@@ -153,16 +153,24 @@ StructDataClass.prototype.clone = function (data) {
     if (data==null) return null;
     // array
     if (data instanceof Array) {
-        var copy = [];
-        for (var i in data) {
+        let copy = [];
+        for (let i in data) {
             copy[i] = this.clone(data[i]);
         }
         return copy;
     }
+    // // Map
+    // if (data instanceof Map) {
+    //     let copy = new Map();
+    //     for (let [k,v] of data) {
+    //         copy.set(this.clone(k),this.clone(v));
+    //     }
+    //     return copy;
+    // }
     // object
     if (data instanceof Object) {
-        var copy = {};
-        for (var i in data) {
+        let copy = {};
+        for (let i in data) {
             if (data.hasOwnProperty(i) && !(data instanceof Function))
                 copy[i] = this.clone(data[i]);
         }
