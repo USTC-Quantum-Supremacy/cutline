@@ -107,12 +107,67 @@ let searchPepsOrder=function (edgeDimension) {
 
     /** @type {import('./main.js').StructDataClass} */
     let sd=this
-    let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
-    edgeDimension.forEach(v => sd.edge(orderList[v[0]],orderList[v[1]]).pepsDimension=v[2]);
-    
-    
-    let n = this.n
-    let mainBFS=()=>{
+    let n,qubit,qubits,edge;
+    let gs={n,qubit,qubits,edge};
+    let buildGraphStructure=(gs,edgeDimension)=>{
+        let edge={}
+        let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
+        edgeDimension.forEach(v => {
+            let a=orderList[v[0]],b=orderList[v[1]];
+            if (a>b) {
+                [a,b]=[b,a]
+            }
+            if(edge[a]==null)edge[a]={};
+            edge[a][b]=v[2]
+        });
+        let n=sd.input.generatingCircuit[0].qubitNumber
+        let qubits=orderList.slice(0,n)
+        n=qubits.length
+        let broken=Array.from({length:sd.bitCount}).map((v,i)=>i).filter(v=>qubits.indexOf(v)===-1)
+        /** @type {import('./main.js').StructDataClass} */
+        let tsd=new sd.constructor().import(sd.input,{brokenBits:JSON.stringify(broken),part1:'[]'})
+        let qubit={}
+        for (let qi of qubits) {
+            let o=tsd.qi2xy(qi)
+            let q={
+                qi,
+                link:[],
+                weakLink:[],
+            }
+            let _f1=(o)=>[
+                {x:o.x-1,y:o.y-1},                {x:o.x-1,y:o.y+1},
+                               
+                {x:o.x+1,y:o.y-1},                {x:o.x+1,y:o.y+1},
+            ]
+            _f1(o).forEach(v=>{
+                let tq=tsd.getxy(v)
+                if (tq.save) {
+                    q.link.push(tq.qi)
+                }
+            })
+            qubit[qi]=q
+        }
+        for (let qi of qubits) {
+            let o=tsd.qi2xy(qi)
+            let q=qubit[qi]
+            let _f2=(o)=>[
+                                  {x:o.x-2,y:o.y}, 
+                {x:o.x-0,y:o.y-2},                {x:o.x-0,y:o.y+2},
+                                  {x:o.x+2,y:o.y}
+            ]
+            if (q.link.length!==4) {
+                _f2(o).forEach(v=>{
+                    let tq=tsd.getxy(v)
+                    if (tq.save && qubit[tq.qi].link.length!==4) {
+                        q.weakLink.push(tq.qi)
+                    }
+                })
+            }
+        }
+        Object.assign(gs,{n,qubit,qubits,edge})
+    }
+    let mainBFS=(gs)=>{
+        let n=gs.n
         /** 存是否已经使用过 */
         let map1=Object.create(null)
         /** 优先队列,次数小的先出队 [(点集,顺序,次数)...] */
@@ -122,7 +177,7 @@ let searchPepsOrder=function (edgeDimension) {
             shift:function(){return this.data.poll()},
             size:function(){return this.data.length},
         }
-        for (const v of initalBoundaryPoints()) {
+        for (const v of initalBoundaryPoints(gs)) {
             let area=Array.from({length:n}).map(v=>0)
             area[v]=1
             queue.push([area,[v],0])
@@ -135,7 +190,7 @@ let searchPepsOrder=function (edgeDimension) {
             if (order.length===n) {
                 return {times,order}
             } else {
-                for(const [v,t] of newPoints(area)){
+                for(const [v,t] of newPoints(gs,area)){
                     let newArea=Array.from(area)
                     newArea[v]=1
                     queue.push([newArea,order.concat([v]),times+t])
@@ -147,14 +202,14 @@ let searchPepsOrder=function (edgeDimension) {
     /**
      * @returns {Number[]} [pt...]
      */
-    let initalBoundaryPoints = ()=>{
-
+    let initalBoundaryPoints = (gs)=>{
+        return gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
     }
     /**
      * @param {Number[]} area
      * @returns {Number[][]} [(pt,times)...]
      */
-    let newPoints = (area)=>{
+    let newPoints = (gs,area)=>{
 
     }
 }
