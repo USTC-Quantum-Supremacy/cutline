@@ -108,13 +108,14 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
 
     /** @type {import('./main.js').StructDataClass} */
     let sd=this
-    let n,qubit,qubits,edge;
-    let gs={n,qubit,qubits,edge};
+    let n,qubit,qubits,edge,bitCount;
+    let gs={n,qubit,qubits,edge,bitCount};
     let buildGraphStructure=(gs)=>{
         edgeDimension=edgeDimension
         let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
         let n=sd.input.generatingCircuit[0].qubitNumber
         let cutInput=eval(sd.input.generatingCircuit[0].pepsCut)
+        let bitCount=sd.bitCount
 
         let cut_obj={}
         cutInput.map((v,i,a)=>[v,a[i+1]]).filter((v,i)=>i%2===0).forEach(v=>{
@@ -189,10 +190,11 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
                 })
             }
         }
-        Object.assign(gs,{n,qubit,qubits,edge})
+        Object.assign(gs,{n,qubit,qubits,edge,bitCount})
     }
     let mainBFS=(gs)=>{
         let n=gs.n
+        let bitCount=gs.bitCount
         /** 存是否已经使用过 */
         let map1=Object.create(null)
         /** 优先队列,次数小的先出队 [(点集,顺序,次数)...] */
@@ -203,16 +205,25 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             size:function(){return this.data.length},
         }
         for (const v of initalBoundaryPoints(gs)) {
-            let area=Array.from({length:n}).map(v=>0)
+            let area=Array.from({length:bitCount}).map(v=>0)
             area[v]=1
             queue.push([area,[v],0])
         }
+        let count=0
+        let ecount=0
+        console.log('count ecount size')
+        console.log('-----------------')
         while (queue.size()) {
+            if (++count%10000==0) {
+                console.log(count,ecount,queue.size())
+            }
             let [area,order,times]=queue.shift()
             let key=area.join('')
             if (map1[key]===true) continue;
             map1[key]=true
+            ecount++
             if (order.length===n) {
+                console.log(count,ecount,queue.size())
                 return {times,order}
             } else {
                 for(const [v,t] of newPoints(gs,area)){
@@ -222,6 +233,7 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
                 }
             }
         }
+        console.log(count,ecount,queue.size())
         return {times:null,order:[]}
     }
     /**
@@ -231,17 +243,17 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         return gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
     }
     /**
-     * @param {Number[]} area
+     * @param {Number[]} area_
      * @returns {Number[][]} [(pt,times)...]
      */
-    let newPoints = (gs,area)=>{
+    let newPoints = (gs,area_)=>{
         edgeMax=edgeMax
-        area=Array.from(area)
+        area=Array.from(area_)
         let edges=[1]
         let pts=[]
         for (const qi of gs.qubits) {
             const used = area[qi];
-            if (!used) continue;
+            if (used!==1) continue;
             for (const qj of gs.qubit[qi].link) {
                 if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
                 if (area[qj]) break;
@@ -273,8 +285,8 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         return pts.filter(v=>v[1]>=0)
     }
     buildGraphStructure(gs)
-    throw '需要加入debug信息, 看进度节点数等等'
     let result = mainBFS(gs)
     return result
 }
-searchPepsOrder.apply(sd,[edgeDimension,11])
+let result = searchPepsOrder.apply(sd,[edgeDimension,7])
+console.log(JSON.stringify(result))
