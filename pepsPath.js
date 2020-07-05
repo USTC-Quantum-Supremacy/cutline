@@ -110,8 +110,28 @@ let searchPepsOrder=function (edgeDimension) {
     let n,qubit,qubits,edge;
     let gs={n,qubit,qubits,edge};
     let buildGraphStructure=(gs,edgeDimension)=>{
-        let edge={}
         let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
+        let n=sd.input.generatingCircuit[0].qubitNumber
+        let cutInput=eval(sd.input.generatingCircuit[0].pepsCut)
+
+        let cut_obj={}
+        cutInput.map((v,i,a)=>[v,a[i+1]]).filter((v,i)=>i%2===0).forEach(v=>{
+            let a=v[0],b=v[1];
+            if (a>b) {
+                [a,b]=[b,a]
+            }
+            if(cut_obj[a]==null)cut_obj[a]={};
+            cut_obj[a][b]=true
+        })
+        let cut=(a,b)=>{
+            if (a>b) {
+                [a,b]=[b,a]
+            }
+            if(cut_obj[a]==null)return false
+            return cut_obj[a][b]===true
+        }
+
+        let edge={}
         edgeDimension.forEach(v => {
             let a=orderList[v[0]],b=orderList[v[1]];
             if (a>b) {
@@ -120,7 +140,7 @@ let searchPepsOrder=function (edgeDimension) {
             if(edge[a]==null)edge[a]={};
             edge[a][b]=v[2]
         });
-        let n=sd.input.generatingCircuit[0].qubitNumber
+        
         let qubits=orderList.slice(0,n)
         n=qubits.length
         let broken=Array.from({length:sd.bitCount}).map((v,i)=>i).filter(v=>qubits.indexOf(v)===-1)
@@ -141,7 +161,7 @@ let searchPepsOrder=function (edgeDimension) {
             ]
             _f1(o).forEach(v=>{
                 let tq=tsd.getxy(v)
-                if (tq.save) {
+                if (tq.save && !cut(qi,tq.qi)) {
                     q.link.push(tq.qi)
                 }
             })
@@ -210,7 +230,24 @@ let searchPepsOrder=function (edgeDimension) {
      * @returns {Number[][]} [(pt,times)...]
      */
     let newPoints = (gs,area)=>{
-
+        area=Array.from(area)
+        let pts=[]
+        for (const qi of gs.qubits) {
+            const used = area[qi];
+            if (!used) continue;
+            for (const qj of gs.qubit[qi].link) {
+                if (area[qj]) return;
+                links.push(qj)
+                area[qj]=2
+            }
+            for (const qj of gs.qubit[qi].weakLink) {
+                if (area[qj]) return;
+                weakLinks.push(qj)
+                area[qj]=2
+            }
+        }
+        throw 'unfinished'
     }
+    throw 'unfinished'
 }
 searchPepsOrder.apply(sd,[edgeDimension])
