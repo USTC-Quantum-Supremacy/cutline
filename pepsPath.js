@@ -65,7 +65,7 @@ PriorityQueue.prototype._exch = function(i, j){
     this._pq[j] = temp;
 }
 
-const fs = require('fs')
+const fs = require('fs');
 
 let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
 let edgeDimension=JSON.parse(fs.readFileSync('../callMeteor/output/s2.json',{encoding:'utf-8'}))
@@ -78,8 +78,8 @@ sd.import(input)
 
 /**
  * 前提:
- * 最优路径的任意时刻边数不超过edgeMax(此图为11)
- * 最优路径的任意时刻都是联通整体,最多再有一个几乎联通的在边界的比特并且下一步就能联通
+ * 1.最优路径的任意时刻边数不超过edgeMax(此图为11)
+ * 2.最优路径的任意时刻都是联通整体,最多再有一个几乎联通的在边界的比特并且下一步就能联通
  * 
  * 伪代码:
  * 
@@ -101,15 +101,17 @@ sd.import(input)
  * 正常时为66*2^66
  * 由于前提的存在使得edgeMax为11,点集数为10万左右
  * @param {Number[][]} edgeDimension [[mapQ1,mapQ2,dimension]...]
+ * @param {Number} edgeMax 
  */
-let searchPepsOrder=function (edgeDimension) {
+let searchPepsOrder=function (edgeDimension,edgeMax) {
     // prepare
 
     /** @type {import('./main.js').StructDataClass} */
     let sd=this
     let n,qubit,qubits,edge;
     let gs={n,qubit,qubits,edge};
-    let buildGraphStructure=(gs,edgeDimension)=>{
+    let buildGraphStructure=(gs)=>{
+        edgeDimension=edgeDimension
         let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
         let n=sd.input.generatingCircuit[0].qubitNumber
         let cutInput=eval(sd.input.generatingCircuit[0].pepsCut)
@@ -177,6 +179,9 @@ let searchPepsOrder=function (edgeDimension) {
             ]
             if (q.link.length!==4) {
                 _f2(o).forEach(v=>{
+                    if (v.x+1<0||v.x+1>tsd.xsize+1||v.y+1<0||v.y+1>tsd.ysize+1) {
+                        return
+                    }
                     let tq=tsd.getxy(v)
                     if (tq.save && qubit[tq.qi].link.length!==4) {
                         q.weakLink.push(tq.qi)
@@ -230,24 +235,46 @@ let searchPepsOrder=function (edgeDimension) {
      * @returns {Number[][]} [(pt,times)...]
      */
     let newPoints = (gs,area)=>{
+        edgeMax=edgeMax
         area=Array.from(area)
+        let edges=[1]
         let pts=[]
         for (const qi of gs.qubits) {
             const used = area[qi];
             if (!used) continue;
             for (const qj of gs.qubit[qi].link) {
-                if (area[qj]) return;
-                links.push(qj)
+                if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
+                if (area[qj]) break;
+                pts.push([qj])
                 area[qj]=2
             }
             for (const qj of gs.qubit[qi].weakLink) {
-                if (area[qj]) return;
-                weakLinks.push(qj)
+                if (area[qj]) break;
+                pts.push([qj])
                 area[qj]=2
             }
         }
-        throw 'unfinished'
+        let times=edges.reduce((p,c)=>p*c)
+        let count=edges.length-1
+        for (const ptarr of pts) {
+            // 先暂时放宽前提2看看效果
+            const qi=ptarr[0]
+            let edges=[times]
+            for (const qj of gs.qubit[qi].link) {
+                if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
+            }
+            let ncount=edges.length-1+count
+            if (ncount>edgeMax) {
+                ptarr.push(-1)
+            } else {
+                ptarr.push(edges.reduce((p,c)=>p*c))
+            }
+        }
+        return pts.filter(v=>v[1]>=0)
     }
-    throw 'unfinished'
+    buildGraphStructure(gs)
+    throw '需要加入debug信息, 看进度节点数等等'
+    let result = mainBFS(gs)
+    return result
 }
-searchPepsOrder.apply(sd,[edgeDimension])
+searchPepsOrder.apply(sd,[edgeDimension,11])
