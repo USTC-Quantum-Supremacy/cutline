@@ -1,3 +1,4 @@
+// node --max-old-space-size=4096  pepsPath.js
 const cutlineMain = require('./main.js')
 const StructDataClass = cutlineMain.StructDataClass
 
@@ -76,6 +77,10 @@ console.log(JSON.stringify(input,null,4))
 
 sd.import(input)
 
+
+debugorder=(order)=>'['+order.join(',')+']'
+debugarea=(area)=>debugorder(area.map((v,i)=>[v,i]).filter(v=>v[0]===1).map(v=>v[1]))
+
 /**
  * 前提:
  * 1.最优路径的任意时刻边数不超过edgeMax(此图为11)
@@ -86,16 +91,16 @@ sd.import(input)
  * edgeMax 最大的边数
  * Queue 优先队列,次数小的先出队
  * Map 存是否已经使用过
- * 把所有({边界点},[边界点],0)加入队列
+ * 把所有({边界点},[边界点],0,-1)加入队列
  * while队列非空
- * >取队首 (点集,顺序,次数)
+ * >取队首 (点集,顺序,次数,联通性)
  * >如果map(点集)非空
  * >>continue
  * >map(点集)设为true
  * >如果:全满
  * >>得到结果(顺序,次数)
  * >否则:对于每个满足前提的扩张新点:
- * >>({点集}并{新点},顺序+[新点],次数+扩新点的计算次数)入队
+ * >>({点集}并{新点},顺序+[新点],次数+扩新点的计算次数,新联通性)入队
  * 
  * 问题规模为 edgeMax*点集数
  * 正常时为66*2^66
@@ -104,8 +109,6 @@ sd.import(input)
  * @param {Number} edgeMax 
  */
 let searchPepsOrder=function (edgeDimension,edgeMax) {
-    // prepare
-
     /** @type {import('./main.js').StructDataClass} */
     let sd=this
     let n,qubit,qubits,edge,bitCount;
@@ -197,9 +200,12 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         let bitCount=gs.bitCount
         /** 存是否已经使用过 */
         let map1=Object.create(null)
-        /** 优先队列,次数小的先出队 [(点集,顺序,次数)...] */
+        /** 
+         * 优先队列,次数小的先出队 [(点集,顺序,次数,联通性)...] 
+         * 联通性-1为只有一个区域, >=0时即为前提2中单独的区域的qi
+         */
         let queue={
-            data:new PriorityQueue().init((a,b)=>b[2]-a[2],1000000),
+            data:new PriorityQueue().init((a,b)=>b[2]-a[2],2000000),
             push:function(v){this.data.offer(v)},
             shift:function(){return this.data.poll()},
             size:function(){return this.data.length},
@@ -207,61 +213,65 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         for (const v of initalBoundaryPoints(gs)) {
             let area=Array.from({length:bitCount}).map(v=>0)
             area[v]=1
-            queue.push([area,[v],0])
+            queue.push([area,[v],0,-1])
         }
         let count=0
         let ecount=0
         console.log('count ecount size')
         console.log('-----------------')
+        let result={times:null,order:[]}
         while (queue.size()) {
             if (++count%10000==0) {
                 console.log(count,ecount,queue.size())
             }
-            let [area,order,times]=queue.shift()
+            let [area,order,times,connecting]=queue.shift()
             let key=area.join('')
             if (map1[key]===true) continue;
             map1[key]=true
             ecount++
             if (order.length===n) {
-                console.log(count,ecount,queue.size())
-                return {times,order}
+                result = {times,order}
+                break;
             } else {
-                for(const [v,t] of newPoints(gs,area)){
+                for(const [v,t,c] of newPoints(gs,area,connecting)){
                     let newArea=Array.from(area)
                     newArea[v]=1
-                    queue.push([newArea,order.concat([v]),times+t])
+                    queue.push([newArea,order.concat([v]),times+t,c])
                 }
             }
         }
         console.log(count,ecount,queue.size())
-        return {times:null,order:[]}
+        return result
     }
     /**
      * @returns {Number[]} [pt...]
      */
     let initalBoundaryPoints = (gs)=>{
-        return gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
+        let pts = gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
+        return pts
     }
     /**
      * @param {Number[]} area_
-     * @returns {Number[][]} [(pt,times)...]
+     * @param {Number} connecting
+     * @returns {Number[][]} [(pt,times,connecting)...]
      */
-    let newPoints = (gs,area_)=>{
+    let newPoints = (gs,area_,connecting)=>{
         edgeMax=edgeMax
         area=Array.from(area_)
         let edges=[1]
         let pts=[]
         for (const qi of gs.qubits) {
-            const used = area[qi];
-            if (used!==1) continue;
+            if (qi===connecting) continue;
+            if (area[qi]!==1) continue;
             for (const qj of gs.qubit[qi].link) {
                 if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
-                if (area[qj]) break;
+                if (area[qj]) continue;
                 pts.push([qj])
                 area[qj]=2
             }
+            if (connecting>-1) continue;
             for (const qj of gs.qubit[qi].weakLink) {
-                if (area[qj]) break;
+                if (area[qj]) continue;
                 pts.push([qj])
                 area[qj]=2
             }
@@ -269,17 +279,21 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         let times=edges.reduce((p,c)=>p*c)
         let count=edges.length-1
         for (const ptarr of pts) {
-            // 先暂时放宽前提2看看效果
             const qi=ptarr[0]
-            let edges=[times]
+            let pedges=[times]
+            let mcount=0
+            let c=connecting
             for (const qj of gs.qubit[qi].link) {
-                if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
+                if (area[qj]!==1) pedges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
+                else mcount++;
+                if (qj===c) c=-1;
             }
-            let ncount=edges.length-1+count
+            if (mcount===0 && connecting==-1) c=qi;
+            let ncount=pedges.length-1+count-mcount
             if (ncount>edgeMax) {
-                ptarr.push(-1)
+                ptarr.push(-1,-1)
             } else {
-                ptarr.push(edges.reduce((p,c)=>p*c))
+                ptarr.push(pedges.reduce((p,c)=>p*c),c)
             }
         }
         return pts.filter(v=>v[1]>=0)

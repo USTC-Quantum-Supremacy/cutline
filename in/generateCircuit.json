@@ -31,7 +31,7 @@
     "generatingCircuit": [
         {
             "type": "generatingCircuit",
-            "qubitNumber": 60,
+            "qubitNumber": 66,
             "elided": "",
             "pattern": "EFGH",
             "seed": 13874234,
