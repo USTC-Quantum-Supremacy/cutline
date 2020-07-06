@@ -1,4 +1,5 @@
-// node --max-old-space-size=4096  pepsPath.js
+// node pepsPath.js
+// node --max-old-space-size=4096 pepsPath.js
 const cutlineMain = require('./main.js')
 const StructDataClass = cutlineMain.StructDataClass
 
@@ -75,6 +76,7 @@ let sd=new StructDataClass();
 
 console.log(JSON.stringify(input,null,4))
 
+// input.generatingCircuit[0].pepsCut='[]'
 sd.import(input)
 
 
@@ -261,10 +263,10 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         let edges=[1]
         let pts=[]
         for (const qi of gs.qubits) {
-            if (qi===connecting) continue;
             if (area[qi]!==1) continue;
             for (const qj of gs.qubit[qi].link) {
                 if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
+                if (qi===connecting) continue;
                 if (area[qj]) continue;
                 pts.push([qj])
                 area[qj]=2
@@ -286,9 +288,9 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             for (const qj of gs.qubit[qi].link) {
                 if (area[qj]!==1) pedges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
                 else mcount++;
-                if (qj===c) c=-1;
+                if (qj===connecting) c=-1;
             }
-            if (mcount===0 && connecting==-1) c=qi;
+            if (mcount===0 && connecting===-1) c=qi;
             let ncount=pedges.length-1+count-mcount
             if (ncount>edgeMax) {
                 ptarr.push(-1,-1)
