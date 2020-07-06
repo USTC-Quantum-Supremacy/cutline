@@ -122,7 +122,7 @@ screen -S abc -X quit
 */
 let analysistask = async (tasks)=>{
     let data=[]
-    data.push(['name','status','search','length','cut','wedge','DCD','start','end','n1','n2','I','J','K','L','input'])
+    data.push(['name','status','n','balancedRange','depth','searchPattern','search','length','cut','wedge','DCD','start','end','n1','n2','I','J','K','L','input'])
     for (const task of tasks) {
         let input= renderTaskInput(task)
         let {xsize,balancedRange,searchPattern,screenName}=task
@@ -135,13 +135,21 @@ let analysistask = async (tasks)=>{
             continue
         }
         let line = [screenName,'running']
+        line.push(xsize==='11'?60:66,balancedRange,searchPattern.length,searchPattern)
+        
         let content=log.split(/\d+ of \d+/).slice(-1)[0].trim().replace(/..\d+m/g,'')
-        if (!content) continue;
+        if (!content) {
+            data.push(line)
+            continue
+        }
+
         line[1]='done'
         let obj=eval('('+content+')')
         input.part1=JSON.stringify(obj.split)
         obj.pattern[1].forEach((v,i)=>input.showPattern[i].bitString=v)
+        
         line.push(obj.search_max,obj.lengthInfo.length,obj.lengthInfo.cut,obj.lengthInfo.wedge,obj.lengthInfo.DCD,obj.lengthInfo.start,obj.lengthInfo.end,obj.n1,obj.n2,...obj.pattern[1],JSON.stringify(input))
+
         data.push(line)
 
     }
