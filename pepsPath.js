@@ -218,19 +218,19 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             queue.push([area,[v],0,-1])
         }
         let count=0
-        let ecount=0
-        console.log('count ecount size')
+        let node=0
+        console.log('count node size')
         console.log('-----------------')
         let result={times:null,order:[]}
         while (queue.size()) {
             if (++count%10000==0) {
-                console.log(count,ecount,queue.size())
+                console.log(count,node,queue.size())
             }
             let [area,order,times,connecting]=queue.shift()
             let key=area.join('')
             if (map1[key]===true) continue;
             map1[key]=true
-            ecount++
+            node++
             if (order.length===n) {
                 result = {times,order}
                 break;
@@ -242,7 +242,7 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
                 }
             }
         }
-        console.log(count,ecount,queue.size())
+        console.log(count,node,queue.size())
         return result
     }
     /**
@@ -266,12 +266,12 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             if (area[qi]!==1) continue;
             for (const qj of gs.qubit[qi].link) {
                 if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
-                if (qi===connecting) continue;
+                if (qi===connecting) continue; // connecting 只算乘积不扩张
                 if (area[qj]) continue;
                 pts.push([qj])
                 area[qj]=2
             }
-            if (connecting>-1) continue;
+            if (connecting>-1) continue; // 两个区域时不增加弱连接
             for (const qj of gs.qubit[qi].weakLink) {
                 if (area[qj]) continue;
                 pts.push([qj])
@@ -288,9 +288,9 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             for (const qj of gs.qubit[qi].link) {
                 if (area[qj]!==1) pedges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
                 else mcount++;
-                if (qj===connecting) c=-1;
+                if (qj===connecting) c=-1; // 两个区域连成了一个
             }
-            if (mcount===0 && connecting===-1) c=qi;
+            if (mcount===0 && connecting===-1) c=qi; // 新点是新的区域
             let ncount=pedges.length-1+count-mcount
             if (ncount>edgeMax) {
                 ptarr.push(-1,-1)
