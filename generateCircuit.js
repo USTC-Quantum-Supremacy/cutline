@@ -21,13 +21,13 @@ let inputs=[tplInput]
 
 let peps=JSON.parse(fs.readFileSync('peps_path/reverted.json',{encoding:'utf-8'}))
 let tasks=[
-    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'EFGH',c:'',m:'',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
-    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
-    {n:[20,25,30,35,40,45,50,55,60],d:[2,3],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
-    {n:[60,66],d:[20],p:'EFGH',c:'',m:'',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
-    {n:[60,66],d:[20],p:'IJCDCDIJ',c:'',m:'',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
-    {n:[37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',m:'',s:''},
-    {n:[66],d:[1],p:'IJCDCDIJ',c:'',m:'peps_path/sycamore.txt',s:''},
+    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'EFGH',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
+    {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
+    {n:[20,25,30,35,40,45,50,55,60],d:[2,3],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
+    {n:[60,66],d:[20],p:'EFGH',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
+    {n:[60,66],d:[20],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
+    {n:[37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt'},
+    {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt'},
 ]
 
 /* 
@@ -45,7 +45,7 @@ inputs=[]
 tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
-            let r=s=>s.split('{n}').join(n).split('{d}').join(d)
+            let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
             let input=JSON.parse(JSON.stringify(tplInput))
             input.generatingCircuit[0].qubitNumber=n
             input.depth=d+''

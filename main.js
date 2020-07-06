@@ -1245,9 +1245,12 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
 
 /**
  * 
+ * @param {String} elidedMod 'number' or 'layer', default 'number'
  * @param {{String:Number[]}} gateArgs 
  */
-StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elided,gateArgs) {
+StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elided,elidedMod,gateArgs) {
+    elidedMod=elidedMod==='layer'?'layer':'number'
+    throw '按照层进行elided尚未支持'
     let text=[saveBitList.length]
     let existCheck={}
     saveBitList.forEach((v,i)=>existCheck[v]=i)
