@@ -14,3 +14,5 @@ test.txt
 text.txt
 circuit.zip
 CutlineInput.g4.js
+output/tasks_result.json
+output/tasks_result.xlsx

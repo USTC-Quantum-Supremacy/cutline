@@ -14,7 +14,7 @@ run2:
 run3:
 	./run2 input3.txt
 win:
-	python generateRandomNumber.py
+	python3 generateRandomNumber.py
 linux:
 	python3 generateRandomNumber.py
 	node generateCircuit.js
