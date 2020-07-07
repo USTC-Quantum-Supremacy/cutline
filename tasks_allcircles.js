@@ -136,7 +136,7 @@ let analysistask = async (tasks)=>{
         }
         let line = [screenName,'running']
         line.push(xsize==='11'?60:66,balancedRange,searchPattern.length,searchPattern)
-        
+
         let content=log.split(/\d+ of \d+/).slice(-1)[0].trim().replace(/..\d+m/g,'')
         if (!content) {
             data.push(line)
@@ -164,7 +164,7 @@ let analysistask = async (tasks)=>{
 
 let argv=Array.from(process.argv)
 if (argv.length<=2) {
-    argv=['x/node','x/x.js','analysis']
+    argv=['x/node','x/x.js','']
 }
 switch (argv[2]) {
     case 'do':

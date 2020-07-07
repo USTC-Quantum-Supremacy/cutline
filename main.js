@@ -22,7 +22,6 @@ StructDataClass.prototype.edge_dict={} // edge_dict[q1_q2]
 StructDataClass.prototype.qi2xy_dict=[]
 StructDataClass.prototype.removeList=[]
 StructDataClass.prototype.splitEdges=[]
-StructDataClass.prototype.CInputFirstLine=''
 StructDataClass.prototype.patterns=['A','B','C','D','E','F','G','H','I','J','K','L']
 StructDataClass.prototype.circles=[
     ['ABCDCDAB','ABCD'],
@@ -437,51 +436,51 @@ StructDataClass.prototype._q0y=function (params) {
  * c code given up
  * use StructDataClass.prototype.searchPath
  */
-StructDataClass.prototype.generateCInput=function (params) {
-    let text=`${this.xsize} ${this.ysize} ${this._ndeep()} ${this._edeep()} ${this._max()} ${this._min()} ${this._q0x()} ${this._q0y()}
-${this._area()}
-${this._cost()}
-${this._start()}
-${this._end()}
-${this._cost2()}`
+// StructDataClass.prototype.generateCInput=function (params) {
+//     let text=`${this.xsize} ${this.ysize} ${this._ndeep()} ${this._edeep()} ${this._max()} ${this._min()} ${this._q0x()} ${this._q0y()}
+// ${this._area()}
+// ${this._cost()}
+// ${this._start()}
+// ${this._end()}
+// ${this._cost2()}`
 
-    if (this.CInputFirstLine) {
-        text=text.split('\n')
-        text[0]=this.CInputFirstLine
-        text=text.join('\n')
-    }
-    this.constructor.prototype.CInput=text
-    return this
-}
+//     if (this.CInputFirstLine) {
+//         text=text.split('\n')
+//         text[0]=this.CInputFirstLine
+//         text=text.join('\n')
+//     }
+//     this.constructor.prototype.CInput=text
+//     return this
+// }
 
 /**
  * deprecated
  * c code given up
  * use StructDataClass.prototype.searchPath
  */
-StructDataClass.prototype.parseCResult = function (resultStr) {
-    // 2 paths found
-    // shortest length & unbalance: 2,1
-    // qubits: 2, 1, 1, 2, 2, 3, 1, 4,
-    // start,end: 2 4 3 1
-    // ===2
-    // 2,1: 2, 1, 1, 2, 2, 3, 1, 4,
-    // 2,1: 2, 1, 1, 2, 3, 2, 2, 3, 1, 4,
-    let check={}
-    let paths=[]
-    let str=resultStr.split('===')[1]
-    let lines=str.split('\n')
-    for (let ii = 1; ii <= ~~lines[0]; ii++) {
-        let a=eval('['+lines[ii].split(':')[1]+']')
-        let b=a.map((v,i,a)=>{ return {x:v-1,y:a[i+1]-1}}).filter((v,i)=>i%2==0).map(v=>this.getxy(v).qi).sort()
-        if (check[JSON.stringify(b)]==null) {
-            check[JSON.stringify(b)]=1
-            paths.push(b)
-        }
-    }
-    this.constructor.prototype.CReturnPaths=paths
-    return `${paths.length} paths found`
-}
+// StructDataClass.prototype.parsePathsResult = function (resultStr) {
+//     // 2 paths found
+//     // shortest length & unbalance: 2,1
+//     // qubits: 2, 1, 1, 2, 2, 3, 1, 4,
+//     // start,end: 2 4 3 1
+//     // ===2
+//     // 2,1: 2, 1, 1, 2, 2, 3, 1, 4,
+//     // 2,1: 2, 1, 1, 2, 3, 2, 2, 3, 1, 4,
+//     let check={}
+//     let paths=[]
+//     let str=resultStr.split('===')[1]
+//     let lines=str.split('\n')
+//     for (let ii = 1; ii <= ~~lines[0]; ii++) {
+//         let a=eval('['+lines[ii].split(':')[1]+']')
+//         let b=a.map((v,i,a)=>{ return {x:v-1,y:a[i+1]-1}}).filter((v,i)=>i%2==0).map(v=>this.getxy(v).qi).sort()
+//         if (check[JSON.stringify(b)]==null) {
+//             check[JSON.stringify(b)]=1
+//             paths.push(b)
+//         }
+//     }
+//     this.constructor.prototype.pathsSplit=paths
+//     return `${paths.length} paths found`
+// }
 
 StructDataClass.prototype.searchPath=function () {
     let xsize,ysize,ndeep,edeep,max,min,q0x,q0y,prune,area,cost,start,end,cost2;
@@ -710,7 +709,7 @@ StructDataClass.prototype.searchPath=function () {
     initPath(gg);
     filtResult(gg);
     let paths=convertToSplit(output);
-    this.constructor.prototype.CReturnPaths=paths
+    this.constructor.prototype.pathsSplit=paths
     return `${paths.length} paths found`
 }
 
@@ -796,7 +795,6 @@ StructDataClass.prototype.setSplit = function (removeList) {
 }
 
 StructDataClass.prototype.calPatterns = function (o1,o2) {
-    // 待重构为用checkBitStringPattern实现
     if (this.use00) {
         o1={x:o1.x,y:o1.y+1}
         o2={x:o2.x,y:o2.y+1}
@@ -1112,9 +1110,9 @@ StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
     return this
 }
 
-StructDataClass.prototype._processCResult = function (circles,func,showProgress) {
+StructDataClass.prototype._processPathsResult = function (circles,func,showProgress) {
     let list=[]
-    let result=this.CReturnPaths
+    let result=this.pathsSplit
     // let circles = this.circles 
     // let circles = this.bitStringCircles 
     // let func= this.calCutLengthWithWedge
@@ -1163,18 +1161,18 @@ StructDataClass.prototype._processCResult = function (circles,func,showProgress)
     return output
 }
 
-StructDataClass.prototype.processCResult = function (params) {
+StructDataClass.prototype.processPathsResult = function (params) {
     let circles = this.circles 
     let func= this.calCutLengthWithWedge
     let showProgress=false
-    return this._processCResult(circles,func,showProgress)
+    return this._processPathsResult(circles,func,showProgress)
 }
 
-StructDataClass.prototype.processCResult_bitString = function (params) {
+StructDataClass.prototype.processPathsResult_bitString = function (params) {
     let circles = this.bitStringCircles 
     let func= this.calCutLengthWithWedge_bitString
     let showProgress=true
-    return this._processCResult(circles,func,showProgress)
+    return this._processPathsResult(circles,func,showProgress)
 }
 
 StructDataClass.prototype.calExpectation = function () {

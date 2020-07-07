@@ -17,7 +17,7 @@ sd.searchPath()
 // // 生成线路,cut,map,paths
 // let generateFormatPaths = function (params) {
 //     let list=[]
-//     let result=this.CReturnPaths
+//     let result=this.pathsSplit
 //     let circles = this.circles 
 //     circles = this.bitStringCircles 
 //     let func= this.calCutLengthWithWedge
@@ -41,7 +41,7 @@ sd.searchPath()
 /** @type {(pf,patterns)=>import('./main.js').StructDataClass} */
 let _calCutLengthWithWedge = sd._calCutLengthWithWedge
 
-let _processCResult = sd._processCResult 
+let _processPathsResult = sd._processPathsResult 
 
 //// 指定pattern ////////////////////////////////////////////////////////////
 
@@ -58,7 +58,7 @@ let calCutLengthWithWedge = function (params) {
     let pattern = sd.input.generatingCircuit[0].pattern
     let circles = [[pattern,pattern.slice(0,4)]]
     sd.constructor.prototype.circles=circles
-    let output=_processCResult.apply(sd,[circles,func,false])
+    let output=_processPathsResult.apply(sd,[circles,func,false])
     console.log(output.maxofmin)
 })();
 //// 所有pattern ////////////////////////////////////////////////////////////
@@ -77,6 +77,6 @@ let calCutLengthWithWedge_bitString = function (params) {
     let func= calCutLengthWithWedge_bitString
     sd.getBitStringCircles()
     let circles = sd.bitStringCircles 
-    let output=_processCResult.apply(sd,[circles,func,true])
+    let output=_processPathsResult.apply(sd,[circles,func,true])
     console.log(output.maxofmin)
 })();

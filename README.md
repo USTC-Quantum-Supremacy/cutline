@@ -16,25 +16,22 @@ c程序已放弃, 在js中实现
 
 筛选1
 
-只用A~E的8种
-
-```
-ABCDCDAB: BC,DA
-BACDCDBA: AC,DB
-ABEFEFAB: BE,FA
-BAEFEFBA: AE,FB
-GHCDCDGH: HC,DG
-HGCDCDHG: GC,DH
-GHEFEFGH: HE,FG
-HGEFEFHG: GE,FH
-```
+只用A~E的32种 外加IJKL
 
 筛选2
 
-按层的话 `2^(左下右上) * 2^(左上右下)` 种
+按层的话 `2 * 2^(左下右上) * 2^(左上右下)` 种
+
+## server
+
+```shell
+screen -R cutline
+python3 server.py
+```
 
 ## generate
 
-
+```shell
 node generateCircuit.js
 7z a circuit.zip circuit peps_path
+```

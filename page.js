@@ -92,7 +92,7 @@ function submit(params) {
     enablesubmit()
 }
 
-function processCResult_page(result,showall,target) {
+function processPathsResult_page(result,showall,target) {
     /** @type {import('./main.js').StructDataClass} */
     let sd=window.sd
     
@@ -100,7 +100,7 @@ function processCResult_page(result,showall,target) {
 
     if (showall) {
         if (result==null) {
-            result=sd.CReturnPaths
+            result=sd.pathsSplit
         }
         let list=[]
         /** @type {import('./main.js').StructDataClass} */
@@ -114,8 +114,8 @@ function processCResult_page(result,showall,target) {
 
     } else {
 
-        let output = sd.processCResult()
-        window.CResultOutput=output
+        let output = sd.processPathsResult()
+        window.PathsResultOutput=output
         window.ssd=output.instance
         console.log(output)
         let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
@@ -128,8 +128,8 @@ function processCResult_page(result,showall,target) {
 }
 
 function reRenderResult(shownumber) {
-    processCResult_page()
-    processCResult_page(null,shownumber,1)
+    processPathsResult_page()
+    processPathsResult_page(null,shownumber,1)
 }
 
 var lastinputstr=''

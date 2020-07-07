@@ -11,10 +11,10 @@ isPy3 = sys.version_info > (3, 0)
 class g:
     ip='0.0.0.0'
     port=26185
-    cutline='/home/user/zhaouv/cutline/run '
-    cutline2='/home/user/zhaouv/cutline/run2 '
-    filepath='/home/user/zhaouv/cutline/in/current.in'
-    isRunning=False
+    # cutline='/home/user/zhaouv/cutline/run '
+    # cutline2='/home/user/zhaouv/cutline/run2 '
+    # filepath='/home/user/zhaouv/cutline/in/current.in'
+    # isRunning=False
 
 def p(s): # s is unicode in py2 and str in py3
         if isPy3: print(s)
@@ -76,31 +76,31 @@ def static_file(path):
     if mimetype.startswith('audio/'): response.headers["Accept-Ranges"] = "bytes"
     return response
 
-@app.route('/', methods=['POST'])
-def writeFile():
-    data = request.get_data() # str in py2 and bytes in py3
-    if isPy3: data = str(data, encoding = 'utf-8')
-    try:
-        op=json.loads(data)
-        CInput=op['CInput']
-        prune=op['prune']
-    except Exception as e:
-        return 'error format'
-    if g.isRunning:
-        return 'failed, last task is running'
-    ret=''
-    try:
-        g.isRunning=True
-        with open(g.filepath,'w') as fid:
-            fid.write(CInput)
-        exe=g.cutline if prune else g.cutline2
-        ss=os.popen(exe+g.filepath)
-        ret=ss.read()
-    except Exception as ee:
-        ret='error happens'
-    finally:
-        g.isRunning=False
-    return ret
+# @app.route('/', methods=['POST'])
+# def writeFile():
+#     data = request.get_data() # str in py2 and bytes in py3
+#     if isPy3: data = str(data, encoding = 'utf-8')
+#     try:
+#         op=json.loads(data)
+#         CInput=op['CInput']
+#         prune=op['prune']
+#     except Exception as e:
+#         return 'error format'
+#     if g.isRunning:
+#         return 'failed, last task is running'
+#     ret=''
+#     try:
+#         g.isRunning=True
+#         with open(g.filepath,'w') as fid:
+#             fid.write(CInput)
+#         exe=g.cutline if prune else g.cutline2
+#         ss=os.popen(exe+g.filepath)
+#         ret=ss.read()
+#     except Exception as ee:
+#         ret='error happens'
+#     finally:
+#         g.isRunning=False
+#     return ret
 
 if __name__ == '__main__':
     p('服务已启动...')
