@@ -1,11 +1,8 @@
-all:
-	make random
-	# make g4
-	make circuit
-random:
+all: random.js CutlineInput.g4.js circuit.zip
+random.js: random_.js generateRandomNumber.py
 	python3 generateRandomNumber.py
-g4:
+CutlineInput.g4.js: CutlineInput.g4
 	python3 generateRandomNumber.py
-circuit:
+circuit.zip: generateCircuit.js in/generateCircuit.json
 	node generateCircuit.js
 	7z a circuit.zip circuit peps_path
