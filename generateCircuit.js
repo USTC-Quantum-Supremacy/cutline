@@ -13,8 +13,6 @@ const cutlineMain = require('./main.js')
 const StructDataClass = cutlineMain.StructDataClass
 const fs = require('fs')
 
-// todo read file and generate inputs and wirte to inputs.json
-
 let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
 let inputs=[tplInput]
 

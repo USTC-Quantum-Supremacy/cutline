@@ -1249,7 +1249,7 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
  */
 StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elided,elidedMod,gateArgs) {
     elidedMod=elidedMod==='layer'?'layer':'number'
-    // throw '按照层进行elided尚未支持'
+    // throw 'todo 按照层进行elided尚未支持'
     let text=[saveBitList.length]
     let existCheck={}
     saveBitList.forEach((v,i)=>existCheck[v]=i)
@@ -1284,6 +1284,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
         savedCut=savedCuts[savedCuts.length-1-elided]
     }
     // generate
+    let crossGateNumber = 0
     for (let layerno = 0; layerno < proto.layer.length; layerno++) {
         const layer = proto.layer[layerno];
         if (layerno%2==0) {
@@ -1302,11 +1303,12 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
                     if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
                     if (elided!=null && gate.cut!=null && gate.cut<=savedCut) continue;
                     text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${gate.q1} ${gate.q2}`)
+                    crossGateNumber++
                 }
             }
         }
     }
-    return text.join('\n')
+    return {circuit:text.join('\n'),crossGateNumber}
 }
 
 StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber,pepsPath,pepsCut) {
@@ -1346,12 +1348,13 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         let simulationFilename=circuitInput.simulationFilename
         let mapFilename=circuitInput.mapFilename
         let cutFilename=circuitInput.cutFilename
-        let elided=circuitInput.elided===''?null:~~circuitInput.elided
+        let elided=circuitInput.elided===''?null:parseInt(circuitInput.elided)
+        let elidedMod=circuitInput.elided.slice(-5)==='layer'?'layer':'number'
         let circuitProto = this.generateCircuitProto(circle,depth)
-        let circuit = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber),elided)
+        let {circuit,crossGateNumber} = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
         let {cutText,mapText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut)
         if (outputFunc) {
-            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,mapFilename,cutFilename,elided,circuitProto,circuit,cutText,mapText})
+            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,mapFilename,cutFilename,elided,elidedMod,circuitProto,circuit,crossGateNumber,cutText,mapText})
         }
     }
     return this
