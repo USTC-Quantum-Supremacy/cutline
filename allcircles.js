@@ -73,10 +73,19 @@ let calCutLengthWithWedge_bitString = function (params) {
     _calCutLengthWithWedge.apply(this,[pf,patterns])
     return this
 }
+
+let getAllMaxPattern = (circles,output)=>{
+    let maxValue=output.maxofmin.search_max
+    let patterns=circles.map((ps,i)=>[output.min[ps[0]].search_max,ps[0]]).filter(v=>v[0]===maxValue).map(v=>v[1])
+    return patterns
+}
+
 ;(()=>{
     let func= calCutLengthWithWedge_bitString
     sd.getBitStringCircles()
     let circles = sd.bitStringCircles 
     let output=_processPathsResult.apply(sd,[circles,func,true])
     console.log(output.maxofmin)
+    console.log('\n===patterns===\n')
+    console.log(JSON.stringify(getAllMaxPattern(circles,output)))
 })();
