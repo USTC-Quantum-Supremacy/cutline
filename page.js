@@ -20,11 +20,11 @@ function buildBlocks(params) {
 }
 function buildMainSVG(params) {
     if(typeof resultlist2)resultlist2.innerHTML=``
-    localStorage.setItem('blocklyinput',document.querySelector('#blocklyinput').value)
     
     var sd=new StructDataClass();
     sd.import(eval('('+document.querySelector('#blocklyinput').value+')'))
     console.log(sd)
+    localStorage.setItem('blocklyinput',document.querySelector('#blocklyinput').value)
     
     var view=new VisualClass();
     view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
