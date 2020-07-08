@@ -1,5 +1,4 @@
-// const cutlineMain = require('./main.js')
-// const StructDataClass = cutlineMain.StructDataClass
+// const {StructDataClass} = require('./main.js')
 
 const execSync = require('child_process').execSync
 

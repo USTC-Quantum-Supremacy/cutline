@@ -1,5 +1,4 @@
-const cutlineMain = require('./main.js')
-const StructDataClass = cutlineMain.StructDataClass
+const {StructDataClass} = require('./main.js')
 
 const fs = require('fs')
 
@@ -35,7 +34,7 @@ sd.searchPath()
 // sd.generateCircuit(args=>{
 //     [circuit,cutText,mapText]=[args.circuit,args.cutText,args.mapText]
 // })
-// fs.writeFileSync('output/check18.txt',JSON.stringify({circuit,cutText,mapText,paths}))
+// fs.writeFileSync('output/check18.txt',JSON.stringify({circuit,cutText,mapText,paths}),{encoding:'utf-8'})
 
 
 /** @type {(pf,patterns)=>import('./main.js').StructDataClass} */
