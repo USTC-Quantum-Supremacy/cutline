@@ -1,7 +1,5 @@
 // node pepsPath.js
 // node --max-old-space-size=4096 pepsPath.js
-const cutlineMain = require('./main.js')
-const StructDataClass = cutlineMain.StructDataClass
 
 function PriorityQueue(){
     this.length = 0;
@@ -67,21 +65,8 @@ PriorityQueue.prototype._exch = function(i, j){
     this._pq[j] = temp;
 }
 
-const fs = require('fs');
-
-let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
-let edgeDimension=JSON.parse(fs.readFileSync('../callMeteor/output/s2.json',{encoding:'utf-8'}))
-
-let sd=new StructDataClass();
-
-console.log(JSON.stringify(input,null,4))
-
-// input.generatingCircuit[0].pepsCut='[]'
-sd.import(input)
-
-
-debugorder=(order)=>'['+order.join(',')+']'
-debugarea=(area)=>debugorder(area.map((v,i)=>[v,i]).filter(v=>v[0]===1).map(v=>v[1]))
+// debugorder=(order)=>'['+order.join(',')+']'
+// debugarea=(area)=>debugorder(area.map((v,i)=>[v,i]).filter(v=>v[0]===1).map(v=>v[1]))
 
 /**
  * 前提:
@@ -304,5 +289,29 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
     let result = mainBFS(gs)
     return result
 }
-let result = searchPepsOrder.apply(sd,[edgeDimension,7])
-console.log(JSON.stringify(result))
+
+if (typeof exports === "undefined") exports = {};
+exports.searchPepsOrder=searchPepsOrder
+
+
+if (typeof require !== 'undefined' && require.main === module) {
+
+    const cutlineMain = require('./main.js')
+    const StructDataClass = cutlineMain.StructDataClass
+    const fs = require('fs');
+
+    let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
+    let edgeDimension=JSON.parse(fs.readFileSync('../callMeteor/output/s2.json',{encoding:'utf-8'}))
+
+    let sd=new StructDataClass();
+
+    console.log(JSON.stringify(input,null,4))
+
+    // input.generatingCircuit[0].pepsCut='[]'
+    sd.import(input)
+
+    let result = searchPepsOrder.apply(sd,[edgeDimension,7])
+    console.log(JSON.stringify(result))
+
+}
+
