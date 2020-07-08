@@ -9,7 +9,7 @@ let mainProcess = async ()=>{
     let dimensionTasks = JSON.parse(fs.readFileSync('output/dimensionTasks.json',{encoding:'utf-8'}))
     let pepsDimensionInput=[]
     for (const [input,task,n,d] of dimensionTasks) {
-        pepsDimensionInput.push([n,d,input,input.generatingCircuit[0].simulationFilename])
+        pepsDimensionInput.push([n,d,input.generatingCircuit[0].simulationFilename])
     }
     fs.writeFileSync('../callMeteor/in/dimensionTasks.json',JSON.stringify(pepsDimensionInput),{encoding:'utf-8'})
     await delay(50)
