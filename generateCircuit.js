@@ -17,7 +17,7 @@ let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf
 let inputs=[tplInput]
 
 
-let peps=JSON.parse(fs.readFileSync('peps_path/reverted.json',{encoding:'utf-8'}))
+let peps=JSON.parse(fs.readFileSync('peps_path/pepsCut.json',{encoding:'utf-8'}))
 let tasks=[
     {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'EFGH',s:'circuit/sycamore{n}_{d}_EFGH.txt'},
     {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt'},
@@ -68,12 +68,13 @@ tasks.forEach(t=>{
             let input=JSON.parse(JSON.stringify(tplInput))
             input.generatingCircuit[0].qubitNumber=n
             input.depth=d+''
-            input.generatingCircuit[0].pattern=t.p
+            input.generatingCircuit[0].pattern=r(t.p)
+            input.generatingCircuit[0].elided=r(t.e)
             input.generatingCircuit[0].cutFilename=r(t.c)
             input.generatingCircuit[0].mapFilename=r(t.m)
             input.generatingCircuit[0].simulationFilename=r(t.s)
-            input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||{c:[]}).c)
-            input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||{p:[]}).p)
+            input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
+            input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
             inputs.push(input)
         })
     })
