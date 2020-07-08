@@ -8,7 +8,10 @@ var StructDataClass = cutlineMain.StructDataClass
 var VisualClass = cutlineMain.VisualClass
 
 if (localStorage.getItem('blocklyinput')!=null) {
-    document.querySelector('#blocklyinput').value=localStorage.getItem('blocklyinput')
+    try {
+        document.querySelector('#blocklyinput').value=localStorage.getItem('blocklyinput')
+    } catch (error) {
+    }
 }
 
 function buildBlocks(params) {
@@ -24,7 +27,10 @@ function buildMainSVG(params) {
     var sd=new StructDataClass();
     sd.import(eval('('+document.querySelector('#blocklyinput').value+')'))
     console.log(sd)
-    localStorage.setItem('blocklyinput',document.querySelector('#blocklyinput').value)
+    try {
+        localStorage.setItem('blocklyinput',document.querySelector('#blocklyinput').value)
+    } catch (error) {
+    }
     
     var view=new VisualClass();
     view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
