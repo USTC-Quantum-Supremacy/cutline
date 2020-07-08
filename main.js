@@ -1249,7 +1249,6 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
  */
 StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elided,elidedMod,gateArgs) {
     elidedMod=elidedMod==='layer'?'layer':'number'
-    // throw 'todo 按照层进行elided尚未支持'
     let text=[saveBitList.length]
     let existCheck={}
     saveBitList.forEach((v,i)=>existCheck[v]=i)
@@ -1262,7 +1261,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
     }
     // pickup cut for elided
     let savedCuts=[]
-    let savedCut=proto.cut
+    let savedCut=elidedMod==='layer'?-1:proto.cut
     for (let layerno = 0; elided!=null && layerno < proto.layer.length; layerno++) {
         const layer = proto.layer[layerno];
         if (layerno%2==0) {
@@ -1274,9 +1273,15 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
                     if (gate.cut!=null)savedCuts.push(gate.cut)
                 }
             }
+            if (elidedMod==='layer'){
+                // elided 0 ~ lineno length-2
+                // elided 1 ~ lineno length-4
+                // elided all ~ lineno length-2-2*all <= -1 the next line will always false
+                if(layerno===proto.layer.length-2-2*elided)savedCut=savedCuts[savedCuts.length-1];
+            }
         }
     }
-    if (elided!=null && savedCuts.length>elided) {
+    if (elided!=null && elidedMod==='number' && savedCuts.length>elided) {
         // elided 0 ~ delete length ~ savedCuts[length-1]
         // elided 1 ~ delete length-1 ~ savedCuts[length-1 -1]
         // elided length-1 ~ delete 1 ~ savedCuts[0]
@@ -1303,7 +1308,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
                     if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
                     if (elided!=null && gate.cut!=null && gate.cut<=savedCut) continue;
                     text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${gate.q1} ${gate.q2}`)
-                    crossGateNumber++
+                    if(gate.cut!=null)crossGateNumber++
                 }
             }
         }
