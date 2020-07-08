@@ -832,8 +832,8 @@ StructDataClass.prototype.calPatterns = function (o1,o2) {
 
 StructDataClass.prototype.definePattern = function (patternDefines) {
     patternDefines=[
-        {"type":"patternDefine","pattern":"I","bitString":'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?1:0).join('')},
-        {"type":"patternDefine","pattern":"J","bitString":'0_'+Array.from({length:this.asize}).map((v,i)=>i===2?0:1).join('')},
+        {"type":"patternDefine","pattern":"I","bitString":'0_'+Array.from({length:this.asize}).map((v,i)=>0).join('')},
+        {"type":"patternDefine","pattern":"J","bitString":'0_'+Array.from({length:this.asize}).map((v,i)=>1).join('')},
         {"type":"patternDefine","pattern":"K","bitString":'1_'+Array.from({length:this.asize}).map((v,i)=>0).join('')},
         {"type":"patternDefine","pattern":"L","bitString":'1_'+Array.from({length:this.asize}).map((v,i)=>1).join('')},
     ].concat(patternDefines).filter(v=>v.type==="patternDefine")
