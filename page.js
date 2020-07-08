@@ -95,7 +95,6 @@ function disablesubmit(params) {
 }
 
 function submit(params) {
-    buildMainSVG()
     disablesubmit()
     document.getElementById('postresult').innerHTML='waiting'
     document.getElementById('postresult').innerHTML=sd.searchPath()
@@ -177,7 +176,6 @@ function changePatten(params) {
 }
 
 function showCircuit(params) {
-    buildMainSVG()
     sd.generateCircuit(args=>{
         document.querySelector('#formatedGateArray').innerText=`circuit:\n${args.circuit}\n\ncut:\n${args.cutText}\n\nmap:\n${args.mapText}`
     })

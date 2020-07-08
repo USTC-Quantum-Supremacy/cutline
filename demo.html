@@ -66,9 +66,9 @@
 </textarea>
             <br>
             <input type="button" id='Generate' onclick="buildMainSVG()" value="Generate">
-            <input type="button" id='Search' onclick="submit()" value="Search">
+            <input type="button" id='Search' onclick="buildMainSVG();submit()" value="Search">
             <input type="button" id='reRenderResult' onclick="reRenderResult(20)" value="ReRenderResult">
-            <input type="button" id='showCircuit' onclick="showCircuit()" value="showCircuit">
+            <input type="button" id='showCircuit' onclick="buildMainSVG();showCircuit()" value="showCircuit">
         </div>
         <br style="clear: both;">
         <div id="blocklyDiv" style="height: 550px; width: 1000px;float: left;"></div>
