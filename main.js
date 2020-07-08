@@ -214,16 +214,20 @@ StructDataClass.prototype.initmap=function (params) {
 }
 
 StructDataClass.prototype.buildMarkMap = function (params) {
-    let markOption=this.input.showMark.filter(v=>v.type!=='markNone')[0]
-    if (!markOption) return this;
-    if (markOption.type==='markQi') {
-        this.markList=Array.from({length:this.bitCount}).map((v,i)=>i)
-    }
-    if (markOption.type==='orderlist') {
-        this.markList=eval(markOption.order)
-    }
+    let markOptions=this.input.showMark.filter(v=>v.type!=='markNone')
+    if (markOptions.length===0) return this;
     this.markMap={}
-    this.markList.forEach((v,i)=>this.markMap[v]=i)
+    for (const markOption of markOptions) {
+        
+        if (markOption.type==='markQi') {
+            this.markList=Array.from({length:this.bitCount}).map((v,i)=>i)
+        }
+        if (markOption.type==='orderlist') {
+            this.markList=eval(markOption.order)
+        }
+        this.markList.forEach((v,i)=>this.markMap[v]=(this.markMap[v]||[]).concat([i]))
+    }
+    
     return this
 }
 
@@ -1380,7 +1384,7 @@ VisualClass.prototype.ptWidth = 10
 VisualClass.prototype.lineStrokeColor = '#000'
 VisualClass.prototype.lineWidth = 10
 VisualClass.prototype.markOffsetQ={x:0,y:0}
-VisualClass.prototype.markFontSizeQ=28
+VisualClass.prototype.markFontSizeQ=[null,28,17,11,9]
 VisualClass.prototype.startR=15
 VisualClass.prototype.startFill='#444'
 VisualClass.prototype.expectation=''
@@ -1474,7 +1478,7 @@ VisualClass.prototype.generateBaseSVG = function (params) {
 
         // QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,qindex,this.markFontSizeQ))
         if (this.data.markMap && this.data.markMap[qindex]!=null) {
-            QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,this.data.markMap[qindex],this.markFontSizeQ))
+            QMarks.push(this.mark(this.data.qi2xy(qindex),this.markOffsetQ,qindex,this.data.markMap[qindex],this.markFontSizeQ[this.data.markMap[qindex].length]))
         }
 
         let pts=_f(this.data.qi2xy(qindex))
