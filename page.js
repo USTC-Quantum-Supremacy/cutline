@@ -7,6 +7,9 @@ if (isNodejs) {
 var StructDataClass = cutlineMain.StructDataClass
 var VisualClass = cutlineMain.VisualClass
 
+if (localStorage.getItem('blocklyinput')!=null) {
+    document.querySelector('#blocklyinput').value=localStorage.getItem('blocklyinput')
+}
 
 function buildBlocks(params) {
     try {
@@ -17,6 +20,7 @@ function buildBlocks(params) {
 }
 function buildMainSVG(params) {
     if(typeof resultlist2)resultlist2.innerHTML=``
+    localStorage.setItem('blocklyinput',document.querySelector('#blocklyinput').value)
     
     var sd=new StructDataClass();
     sd.import(eval('('+document.querySelector('#blocklyinput').value+')'))
