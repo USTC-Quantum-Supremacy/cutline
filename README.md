@@ -4,8 +4,7 @@
 git clone <url>
 cd cutline
 git submodule update --init --recursive antlr-blockly
-make random
-make g4
+make page
 ```
 
 ## 搜索切割线
@@ -41,8 +40,7 @@ node tasks_allcircles.js giveup
 双击demo.html是能够在 file:// 下运行的, 目前server仅提供静态服务
 
 ```shell
-make random
-make g4
+make page
 screen -dms cutline python3 server.py
 ```
 

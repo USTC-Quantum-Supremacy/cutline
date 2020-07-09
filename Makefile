@@ -6,6 +6,9 @@ random:random.js
 .PHONY:g4
 g4:CutlineInput.g4.js
 
+.PHONY:page
+page:random.js CutlineInput.g4.js
+
 .PHONY:dimension
 dimension:output/dimensionTasks.json
 
