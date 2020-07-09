@@ -63,10 +63,10 @@ StructDataClass.prototype.circles=[
     ['IJKLKLIJ','IJKL'],
 ]
 StructDataClass.prototype.bitStringCircles=(()=>{
-    let pa='0000000100'
-    let pb='1111111011'
-    let pc='0000000000'
-    let pd='1111111111'
+    let pa='000000000000000000000000'
+    let pb='111111111111111111111111'
+    let pc='000000000000000000000000'
+    let pd='111111111111111111111111'
     return [
         ['0_'+pa+'_1_'+pc,['0_'+pa,'0_'+pb,'1_'+pc,'1_'+pd]]
     ]
