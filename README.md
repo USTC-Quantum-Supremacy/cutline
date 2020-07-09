@@ -32,6 +32,8 @@ python3 server.py
 ## generate
 
 ```shell
-node generateCircuit.js
-7z a circuit.zip circuit peps_path
+make
 ```
+
+其中  
+output/orders_peps.json circuit.zip 需要与Meteor.jl和callMeteor一起工作

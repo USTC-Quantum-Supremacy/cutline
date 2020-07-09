@@ -5,8 +5,10 @@ run2
 in/*.in
 random.js
 ./syc*.txt
-circuit/syc*.txt
-peps_path/syc*.txt
+circuit/*.txt
+circuit/*.cut
+peps_path/*.txt
+peps_path/*.cut
 peps_path/inputs.json
 test.txt
 text.txt

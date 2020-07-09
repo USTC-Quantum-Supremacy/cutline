@@ -1,12 +1,10 @@
 // node generateCircuit.js
 
 // node jsfile a1
-if (false) { // process.argv.length==2
-    console.log(`
-node generateCircuit.js depth qubitNumber pattern [outputfile]
-node generateCircuit.js 15 66 EFGH
-node generateCircuit.js 15 60 IJCDCDIJ abc.txt
-    `)
+let withOrder=false
+let pepsOrder=[]
+if (process.argv[2]==='order') {
+    withOrder=true
 }
 
 const {StructDataClass} = require('./main.js')
@@ -14,9 +12,9 @@ const fs = require('fs')
 
 let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
 let inputs=[tplInput]
+let peps=JSON.parse(fs.readFileSync('in/pepsCut.json',{encoding:'utf-8'}))
+if(withOrder)pepsOrder=JSON.parse(fs.readFileSync('output/orders_peps.json',{encoding:'utf-8'}));
 
-
-let peps=JSON.parse(fs.readFileSync('peps_path/pepsCut.json',{encoding:'utf-8'}))
 let tasks=[
     {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'EFGH',s:'circuit/sycamore{n}_{d}_EFGH.txt',target:[]},
     {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt',target:[]},
@@ -48,17 +46,6 @@ let tasks=[
 
 ]
 
-/* 
-elided 4 layer 待加入生成
-12：ABCDCDABABCD;   
-14: ABCDCDABABCDCB; ?
-14: ABCDCDABABCDAD; ?
-16：ABCDCDABABCDCDAB; 
-18：ABCDCDABABCDCDABCB; x
-18：ABCDCDABABCDCDABAD; v
-
-*/
-
 inputs=[]
 let PEPSInputs=[]
 tasks.forEach(t=>{
@@ -75,15 +62,19 @@ tasks.forEach(t=>{
             input.generatingCircuit[0].simulationFilename=r(t.s)
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
-            inputs.push(input)
             if (t.target.indexOf('PEPS')!==-1) {
+                if (withOrder) {
+                    input.generatingCircuit[0].pepsPath[0].order=JSON.stringify(pepsOrder[PEPSInputs.length].order);
+                    input.generatingCircuit[0].cutFilename=input.generatingCircuit[0].simulationFilename+'.cut'
+                }
                 PEPSInputs.push([input,t,n,d])
             }
+            inputs.push(input)
         })
     })
 })
 fs.writeFileSync('peps_path/inputs.json','[\n'+inputs.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'})
-fs.writeFileSync('output/dimensionTasks.json','[\n'+PEPSInputs.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'})
+if (!withOrder) fs.writeFileSync('output/dimensionTasks.json','[\n'+PEPSInputs.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'});
 
 
 inputs.forEach(input=>{
