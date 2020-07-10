@@ -1100,16 +1100,14 @@ StructDataClass.prototype._calCutLengthWithWedge = function (pf,patterns) {
     return this
 }
 
-StructDataClass.prototype.calCutLengthWithWedge = function (params) {
+StructDataClass.prototype.calCutLengthWithWedge = function (patterns) {
     let pf=(edge,pattern)=>edge.isPattern[pattern]
-    let patterns=this.circles
     this._calCutLengthWithWedge(pf,patterns)
     return this
 }
 
-StructDataClass.prototype.calCutLengthWithWedge_bitString = function (params) {
+StructDataClass.prototype.calCutLengthWithWedge_bitString = function (patterns) {
     let pf=(edge,pattern)=>this.checkBitStringPattern(this.qi2xy(edge.q1),this.qi2xy(edge.q2),pattern)
-    let patterns=this.bitStringCircles
     this._calCutLengthWithWedge(pf,patterns)
     return this
 }
@@ -1132,7 +1130,7 @@ StructDataClass.prototype._processPathsResult = function (circles,func,showProgr
         if(showProgress)console.log(`${i+1} of ${a.length}`);
         /** @type {StructDataClass} */
         let csd=v
-        func.call(csd)
+        func.call(csd,circles)
         circles.forEach(ps=>{
             let pattern = ps[0]
             let search_min=csd.wedge[pattern].length+Math.log2(2**(csd.n1)+2**(csd.n2))/2-Math.log2(2**Math.ceil(csd.n/2)+2**Math.floor(csd.n/2))/2

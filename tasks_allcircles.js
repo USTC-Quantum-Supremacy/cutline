@@ -171,13 +171,12 @@ let analysistask = async (tasks)=>{
     }
     // 60 and 66
     let data3_4=[[],[]]
-    for (const ti of [0,1]) {
+    for (const ti of [0]) {
         let index = [24,51][ti]
         let data3=data3_4[ti]
         let sline = data[index]
         if (sline[1]!=='done') continue;
         new StructDataClass().import(renderTaskInput(tasks[index-1])).searchPath()
-        StructDataClass.prototype.circles=[['IJKLKLIJ','IJKL']]
         let patterns=JSON.parse(sline.slice(-2)[0])
         data3.push(['name',...patterns])
         for (const task of tasks) {
@@ -191,6 +190,7 @@ let analysistask = async (tasks)=>{
                 let input=JSON.parse(JSON.stringify(sinput))
                 p.forEach((v,i)=>input.showPattern[i].bitString=v)
                 let sd=new StructDataClass().import(input);
+                sd.circles=[['IJKLKLIJ','IJKL']]
                 let output=sd.processPathsResult();
                 let searmax=output.maxofmin.search_max
                 line.push(searmax)

@@ -44,10 +44,9 @@ let _processPathsResult = sd._processPathsResult
 
 //// 指定pattern ////////////////////////////////////////////////////////////
 
-/** @type {()=>import('./main.js').StructDataClass} */
-let calCutLengthWithWedge = function (params) {
+/** @type {(patterns)=>import('./main.js').StructDataClass} */
+let calCutLengthWithWedge = function (patterns) {
     let pf=(edge,pattern)=>edge.isPattern[pattern]
-    let patterns=this.circles
     _calCutLengthWithWedge.apply(this,[pf,patterns])
     return this
 }
@@ -65,10 +64,9 @@ let calCutLengthWithWedge = function (params) {
 sd=new StructDataClass();
 sd.import(input)
 
-/** @type {()=>import('./main.js').StructDataClass} */
-let calCutLengthWithWedge_bitString = function (params) {
+/** @type {(patterns)=>import('./main.js').StructDataClass} */
+let calCutLengthWithWedge_bitString = function (patterns) {
     let pf=(edge,pattern)=>this.checkBitStringPattern(this.qi2xy(edge.q1),this.qi2xy(edge.q2),pattern)
-    let patterns=this.bitStringCircles
     _calCutLengthWithWedge.apply(this,[pf,patterns])
     return this
 }
