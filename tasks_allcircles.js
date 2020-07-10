@@ -122,7 +122,7 @@ screen -S abc -X quit
 */
 let analysistask = async (tasks)=>{
     let data=[]
-    data.push(['name','status','n','balancedRange','depth','searchPattern','search','length','cut','wedge','DCD','start','end','n1','n2','I','J','K','L','input'])
+    data.push(['name','status','n','balancedRange','depth','searchPattern','search','length','cut','wedge','DCD','start','end','n1','n2','I','J','K','L','allPatterns','input'])
     for (const task of tasks) {
         let input= renderTaskInput(task)
         let {xsize,balancedRange,searchPattern,screenName}=task
@@ -144,11 +144,11 @@ let analysistask = async (tasks)=>{
         }
 
         line[1]='done'
-        let obj=eval('('+content+')')
+        let obj=eval('('+content.split('===patterns===')[0]+')')
         input.part1=JSON.stringify(obj.split)
         obj.pattern[1].forEach((v,i)=>input.showPattern[i].bitString=v)
         
-        line.push(obj.search_max,obj.lengthInfo.length,obj.lengthInfo.cut,obj.lengthInfo.wedge,obj.lengthInfo.DCD,obj.lengthInfo.start,obj.lengthInfo.end,obj.n1,obj.n2,...obj.pattern[1],JSON.stringify(input))
+        line.push(obj.search_max,obj.lengthInfo.length,obj.lengthInfo.cut,obj.lengthInfo.wedge,obj.lengthInfo.DCD,obj.lengthInfo.start,obj.lengthInfo.end,obj.n1,obj.n2,...obj.pattern[1],content.split('===patterns===')[1].trim(),JSON.stringify(input))
 
         data.push(line)
 
