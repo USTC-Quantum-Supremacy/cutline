@@ -1,4 +1,4 @@
-// const {StructDataClass} = require('./main.js')
+const {StructDataClass} = require('./main.js')
 
 const execSync = require('child_process').execSync
 
@@ -123,6 +123,7 @@ screen -S abc -X quit
 let analysistask = async (tasks)=>{
     let data=[]
     data.push(['name','status','n','balancedRange','depth','searchPattern','search','length','cut','wedge','DCD','start','end','n1','n2','I','J','K','L','allPatterns','input'])
+    // tasks result
     for (const task of tasks) {
         let input= renderTaskInput(task)
         let {xsize,balancedRange,searchPattern,screenName}=task
@@ -153,6 +154,7 @@ let analysistask = async (tasks)=>{
         data.push(line)
 
     }
+    // patterns
     let patternMap={}
     for (const line of data) {
         if (line[1]!=='done') continue;
@@ -167,8 +169,35 @@ let analysistask = async (tasks)=>{
     for (const [pattern,source] of pairs) {
         data2.push([pattern,source.length,...source])
     }
+    // 60 and 66
+    let data3_4=[[],[]]
+    for (const ti of [0,1]) {
+        let index = [24,51][ti]
+        let data3=data3_4[ti]
+        let sline = data[index]
+        if (sline[1]!=='done') continue;
+        let patterns=JSON.parse(sline.slice(-2)[0])
+        data3.push(['name',...patterns])
+        for (const task of tasks) {
+            let line=[screenName]
+            let sinput= renderTaskInput(task)
+            let {xsize,balancedRange,searchPattern,screenName}=task
+            for (const pattern of patterns) {
+                let r=s=>Array.from(s).map(v=>1-(~~v)).join('')
+                let [a1,b1,a2,b2]=pattern.split('_')
+                let p=[a1+'_'+b1,a1+'_'+r(b1),a2+'_'+b2,a2+'_'+r(b2)]
+                let input=JSON.parse(JSON.stringify(sinput))
+                p.forEach((v,i)=>input.showPattern[i].bitString=v)
+                let sd=new StructDataClass().import(input);
+                let output=sd.processPathsResult();
+                let searmax=output.maxofmin.search_max
+                line.push(searmax)
+            }
+            data3.push(line)
+        }
+    }
 
-    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns'],data:[data,data2],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
+    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns','60','66'],data:[data,data2,data3_4[0],data3_4[1]],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
     await delay(50)
     execSync(`python3 convertToXlsx.py output/tasks_result.json`)
 }
