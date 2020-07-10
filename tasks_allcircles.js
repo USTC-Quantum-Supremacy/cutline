@@ -179,9 +179,9 @@ let analysistask = async (tasks)=>{
         let patterns=JSON.parse(sline.slice(-2)[0])
         data3.push(['name',...patterns])
         for (const task of tasks) {
-            let line=[screenName]
             let sinput= renderTaskInput(task)
             let {xsize,balancedRange,searchPattern,screenName}=task
+            let line=[screenName]
             for (const pattern of patterns) {
                 let r=s=>Array.from(s).map(v=>1-(~~v)).join('')
                 let [a1,b1,a2,b2]=pattern.split('_')
