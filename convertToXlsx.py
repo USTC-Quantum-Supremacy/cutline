@@ -1,11 +1,11 @@
-# python3 tasks_format_allcircles.py
+# python3 convertToXlsx.py
 # convert tasks_result.json from tasks_allcircles.js to tasks_result.xlsx
 import json
 import sys
 import re
 
-def get_reuslt():
-    with open('output/tasks_result.json',encoding='utf-8') as fid:
+def get_reuslt(filename):
+    with open(filename,encoding='utf-8') as fid:
         data=json.load(fid)
     return data
 
@@ -17,7 +17,7 @@ def convertToXlsx(data):
     ws.title = data['title']
     for line in data['data']:
         ws.append(line)
-    wb.save('output/tasks_result.xlsx')
+    wb.save(data['outFileName'])
 
 # def readXlsx():
 #     from openpyxl import load_workbook
@@ -27,4 +27,4 @@ def convertToXlsx(data):
 #     return list(data)
 
 if __name__ == "__main__":
-    convertToXlsx(get_reuslt())
+    convertToXlsx(get_reuslt(sys.argv[1]))

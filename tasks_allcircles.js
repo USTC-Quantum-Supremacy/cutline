@@ -153,9 +153,9 @@ let analysistask = async (tasks)=>{
         data.push(line)
 
     }
-    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:'tasks_result',data}),{encoding:'utf-8'})
+    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:'tasks_result',data,outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
     await delay(50)
-    execSync(`python3 tasks_format_allcircles.py`)
+    execSync(`python3 convertToXlsx.py output/tasks_result.json`)
 }
 
 
