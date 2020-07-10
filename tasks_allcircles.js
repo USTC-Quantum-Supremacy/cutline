@@ -165,13 +165,13 @@ let analysistask = async (tasks)=>{
         }
     }
     let pairs=Object.entries(patternMap).sort((a,b)=>b[1].length-a[1].length)
-    let data2=[['pattern','count','source']]
+    let data2=[['pattern','all','count','source']]
     for (const [pattern,source] of pairs) {
-        data2.push([pattern,source.length,...source])
+        data2.push([pattern,source.join(''),source.length,...source])
     }
     // 60 and 66
     let data3_4=[[],[]]
-    for (const ti of [0]) {
+    for (const ti of []) {
         let index = [24,51][ti]
         let data3=data3_4[ti]
         let sline = data[index]
