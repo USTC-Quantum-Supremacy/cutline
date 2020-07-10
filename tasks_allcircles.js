@@ -153,7 +153,22 @@ let analysistask = async (tasks)=>{
         data.push(line)
 
     }
-    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:'tasks_result',data,outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
+    let patternMap={}
+    for (const line of data) {
+        if (line[1]!=='done') continue;
+        let name=line[0]
+        let patterns=JSON.parse(line.slice(-2)[0])
+        for (const pattern of patterns) {
+            patternMap[pattern]=(patternMap[pattern]||[]).concat([name])
+        }
+    }
+    let pairs=Object.entries(patternMap).sort((a,b)=>b[1].length-a[1].length)
+    let data2=[['pattern','count','source']]
+    for (const [pattern,source] of pairs) {
+        data2.push([pattern,source.length,...source])
+    }
+
+    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns'],data:[data,data2],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
     await delay(50)
     execSync(`python3 convertToXlsx.py output/tasks_result.json`)
 }

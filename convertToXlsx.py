@@ -12,11 +12,17 @@ def get_reuslt(filename):
 def convertToXlsx(data):
     from openpyxl import Workbook
     wb = Workbook()
-    ws = wb.active 
-    # ws2 = wb.create_sheet()
-    ws.title = data['title']
-    for line in data['data']:
-        ws.append(line)
+    if type(data['title'])==type(''):
+        data['title']=[data['title']]
+        data['data']=[data['data']]
+    for ii,title in enumerate(data['title']):
+        if ii==0:
+            ws = wb.active 
+        else:
+            ws = wb.create_sheet()
+        ws.title = title
+        for line in data['data'][ii]:
+            ws.append(line)
     wb.save(data['outFileName'])
 
 # def readXlsx():
