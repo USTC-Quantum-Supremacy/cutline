@@ -176,6 +176,7 @@ let analysistask = async (tasks)=>{
         let data3=data3_4[ti]
         let sline = data[index]
         if (sline[1]!=='done') continue;
+        new StructDataClass().import(renderTaskInput(tasks[index-1])).searchPath()
         let patterns=JSON.parse(sline.slice(-2)[0])
         data3.push(['name',...patterns])
         for (const task of tasks) {
