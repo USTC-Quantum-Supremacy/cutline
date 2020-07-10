@@ -8,75 +8,7 @@ let inputTPL=JSON.parse(fs.readFileSync('in/tasks_allcircles.json',{encoding:'ut
 // let sd=new StructDataClass();
 
 
-let tasks=[
-    {xsize:"11",balancedRange:6,searchPattern:'012323010123'},
-    {xsize:"11",balancedRange:10,searchPattern:'012323010123'},
-    {xsize:"11",balancedRange:20,searchPattern:'012323010123'},
-        {giveup:1,xsize:"11",balancedRange:6,searchPattern:'01232301012323'},
-        {giveup:1,xsize:"11",balancedRange:10,searchPattern:'01232301012323'},
-        {giveup:1,xsize:"11",balancedRange:20,searchPattern:'01232301012323'},
-        {giveup:1,xsize:"11",balancedRange:6,searchPattern:'01232301012321'},
-        {giveup:1,xsize:"11",balancedRange:10,searchPattern:'01232301012321'},
-        {giveup:1,xsize:"11",balancedRange:20,searchPattern:'01232301012321'},
-    {xsize:"11",balancedRange:6,searchPattern:'01232301012303'},
-    {xsize:"11",balancedRange:10,searchPattern:'01232301012303'},
-    {xsize:"11",balancedRange:20,searchPattern:'01232301012303'},
-        {giveup:1,xsize:"11",balancedRange:6,searchPattern:'01232301012301'},
-        {giveup:1,xsize:"11",balancedRange:10,searchPattern:'01232301012301'},
-        {giveup:1,xsize:"11",balancedRange:20,searchPattern:'01232301012301'},
-    {xsize:"11",balancedRange:6,searchPattern:'0123230101232301'},
-    {xsize:"11",balancedRange:10,searchPattern:'0123230101232301'},
-    {xsize:"11",balancedRange:20,searchPattern:'0123230101232301'},
-        {giveup:1,xsize:"11",balancedRange:6,searchPattern:'012323010123230101'},
-        {giveup:1,xsize:"11",balancedRange:10,searchPattern:'012323010123230101'},
-        {giveup:1,xsize:"11",balancedRange:20,searchPattern:'012323010123230101'},
-    {xsize:"11",balancedRange:6,searchPattern:'012323010123230103'},
-    {xsize:"11",balancedRange:10,searchPattern:'012323010123230103'},
-    {xsize:"11",balancedRange:20,searchPattern:'012323010123230103'},
-        {giveup:1,xsize:"11",balancedRange:6,searchPattern:'012323010123230121'},
-        {giveup:1,xsize:"11",balancedRange:10,searchPattern:'012323010123230121'},
-        {giveup:1,xsize:"11",balancedRange:20,searchPattern:'012323010123230121'},
-        {giveup:1,xsize:"11",balancedRange:6,searchPattern:'012323010123230123'},
-        {giveup:1,xsize:"11",balancedRange:10,searchPattern:'012323010123230123'},
-        {giveup:1,xsize:"11",balancedRange:20,searchPattern:'012323010123230123'},
-    {xsize:"11",balancedRange:6,searchPattern:'01232301012323010123'},
-    {xsize:"11",balancedRange:10,searchPattern:'01232301012323010123'},
-    {xsize:"11",balancedRange:20,searchPattern:'01232301012323010123'},
-    {xsize:"12",balancedRange:6,searchPattern:'012323010123'},
-    {xsize:"12",balancedRange:10,searchPattern:'012323010123'},
-    {xsize:"12",balancedRange:14,searchPattern:'012323010123'},
-        {giveup:1,xsize:"12",balancedRange:6,searchPattern:'01232301012323'},
-        {giveup:1,xsize:"12",balancedRange:10,searchPattern:'01232301012323'},
-        {giveup:1,xsize:"12",balancedRange:14,searchPattern:'01232301012323'},
-    {xsize:"12",balancedRange:6,searchPattern:'01232301012321'},
-    {xsize:"12",balancedRange:10,searchPattern:'01232301012321'},
-    {xsize:"12",balancedRange:14,searchPattern:'01232301012321'},
-        {giveup:1,xsize:"12",balancedRange:6,searchPattern:'01232301012303'},
-        {giveup:1,xsize:"12",balancedRange:10,searchPattern:'01232301012303'},
-        {giveup:1,xsize:"12",balancedRange:14,searchPattern:'01232301012303'},
-    {xsize:"12",balancedRange:6,searchPattern:'01232301012301'},
-    {xsize:"12",balancedRange:10,searchPattern:'01232301012301'},
-    {xsize:"12",balancedRange:14,searchPattern:'01232301012301'},
-    {xsize:"12",balancedRange:6,searchPattern:'0123230101232301'},
-    {xsize:"12",balancedRange:10,searchPattern:'0123230101232301'},
-    {xsize:"12",balancedRange:14,searchPattern:'0123230101232301'},
-    {xsize:"12",balancedRange:6,searchPattern:'012323010123230101'},
-    {xsize:"12",balancedRange:10,searchPattern:'012323010123230101'},
-    {xsize:"12",balancedRange:14,searchPattern:'012323010123230101'},
-    {xsize:"12",balancedRange:6,searchPattern:'012323010123230103'},
-    {xsize:"12",balancedRange:10,searchPattern:'012323010123230103'},
-    {xsize:"12",balancedRange:14,searchPattern:'012323010123230103'},
-        {giveup:1,xsize:"12",balancedRange:6,searchPattern:'012323010123230121'},
-        {giveup:1,xsize:"12",balancedRange:10,searchPattern:'012323010123230121'},
-        {giveup:1,xsize:"12",balancedRange:14,searchPattern:'012323010123230121'},
-    {xsize:"12",balancedRange:6,searchPattern:'012323010123230123'},
-    {xsize:"12",balancedRange:10,searchPattern:'012323010123230123'},
-    {xsize:"12",balancedRange:14,searchPattern:'012323010123230123'},
-    {xsize:"12",balancedRange:6,searchPattern:'01232301012323010123'},
-    {xsize:"12",balancedRange:10,searchPattern:'01232301012323010123'},
-    {xsize:"12",balancedRange:14,searchPattern:'01232301012323010123'},
-]
-tasks.forEach((v,i)=>v.screenName='sc'+(i+1))
+let tasks=JSON.parse(fs.readFileSync('in/tasks.json',{encoding:'utf-8'}))
 
 let renderTaskInput=(task)=>{
     let input= JSON.parse(JSON.stringify(inputTPL))
@@ -170,6 +102,7 @@ let analysistask = async (tasks)=>{
         data2.push([pattern,source.join(''),source.length,...source])
     }
     // 60 and 66
+    // very slow, give up
     let data3_4=[[],[]]
     for (const ti of []) {
         let index = [24,51][ti]
@@ -199,7 +132,7 @@ let analysistask = async (tasks)=>{
         }
     }
 
-    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns','60','66'],data:[data,data2,data3_4[0],data3_4[1]],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
+    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns'],data:[data,data2],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
     await delay(50)
     execSync(`python3 convertToXlsx.py output/tasks_result.json`)
 }
