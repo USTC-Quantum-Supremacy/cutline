@@ -52,7 +52,7 @@ screen -dmS abc -L -Logfile output/abc.log node allcircles.js
 -   give up
 screen -S abc -X quit
 */
-let analysistask = async (tasks)=>{
+let parsetask = async (tasks)=>{
     let data=[]
     data.push(['name','status','n','balancedRange','depth','searchPattern','search','length','cut','wedge','DCD','start','end','n1','n2','I','J','K','L','allPatterns','input'])
     // tasks result
@@ -152,10 +152,12 @@ switch (argv[2]) {
     case 'giveup':
         giveuptask(tasks)
         break;
+    case 'parse':
+        parsetask(tasks)
+        break;
     case 'analysis':
-        analysistask(tasks)
         break;
     default:
-        console.log('argv need: do, giveup, analysis')
+        console.log('argv need: do, giveup, parse, analysis')
         break;
 }

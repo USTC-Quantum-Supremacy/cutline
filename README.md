@@ -30,7 +30,7 @@ c程序已放弃, 在js中重新实现
 
 ```shell
 node tasks_allcircles.js do
-node tasks_allcircles.js analysis
+node tasks_allcircles.js parse
 
 node tasks_allcircles.js giveup
 ```
