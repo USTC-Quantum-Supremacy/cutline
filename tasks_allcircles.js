@@ -109,41 +109,53 @@ let parsetask = async (tasks)=>{
 }
 
 let analysistask = async (tasks)=>{
+    let debug = false
+    
     let analysis = JSON.parse(fs.readFileSync('in/task_analysis.json',{encoding:'utf-8'}))
     let parsed = JSON.parse(fs.readFileSync('output/tasks_result.json',{encoding:'utf-8'}))
     let data = parsed.data[0]
     let data2 = parsed.data[1]
 
-    // 60 and 66
-    // very slow, give up
-    let data3_4=[[],[]]
-    for (const ti of []) {
-        let index = [24,51][ti]
-        let data3=data3_4[ti]
-        let sline = data[index]
-        if (sline[1]!=='done') continue;
-        new StructDataClass().import(renderTaskInput(tasks[index-1])).searchPath()
-        let patterns=JSON.parse(sline.slice(-2)[0])
-        data3.push(['name',...patterns])
-        for (const task of tasks) {
-            let sinput= renderTaskInput(task)
-            let {xsize,balancedRange,searchPattern,screenName}=task
-            let line=[screenName]
-            for (const pattern of patterns) {
-                let r=s=>Array.from(s).map(v=>1-(~~v)).join('')
-                let [a1,b1,a2,b2]=pattern.split('_')
-                let p=[a1+'_'+b1,a1+'_'+r(b1),a2+'_'+b2,a2+'_'+r(b2)]
-                let input=JSON.parse(JSON.stringify(sinput))
+    for (const {name,filter,target} of analysis) {
+        console.log('name:',name,'start')
+        let data3=[['pattern filted from '+filter.map(v=>'sc'+v).join(''),...target.map(v=>'sc'+v)]]
+        new StructDataClass().import(renderTaskInput(tasks[filter[0]-1])).searchPath()
+        let count=0;
+        for (const pline of data2.slice(1)) {
+            let save=true
+            for (const toCheck of filter.map(v=>'sc'+v)) {
+                if (pline.indexOf(toCheck)===-1) {
+                    save=false
+                    break;
+                }
+            }
+            if (!save) continue;
+            console.log(name,':',++count)
+            if (debug && count==3) break;
+            let line=[pline[0]]
+            let r=s=>Array.from(s).map(v=>1-(~~v)).join('')
+            let [a1,b1,a2,b2]=pline[0].split('_')
+            let p=[a1+'_'+b1,a1+'_'+r(b1),a2+'_'+b2,a2+'_'+r(b2)]
+            for (const ti of target) {
+                let task = tasks[ti-1]
+                let input= renderTaskInput(task)
+                let {xsize,balancedRange,searchPattern,screenName}=task
                 p.forEach((v,i)=>input.showPattern[i].bitString=v)
                 let sd=new StructDataClass().import(input);
-                sd.circles=[['IJKLKLIJ','IJKL']]
+                sd.circles=[['patternName','IJKL']]
                 let output=sd.processPathsResult();
                 let searmax=output.maxofmin.search_max
                 line.push(searmax)
             }
             data3.push(line)
         }
+        parsed.data.push(data3)
+        parsed.title.push(name)
     }
+    if (debug && false) parsed={outFileName:parsed.outFileName,title:parsed.title.slice(2),data:parsed.data.slice(2)};
+    fs.writeFileSync('output/tasks_result_analysis.json',JSON.stringify(parsed),{encoding:'utf-8'})
+    await delay(50)
+    execSync(`python3 convertToXlsx.py output/tasks_result_analysis.json`)
 }
 
 
