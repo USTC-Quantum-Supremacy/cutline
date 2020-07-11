@@ -24,6 +24,7 @@ let renderTaskInput=(task)=>{
 }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
+
 let dotask = async (tasks)=>{
     for (const task of tasks) {
         let input= renderTaskInput(task)
@@ -101,6 +102,18 @@ let parsetask = async (tasks)=>{
     for (const [pattern,source] of pairs) {
         data2.push([pattern,source.join(''),source.length,...source])
     }
+    
+    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns'],data:[data,data2],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
+    await delay(50)
+    execSync(`python3 convertToXlsx.py output/tasks_result.json`)
+}
+
+let analysistask = async (tasks)=>{
+    let analysis = JSON.parse(fs.readFileSync('in/task_analysis.json',{encoding:'utf-8'}))
+    let parsed = JSON.parse(fs.readFileSync('output/tasks_result.json',{encoding:'utf-8'}))
+    let data = parsed.data[0]
+    let data2 = parsed.data[1]
+
     // 60 and 66
     // very slow, give up
     let data3_4=[[],[]]
@@ -131,13 +144,7 @@ let parsetask = async (tasks)=>{
             data3.push(line)
         }
     }
-
-    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns'],data:[data,data2],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
-    await delay(50)
-    execSync(`python3 convertToXlsx.py output/tasks_result.json`)
 }
-
-
 
 
 
@@ -156,6 +163,7 @@ switch (argv[2]) {
         parsetask(tasks)
         break;
     case 'analysis':
+        analysistask(tasks)
         break;
     default:
         console.log('argv need: do, giveup, parse, analysis')
