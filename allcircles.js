@@ -73,7 +73,7 @@ let calCutLengthWithWedge_bitString = function (patterns) {
 
 let getAllMaxPattern = (circles,output)=>{
     let maxValue=output.maxofmin.search_max
-    let patterns=circles.map((ps,i)=>[output.min[ps[0]].search_max,ps[0]]).filter(v=>v[0]===maxValue).map(v=>v[1])
+    let patterns=circles.map((ps,i)=>[output.min[ps[0]].search_max,ps[0]]).filter(v=>v[0]>=maxValue-0.035).map(v=>v[1])
     return patterns
 }
 
