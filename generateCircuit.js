@@ -62,6 +62,14 @@ tasks.forEach(t=>{
             input.generatingCircuit[0].simulationFilename=r(t.s)
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
+            if (n===66) {
+                // let pp='0_0011100000_1_0100011100' // 60
+                let pp='0_0000000000_1_0000001100' // 66
+                let r=s=>Array.from(s).map(v=>1-(~~v)).join('')
+                let [a1,b1,a2,b2]=pp.split('_')
+                let p=[a1+'_'+b1,a1+'_'+r(b1),a2+'_'+b2,a2+'_'+r(b2)]
+                p.forEach((v,i)=>input.showPattern[i].bitString=v)
+            }
             if (t.target.indexOf('PEPS')!==-1) {
                 if (withOrder) {
                     input.generatingCircuit[0].pepsPath[0].order=JSON.stringify(pepsOrder[PEPSInputs.length].order);

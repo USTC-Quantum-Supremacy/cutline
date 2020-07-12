@@ -20,12 +20,42 @@
         {
             "type": "patternDefine",
             "pattern": "I",
-            "bitString": "0_0001001000"
+            "bitString": "0_0011100000"
         },
         {
             "type": "patternDefine",
             "pattern": "J",
-            "bitString": "0_1110110111"
+            "bitString": "0_1100011111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "K",
+            "bitString": "1_0100011100"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "L",
+            "bitString": "1_1011100011"
+        },
+        {
+            "type": "patternA",
+            "pattern": "I",
+            "color": "#ff9900"
+        },
+        {
+            "type": "patternA",
+            "pattern": "J",
+            "color": "#3333ff"
+        },
+        {
+            "type": "patternC",
+            "pattern": "K",
+            "color": "#009900"
+        },
+        {
+            "type": "patternC",
+            "pattern": "L",
+            "color": "#cc0000"
         }
     ],
     "generatingCircuit": [
