@@ -69,6 +69,7 @@ tasks.forEach(t=>{
                 let [a1,b1,a2,b2]=pp.split('_')
                 let p=[a1+'_'+b1,a1+'_'+r(b1),a2+'_'+b2,a2+'_'+r(b2)]
                 p.forEach((v,i)=>input.showPattern[i].bitString=v)
+                input.part1='[0,1,12,13,14,18,19,2,20,21,24,25,26,3,30,31,32,33,36,37,38,42,43,44,48,49,54,55,6,60,7,8,9]'
             }
             if (t.target.indexOf('PEPS')!==-1) {
                 if (withOrder) {
