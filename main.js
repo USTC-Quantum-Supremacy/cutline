@@ -1417,7 +1417,7 @@ VisualClass.prototype.mark=function (o,f,qi,mark,markFontSize) {
     let save = qubit.save?'save':'notsave'
     let notinmax = (!qubit.area2 && qubit.save)?'notinmax':''
     let part12=qubit.area2?'part'+qubit.area2:''
-    let cssclass=`mark q${qi} m${this.data.qubit(qi).mi}} ${notinmax} ${save} ${part12}`
+    let cssclass=`mark q${qi} m${this.data.qubit(qi).mi} ${notinmax} ${save} ${part12}`
     return `<text x="${100*o.x+f.x}" y="${100*o.y+f.y}" class="${cssclass}" dominant-baseline="middle" text-anchor="middle" font-size="${markFontSize}" stroke="black">${mark}</text>`
 }
 
