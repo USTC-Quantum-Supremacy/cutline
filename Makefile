@@ -32,7 +32,4 @@ output/orders_peps.json: dimensionTasks.js main.js pepsPath.js output/dimensionT
 
 circuit.zip: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json output/orders_peps.json
 	node generateCircuit.js order
-	7z a circuit.zip circuit peps_path
-	cp circuit.zip ../circuit.zip
-	cd ..
-	7z x circuit.zip
+	7z a circuit.zip ../MeteorCircuit

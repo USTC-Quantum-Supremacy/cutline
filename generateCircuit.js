@@ -87,19 +87,20 @@ if (!withOrder) fs.writeFileSync('output/dimensionTasks.json','[\n'+PEPSInputs.m
 
 
 inputs.forEach(input=>{
+    let baseDir='../MeteorCircuit'
     let sd=new StructDataClass();
     sd.import(input)
     sd.generateCircuit(args=>{
         if (args.simulationFilename) {
-            fs.writeFileSync(args.simulationFilename,args.circuit,{encoding:'utf-8'})
+            fs.writeFileSync(baseDir+'/'+args.simulationFilename,args.circuit,{encoding:'utf-8'})
         } else {
             // console.log(args.circuit)
         }
         if (args.mapFilename) {
-            fs.writeFileSync(args.mapFilename,args.mapText,{encoding:'utf-8'})
+            fs.writeFileSync(baseDir+'/'+args.mapFilename,args.mapText,{encoding:'utf-8'})
         }
         if (args.cutFilename) {
-            fs.writeFileSync(args.cutFilename,args.cutText,{encoding:'utf-8'})
+            fs.writeFileSync(baseDir+'/'+args.cutFilename,args.cutText,{encoding:'utf-8'})
         }
     })
 })
