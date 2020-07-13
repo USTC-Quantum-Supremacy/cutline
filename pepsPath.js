@@ -183,6 +183,7 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         Object.assign(gs,{n,qubit,qubits,edge,bitCount})
     }
     let mainBFS=(gs)=>{
+        let debug=0
         let n=gs.n
         let bitCount=gs.bitCount
         /** 存是否已经使用过 */
@@ -204,11 +205,11 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
         }
         let count=0
         let node=0
-        console.log('count node size')
-        console.log('-----------------')
+        if(debug)console.log('count node size');
+        if(debug)console.log('-----------------');
         let result={times:null,order:[]}
         while (queue.size()) {
-            if (++count%10000==0) {
+            if (debug && ++count%10000==0) {
                 console.log(count,node,queue.size())
             }
             let [area,order,times,connecting]=queue.shift()
@@ -227,7 +228,7 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
                 }
             }
         }
-        console.log(count,node,queue.size())
+        if(debug)console.log(count,node,queue.size());
         return result
     }
     /**

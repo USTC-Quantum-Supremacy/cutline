@@ -16,9 +16,6 @@ circuit.zip
 CutlineInput.g4.js
 output/*.txt
 output/*.log
-output/tasks_result.json
-output/tasks_result.xlsx
+output/*.json
+output/*.xlsx
 output/*.zip
-output/dimensionTasks.json
-output/orders_peps.json
-output/tasks_result_analysis.json

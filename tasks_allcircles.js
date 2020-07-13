@@ -1,6 +1,6 @@
 const {StructDataClass} = require('./main.js')
 
-const execSync = require('child_process').execSync
+const {execSync} = require('child_process')
 
 const fs = require('fs')
 
