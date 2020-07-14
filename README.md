@@ -42,7 +42,7 @@ node tasks_allcircles.js giveup
 
 ```shell
 make page
-screen -dms cutline python3 server.py
+screen -dms cutline bash startServer.sh
 ```
 
 ## generate
