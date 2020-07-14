@@ -53,137 +53,191 @@ var toolboxObj = {
     CutlineInputBlocks["generatingCircuit"].xmlText(),
     '<label text="60bit"></label>',
     CutlineInputFunctions.parser.parse({
-      "type": "prog",
-      "xsize": "11",
-      "ysize": "11",
-      "use00": false,
-      "brokenBits": "[]",
-      "part1": "[]",
-      "depth": "18",
-      "searchPattern": "012323010123230103",
-      "errorRates": "[0.0016,0.008,0.038]",
-      "removedEntrances": "[]",
-      "balancedRange": 6,
-      "search": "notprune",
-      "showMark": [
-          {
-              "type": "markQi"
-          }
-      ],
-      "showPattern": [
-          {
-              "type": "patternDefine",
-              "pattern": "I",
-              "bitString": "0_1011100010"
-          },
-          {
-              "type": "patternDefine",
-              "pattern": "J",
-              "bitString": "0_0100011101"
-          },
-          {
-              "type": "patternDefine",
-              "pattern": "K",
-              "bitString": "1_0100011101"
-          },
-          {
-              "type": "patternDefine",
-              "pattern": "L",
-              "bitString": "1_1011100010"
-          },
-          {
-              "type": "patternA",
-              "pattern": "I",
-              "color": "#ff9900"
-          },
-          {
-              "type": "patternA",
-              "pattern": "J",
-              "color": "#3333ff"
-          },
-          {
-              "type": "patternC",
-              "pattern": "K",
-              "color": "#009900"
-          },
-          {
-              "type": "patternC",
-              "pattern": "L",
-              "color": "#cc0000"
-          }
-      ],
-      "generatingCircuit": [
-          {
-              "type": "generatingCircuitNone"
-          }
-      ]
+        "type": "prog",
+        "xsize": "12",
+        "ysize": "11",
+        "use00": false,
+        "brokenBits": "[5,17,29,41,53,65]",
+        "part1": "[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,26,27,28,3,30,34,35,4,40,6,7,8,9,5,17,29]",
+        "depth": "18",
+        "searchPattern": "012323010123230103",
+        "errorRates": "[0.0016,0.0062,0.038]",
+        "removedEntrances": "[]",
+        "balancedRange": 20,
+        "search": "notprune",
+        "showMark": [
+            {
+                "type": "markQi"
+            }
+        ],
+        "showPattern": [
+            {
+                "type": "patternDefine",
+                "pattern": "I",
+                "bitString": "0_0011100000"
+            },
+            {
+                "type": "patternDefine",
+                "pattern": "J",
+                "bitString": "0_1100011111"
+            },
+            {
+                "type": "patternDefine",
+                "pattern": "K",
+                "bitString": "1_0100011100"
+            },
+            {
+                "type": "patternDefine",
+                "pattern": "L",
+                "bitString": "1_1011100011"
+            },
+            {
+                "type": "patternA",
+                "pattern": "I",
+                "color": "#ff9900"
+            },
+            {
+                "type": "patternA",
+                "pattern": "J",
+                "color": "#3333ff"
+            },
+            {
+                "type": "patternC",
+                "pattern": "K",
+                "color": "#009900"
+            },
+            {
+                "type": "patternC",
+                "pattern": "L",
+                "color": "#cc0000"
+            }
+        ],
+        "generatingCircuit": [
+            {
+                "type": "generatingCircuit",
+                "qubitNumber": 60,
+                "elided": "",
+                "pattern": "IJKLKLIJIJKLKLIJIL",
+                "seed": 13874234,
+                "simulationFilename": "",
+                "cutFilename": "",
+                "mapFilename": "",
+                "experimentFilename": "unknown now",
+                "order": [
+                    {
+                        "type": "orderlist",
+                        "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
+                    }
+                ],
+                "pepsCut": "[]",
+                "pepsPath": [
+                    {
+                        "type": "orderlist",
+                        "order": "[]"
+                    }
+                ],
+                "gateArgs": [
+                    {
+                        "type": "gateArgs",
+                        "unknow": "[0.5,0.1666666667,0,0,0]"
+                    }
+                ]
+            }
+        ]
     }),
     '<label text="66bit"></label>',
     CutlineInputFunctions.parser.parse({
-      "type": "prog",
-      "xsize": "12",
-      "ysize": "11",
-      "use00": false,
-      "brokenBits": "[]",
-      "part1": "[]",
-      "depth": "16",
-      "searchPattern": "01232301",
-      "errorRates": "[0.0016,0.008,0.038]",
-      "removedEntrances": "[]",
-      "balancedRange": 6,
-      "search": "notprune",
-      "showMark": [
-          {
-              "type": "markQi"
-          }
-      ],
-      "showPattern": [
-          {
-              "type": "patternDefine",
-              "pattern": "I",
-              "bitString": "0_0000000000"
-          },
-          {
-              "type": "patternDefine",
-              "pattern": "J",
-              "bitString": "0_1111111111"
-          },
-          {
-              "type": "patternDefine",
-              "pattern": "K",
-              "bitString": "1_0000001100"
-          },
-          {
-              "type": "patternDefine",
-              "pattern": "L",
-              "bitString": "1_1111110011"
-          },
-          {
-              "type": "patternA",
-              "pattern": "I",
-              "color": "#ff9900"
-          },
-          {
-              "type": "patternA",
-              "pattern": "J",
-              "color": "#3333ff"
-          },
-          {
-              "type": "patternC",
-              "pattern": "K",
-              "color": "#009900"
-          },
-          {
-              "type": "patternC",
-              "pattern": "L",
-              "color": "#cc0000"
-          }
-      ],
-      "generatingCircuit": [
-          {
-              "type": "generatingCircuitNone"
-          }
-      ]
+        "type": "prog",
+        "xsize": "12",
+        "ysize": "11",
+        "use00": false,
+        "brokenBits": "[]",
+        "part1": "[0,1,12,13,14,18,19,2,20,21,24,25,26,3,30,31,32,33,36,37,38,42,43,44,48,49,54,55,6,60,7,8,9]",
+        "depth": "16",
+        "searchPattern": "0123230101232301",
+        "errorRates": "[0.0016,0.0062,0.038]",
+        "removedEntrances": "[]",
+        "balancedRange": 14,
+        "search": "notprune",
+        "showMark": [
+            {
+                "type": "markQi"
+            }
+        ],
+        "showPattern": [
+            {
+                "type": "patternDefine",
+                "pattern": "I",
+                "bitString": "0_0000000000"
+            },
+            {
+                "type": "patternDefine",
+                "pattern": "J",
+                "bitString": "0_1111111111"
+            },
+            {
+                "type": "patternDefine",
+                "pattern": "K",
+                "bitString": "1_0000001100"
+            },
+            {
+                "type": "patternDefine",
+                "pattern": "L",
+                "bitString": "1_1111110011"
+            },
+            {
+                "type": "patternA",
+                "pattern": "I",
+                "color": "#ff9900"
+            },
+            {
+                "type": "patternA",
+                "pattern": "J",
+                "color": "#3333ff"
+            },
+            {
+                "type": "patternC",
+                "pattern": "K",
+                "color": "#009900"
+            },
+            {
+                "type": "patternC",
+                "pattern": "L",
+                "color": "#cc0000"
+            }
+        ],
+        "generatingCircuit": [
+            {
+                "type": "generatingCircuit",
+                "qubitNumber": 66,
+                "elided": "",
+                "pattern": "IJKLKLIJ",
+                "seed": 13874234,
+                "simulationFilename": "",
+                "cutFilename": "",
+                "mapFilename": "",
+                "experimentFilename": "unknown now",
+                "order": [
+                    {
+                        "type": "orderlist",
+                        "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
+                    }
+                ],
+                "pepsCut": "[]",
+                "pepsPath": [
+                    {
+                        "type": "orderlist",
+                        "order": "[]"
+                    }
+                ],
+                "gateArgs": [
+                    {
+                        "type": "gateArgs",
+                        "unknow": "[0.5,0.1666666667,0,0,0]"
+                    }
+                ]
+            }
+        ]
     }),
     '<label text="google"></label>',
     CutlineInputFunctions.parser.parse({
