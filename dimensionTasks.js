@@ -8,8 +8,8 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 let mainProcess = async ()=>{
     let dimensionTasks = JSON.parse(fs.readFileSync('output/dimensionTasks.json',{encoding:'utf-8'}))
     let pepsDimensionInput=[]
-    for (const [input,task,n,d] of dimensionTasks) {
-        pepsDimensionInput.push([n,d,input.generatingCircuit[0].simulationFilename])
+    for (const [input,task,n,d,filename] of dimensionTasks) {
+        pepsDimensionInput.push([n,d,filename])
     }
     fs.writeFileSync('../callMeteor/in/dimensionTasks.json',JSON.stringify(pepsDimensionInput),{encoding:'utf-8'})
     await delay(50)
@@ -19,7 +19,7 @@ let mainProcess = async ()=>{
     let results=[]
     for (let index = 0; index < dimensions.length; index++) {
         const dimension = dimensions[index];
-        const [input,task,n,d] = dimensionTasks[index];
+        const [input,task,n,d,filename] = dimensionTasks[index];
         let sd=new StructDataClass();
         sd.import(input)
         let result = searchPepsOrder.apply(sd,[dimension,7])

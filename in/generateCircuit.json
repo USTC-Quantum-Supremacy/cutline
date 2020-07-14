@@ -4,13 +4,13 @@
     "ysize": "11",
     "use00": false,
     "brokenBits": "[]",
-    "part1": "[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,26,27,28,3,30,34,35,4,40,6,7,8,9]",
+    "part1": "[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]",
     "depth": "20",
     "searchPattern": "01232301",
     "errorRates": "[0.0016,0.0062,0.038]",
     "removedEntrances": "[]",
     "balancedRange": 6,
-    "search": "prune",
+    "search": "notprune",
     "showMark": [
         {
             "type": "markQi"
@@ -36,6 +36,26 @@
             "type": "patternDefine",
             "pattern": "L",
             "bitString": "1_1011100011"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "M",
+            "bitString": "0_0000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "N",
+            "bitString": "0_1111111111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "O",
+            "bitString": "1_0000001100"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "P",
+            "bitString": "1_1111110011"
         },
         {
             "type": "patternA",
