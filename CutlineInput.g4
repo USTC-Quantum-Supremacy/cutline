@@ -45,7 +45,7 @@ generatingCircuit
         gateArgs
 /* generatingCircuit
 name : ['qubitNumber','elided','pattern','seed','simulationFilename','cutFilename','mapFilename','experimentFilename','order','pepsCut','pepsPath','gateArgs']
-default : [60,'','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','peps_path/sycamore60_cut.txt','peps_path/sycamore.txt','unknown now','[8,3,8,15,20,15,20,27]']
+default : [60,'','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','circuit/sycamore60_20_EFGH.txt.cut','circuit/sycamore60_20_EFGH.txt.map','unknown now','[8,3,8,15,20,15,20,27]']
 colour : this.generatingCircuitColor
 var code = CutlineInputFunctions.defaultCode('generatingCircuit',eval('['+CutlineInputBlocks['generatingCircuit'].args.join(',')+']'));
       return code;

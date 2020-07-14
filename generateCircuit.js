@@ -58,6 +58,9 @@ let tasks=[
     {n:[66],d:[14],p:'MNOPOPMNMNOPON',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP']},
 
     // Auxliary
+    {n:[60],d:[4],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']},
+    {n:[66],d:[4],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['PEPS']},
+
     {n:[15,18,21,24,27,30,33,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',target:[]},
     {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt',target:[]},
 
@@ -82,15 +85,14 @@ tasks.forEach(t=>{
             input.part1=r(t.part1)||input.part1
             input.generatingCircuit[0].pattern=r(t.p)
             input.generatingCircuit[0].elided=r(t.e)
-            input.generatingCircuit[0].cutFilename=r(t.c)
-            input.generatingCircuit[0].mapFilename=r(t.m)
             input.generatingCircuit[0].simulationFilename=r(t.s)
+            input.generatingCircuit[0].cutFilename=r(t.c)||r(t.s)+'.cut'
+            input.generatingCircuit[0].mapFilename=r(t.m)||r(t.s)+'.map'
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
             if (t.target.indexOf('PEPS')!==-1) {
                 if (withOrder) {
                     input.generatingCircuit[0].pepsPath[0].order=JSON.stringify(pepsOrder[PEPSInputs.length].order);
-                    input.generatingCircuit[0].cutFilename=input.generatingCircuit[0].simulationFilename+'.cut'
                     if (t.target.indexOf('PEPSTime')!==-1) PEPSTimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
                 }
                 PEPSInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename])
