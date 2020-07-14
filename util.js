@@ -76,5 +76,31 @@ if (typeof require !== 'undefined' && require.main === module) {
         execSync(`python3 convertToXlsx.py output/pepsTimeCompare.json`)
     }
 
+    let pepstime=()=>{
+        const fs = require('fs')
+        const {execSync} = require('child_process')
+        let newTime=JSON.parse(fs.readFileSync('../callMeteor/output/PEPSTimeTest.json',{encoding:'utf-8'}))
+        let tasks=JSON.parse(fs.readFileSync('output/PEPSTimeInputs.json',{encoding:'utf-8'}))
+        let data={title:'peps time',data:[['input','task','n','d','circuit','time']],outFileName:'output/PEPSTimeTest.xlsx'}
+        for (let index = 0; index < tasks.length; index++) {
+            data.data.push([...tasks[index],newTime[index]])
+        }
+        fs.writeFileSync('output/PEPSTimeTest.json',JSON.stringify(data),{encoding:'utf-8'})
+        execSync(`python3 convertToXlsx.py output/PEPSTimeTest.json`)
+    }
+
+    let sfatime=()=>{
+        const fs = require('fs')
+        const {execSync} = require('child_process')
+        let newTime=JSON.parse(fs.readFileSync('../callMeteor/output/SFATimeTest.json',{encoding:'utf-8'}))
+        let tasks=JSON.parse(fs.readFileSync('output/SFATimeInputs.json',{encoding:'utf-8'}))
+        let data={title:'peps time',data:[['input','task','n','d','circuit','time','paths','crossgate','napth']],outFileName:'output/SFATimeTest.xlsx'}
+        for (let index = 0; index < tasks.length; index++) {
+            data.data.push([...tasks[index],...newTime[index]])
+        }
+        fs.writeFileSync('output/SFATimeTest.json',JSON.stringify(data),{encoding:'utf-8'})
+        execSync(`python3 convertToXlsx.py output/SFATimeTest.json`)
+    }
+
     eval('!'+(process.argv[2]||'f1')+'();')
 }
