@@ -13,5 +13,5 @@ with open('random.js','w') as fid:
 with open('CutlineInput.g4') as fid:
     sourceg4=fid.read()
 with open('CutlineInput.g4.js','w') as fid:
-    fid.write('window.grammerFile=')
+    fid.write('this.grammerFile=')
     fid.write(json.dumps(sourceg4))
