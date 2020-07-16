@@ -120,8 +120,8 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             if (a>b) {
                 [a,b]=[b,a]
             }
-            if(cut_obj[a]==null)return false
-            return cut_obj[a][b]===true
+            if(cut_obj[a]==null)return false;
+            return cut_obj[a][b]===true;
         }
 
         let edge={}
@@ -133,6 +133,11 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
             if(edge[a]==null)edge[a]={};
             edge[a][b]=v[2]
         });
+        sd.maxAreaEdges.forEach(v=>{
+            let [a,b]=v
+            if(edge[a]==null)edge[a]={};
+            if(edge[a][b]==null)edge[a][b]=1;
+        })
         
         let qubits=orderList.slice(0,n)
         n=qubits.length
