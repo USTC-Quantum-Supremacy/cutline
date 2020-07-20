@@ -10,32 +10,7 @@ console.log(JSON.stringify(input,null,4))
 
 sd.import(input)
 
-
 sd.searchPath()
-
-// // 生成线路,cut,map,paths
-// let generateFormatPaths = function (params) {
-//     let list=[]
-//     let result=this.pathsSplit
-//     let circles = this.circles 
-//     circles = this.bitStringCircles 
-//     let func= this.calCutLengthWithWedge
-//     func = this.calCutLengthWithWedge_bitString
-//     /** @type {import('./main.js').StructDataClass} */
-//     let newins=new this.constructor().import(this.input,{part1:'[]'})
-//     for (let index = 0; index < result.length; index++) {
-//         const removeList = result[index];
-//         list.push(newins.copyThis().setSplit(removeList).splitEdges)
-//     }
-//     return list
-// }
-// let paths = generateFormatPaths.call(sd)
-// let circuit,cutText,mapText;
-// sd.generateCircuit(args=>{
-//     [circuit,cutText,mapText]=[args.circuit,args.cutText,args.mapText]
-// })
-// fs.writeFileSync('output/check18.txt',JSON.stringify({circuit,cutText,mapText,paths}),{encoding:'utf-8'})
-
 
 /** @type {(pf,patterns)=>import('./main.js').StructDataClass} */
 let _calCutLengthWithWedge = sd._calCutLengthWithWedge

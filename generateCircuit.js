@@ -66,8 +66,8 @@ let tasks=[
     {n:[66],d:[7],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:'[0,12,13,18,19,24,25,30,31,32,36,37,38,42,43,44,45,48,49,50,51,54,55,56,57,58,6,60,61,62,63,64,7]',target:['SFA','PEPS']},
     {n:[66],d:[8],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,25,26,27,28,3,30,32,33,38,4,5,6,7,8,9]',target:['SFA','PEPS']},
 
-    {n:[15,18,21,24,27,30,33,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',target:[]},
-    {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt',target:[]},
+    // {n:[15,18,21,24,27,30,33,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',target:[]},
+    // {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt',target:[]},
 
     {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'EFGH',s:'circuit/sycamore{n}_{d}_EFGH.txt',target:[]},
     {n:[37,40,45,50,55,60,66],d:[4,5,6,7,8,9,10],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt',target:[]},
@@ -91,8 +91,7 @@ tasks.forEach(t=>{
             input.generatingCircuit[0].pattern=r(t.p)
             input.generatingCircuit[0].elided=r(t.e)
             input.generatingCircuit[0].simulationFilename=r(t.s)
-            input.generatingCircuit[0].cutFilename=r(t.c)||r(t.s)+'.cut'
-            input.generatingCircuit[0].mapFilename=r(t.m)||r(t.s)+'.map'
+            input.generatingCircuit[0].auxiliaryFilename=r(t.s)+'.json'
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
             if (t.target.indexOf('PEPS')!==-1) {
@@ -125,11 +124,8 @@ inputs.forEach(input=>{
         } else {
             // console.log(args.circuit)
         }
-        if (args.mapFilename) {
-            fs.writeFileSync(baseDir+'/'+args.mapFilename,args.mapText,{encoding:'utf-8'})
-        }
-        if (args.cutFilename) {
-            fs.writeFileSync(baseDir+'/'+args.cutFilename,args.cutText,{encoding:'utf-8'})
+        if (args.auxiliaryFilename) {
+            fs.writeFileSync(baseDir+'/'+args.auxiliaryFilename,args.auxiliaryText,{encoding:'utf-8'})
         }
     })
 })

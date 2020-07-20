@@ -33,19 +33,16 @@ generatingCircuit
         'seed (can not change now)' Int BGNL
         'output file name' BGNL
         '> simulation' NormalStr? BGNL
-        '> cut' NormalStr? BGNL
-        '> map' NormalStr? BGNL
+        '> auxiliary' NormalStr? BGNL
         '> experiment(unknown now)' NormalStr? BGNL
-        'order (bit indexes)' BGNL
-        orderlist
+        'order (bit indexes)' BGNL orderlist
+        'sfa cut' JsonStr BGNL
         'peps cut' JsonStr BGNL
-        'peps path' BGNL
-        orderlist
-        'gateArgs(unknown now)' BGNL
-        gateArgs
+        'peps path' BGNL orderlist
+        'gateArgs(unknown now)' BGNL gateArgs
 /* generatingCircuit
-name : ['qubitNumber','elided','pattern','seed','simulationFilename','cutFilename','mapFilename','experimentFilename','order','pepsCut','pepsPath','gateArgs']
-default : [60,'','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','circuit/sycamore60_20_EFGH.txt.cut','circuit/sycamore60_20_EFGH.txt.map','unknown now','[8,3,8,15,20,15,20,27]']
+name : ['qubitNumber','elided','pattern','seed','simulationFilename','auxiliaryFilename','experimentFilename','order','sfaCut','pepsCut','pepsPath','gateArgs']
+default : [60,'','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','circuit/sycamore60_20_EFGH.txt.json','unknown now','-1','[8,3,8,15,20,15,20,27]']
 colour : this.generatingCircuitColor
 var code = CutlineInputFunctions.defaultCode('generatingCircuit',eval('['+CutlineInputBlocks['generatingCircuit'].args.join(',')+']'));
       return code;

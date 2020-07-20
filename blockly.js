@@ -120,8 +120,7 @@ var toolboxObj = {
                 "pattern": "IJKLKLIJIJKLKLIJIL",
                 "seed": 13874234,
                 "simulationFilename": "",
-                "cutFilename": "",
-                "mapFilename": "",
+                "auxiliaryFilename": "",
                 "experimentFilename": "unknown now",
                 "order": [
                     {
@@ -129,6 +128,7 @@ var toolboxObj = {
                         "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
                     }
                 ],
+                "sfaCut": "-1",
                 "pepsCut": "[]",
                 "pepsPath": [
                     {
@@ -214,8 +214,7 @@ var toolboxObj = {
                 "pattern": "IJKLKLIJ",
                 "seed": 13874234,
                 "simulationFilename": "",
-                "cutFilename": "",
-                "mapFilename": "",
+                "auxiliaryFilename": "",
                 "experimentFilename": "unknown now",
                 "order": [
                     {
@@ -223,6 +222,7 @@ var toolboxObj = {
                         "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
                     }
                 ],
+                "sfaCut": "-1",
                 "pepsCut": "[]",
                 "pepsPath": [
                     {

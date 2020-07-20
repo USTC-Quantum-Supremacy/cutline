@@ -1,7 +1,9 @@
 if (typeof document === "undefined") {
     var rand = require('./random.js').rand
+    var json = require('./util.js').json
 } else {
     var rand = exports.rand
+    var json = exports.json
 }
 
 /**
@@ -1318,22 +1320,28 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
     return {circuit:text.join('\n'),crossGateNumber}
 }
 
-StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber,pepsPath,pepsCut) {
+StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber,pepsPath,pepsCut,sfaCut) {
     let qindexs=orderList.slice(0,qubitNumber)
-    let Aindexes=[]
-    let Bindexes=[]
+    let AIndexes=[]
+    let BIndexes=[]
     for (let qi = 0; qi < this.bitCount; qi++) {
         const qubit = this.qubit(qi);
         if (qubit.area2===2 && qindexs.indexOf(qi)!==-1) {
-            Aindexes.push(qi)
+            AIndexes.push(qi)
         }
         if (qubit.area2===1 && qindexs.indexOf(qi)!==-1) {
-            Bindexes.push(qi)
+            BIndexes.push(qi)
         }
     }
-    let cutText=`${qubitNumber}\n\n${Aindexes.join('\n')}\n\n${Bindexes.join('\n')}\n\n${pepsPath.join('\n')}\n\n${pepsCut.map((v,i)=>v+(i%2?'\n':' ')).join('')}`
-    let mapText=`${orderList.map((v,i)=>v+' '+(i+1)).join('\n')}\n`
-    return {cutText,mapText}
+    // let cutText=`${qubitNumber}\n\n${AIndexes.join('\n')}\n\n${BIndexes.join('\n')}\n\n${pepsPath.join('\n')}\n\n${pepsCut.map((v,i)=>v+(i%2?'\n':' ')).join('')}`
+    // let mapText=`${orderList.map((v,i)=>v+' '+(i+1)).join('\n')}\n`
+    let auxiliaryText=json.d1({
+        N:qubitNumber,
+        AIndexes,BIndexes,SFACut:sfaCut,
+        PEPSCut:pepsCut.map((v,i,a)=>[v,a[i+1]]).filter((v,i)=>i%2==0),PEPSOrder:pepsPath,
+        map:orderList.map((v,i)=>[v,i+1]),
+    })
+    return {auxiliaryText}
 }
 
 /**
@@ -1352,16 +1360,16 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         }
         let pepsPath=eval(circuitInput.pepsPath[0].order)
         let pepsCut=eval(circuitInput.pepsCut)
+        let sfaCut=eval(circuitInput.sfaCut)
         let simulationFilename=circuitInput.simulationFilename
-        let mapFilename=circuitInput.mapFilename
-        let cutFilename=circuitInput.cutFilename
+        let auxiliaryFilename=circuitInput.auxiliaryFilename
         let elided=circuitInput.elided===''?null:parseInt(circuitInput.elided)
         let elidedMod=circuitInput.elided.slice(-5)==='layer'?'layer':'number'
         let circuitProto = this.generateCircuitProto(circle,depth)
         let {circuit,crossGateNumber} = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
-        let {cutText,mapText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut)
+        let {auxiliaryText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut,sfaCut)
         if (outputFunc) {
-            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,mapFilename,cutFilename,elided,elidedMod,circuitProto,circuit,crossGateNumber,cutText,mapText})
+            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,auxiliaryFilename,elided,elidedMod,circuitProto,circuit,crossGateNumber,auxiliaryText})
         }
     }
     return this
