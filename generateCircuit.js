@@ -113,7 +113,7 @@ tasks.forEach(t=>{
             }
             if (t.target.indexOf('SFATime')!==-1) SFATimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
             inputs.push(input)
-            taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],t,input,t.target.join('_')||'null'])
+            taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],JSON.stringify(t),JSON.stringify(input),t.target.join('_')||'null'])
         })
     })
 })
@@ -141,4 +141,4 @@ inputs.forEach(input=>{
     })
 })
 
-fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],data:[taskDisplay],outFileName:'output/circuits.xlsx'}),{encoding:'utf-8'})
+fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],data:[taskDisplay],outFileName:'output/circuits.xlsx'},null,4),{encoding:'utf-8'})
