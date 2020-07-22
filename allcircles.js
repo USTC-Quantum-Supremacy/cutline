@@ -30,7 +30,6 @@ let calCutLengthWithWedge = function (patterns) {
     let func= calCutLengthWithWedge
     let pattern = sd.input.generatingCircuit[0].pattern
     let circles = [[pattern,pattern.slice(0,4)]]
-    sd.constructor.prototype.circles=circles
     let output=_processPathsResult.apply(sd,[circles,func,false])
     console.log(output.maxofmin)
 })();
