@@ -10,9 +10,9 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         '> removed entrances' JsonStr BGNL
         '> n1-n2 no bigger than' Int BGNL
         '>' Search_List BGNL
-        'show mark ~1(only for mark)' BGNL marks
-        'show and define pattern ~n' BGNL patterns
-        'generating circuit ~1' BGNL generatingCircuits
+        'show mark ~1(only for mark)' BGNL marks+
+        'show and define pattern ~n' BGNL patterns+
+        'generating circuit ~1' BGNL generatingCircuits+
 /* prog
 name : ['xsize','ysize','use00','brokenBits','part1','depth','searchPattern','errorRates','removedEntrances','balancedRange','search','showMark','showPattern','generatingCircuit']
 default : ['12','11',true,'[]','[]','20','01232301','[0.0016,0.0062,0.038]','[]',6,'prune']
@@ -35,11 +35,11 @@ generatingCircuit
         '> simulation' NormalStr? BGNL
         '> auxiliary' NormalStr? BGNL
         '> experiment(unknown now)' NormalStr? BGNL
-        'order (bit indexes)' BGNL orderlist
+        'order (bit indexes)' BGNL orderlist+
         'sfa cut' JsonStr BGNL
         'peps cut' JsonStr BGNL
-        'peps path' BGNL orderlist
-        'gateArgs(unknown now)' BGNL gateArgs
+        'peps path' BGNL orderlist+
+        'gateArgs(unknown now)' BGNL gateArgs+
 /* generatingCircuit
 name : ['qubitNumber','elided','pattern','seed','simulationFilename','auxiliaryFilename','experimentFilename','order','sfaCut','pepsCut','pepsPath','gateArgs']
 default : [60,'','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','circuit/sycamore60_20_EFGH.txt.json','unknown now','-1','[8,3,8,15,20,15,20,27]']

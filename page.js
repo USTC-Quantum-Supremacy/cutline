@@ -102,6 +102,13 @@ function submit(params) {
     enablesubmit()
 }
 
+function calulate(params) {
+    document.getElementById('postresult').innerHTML=''
+    sd.constructor.prototype.pathsSplit=[sd.removeList]
+    sd.circles=[['IJKLKLIJ','IJKL']]
+    document.getElementById('reRenderResult').onclick()
+}
+
 function processPathsResult_page(result,showall,target) {
     /** @type {import('./main.js').StructDataClass} */
     let sd=window.sd

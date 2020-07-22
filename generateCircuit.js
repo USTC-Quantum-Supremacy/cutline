@@ -85,6 +85,7 @@ let tasks=[
     {n:[60,66],d:[20],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt',target:[]},
 ]
 
+let taskDisplay=[['n','depth','name','task','input','targets']]
 inputs=[]
 let PEPSInputs=[]
 let PEPSTimeInputs=[]
@@ -112,6 +113,7 @@ tasks.forEach(t=>{
             }
             if (t.target.indexOf('SFATime')!==-1) SFATimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
             inputs.push(input)
+            taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],t,input,t.target.join('_')||'null'])
         })
     })
 })
@@ -138,3 +140,5 @@ inputs.forEach(input=>{
         }
     })
 })
+
+fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],data:[taskDisplay],outFileName:'output/circuits.xlsx'}),{encoding:'utf-8'})
