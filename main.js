@@ -749,7 +749,7 @@ StructDataClass.prototype.setSplit = function (removeList) {
             area2[1]++
         }
     }
-    if (removeList.length===0 || removeList.length===this.n) {
+    if (removeList.length===0) {
         this.splitEdges=[]
         this.unbalance=this.n*2
         this.n1=this.n
