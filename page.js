@@ -102,7 +102,7 @@ function submit(params) {
     enablesubmit()
 }
 
-function calulate(params) {
+function calculate(params) {
     document.getElementById('postresult').innerHTML=''
     sd.constructor.prototype.pathsSplit=[sd.removeList]
     sd.circles=[['IJKLKLIJ','IJKL']]
