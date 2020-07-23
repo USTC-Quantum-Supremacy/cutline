@@ -20,3 +20,4 @@ output/*.log
 output/*.json
 output/*.xlsx
 output/*.zip
+pushall.cmd

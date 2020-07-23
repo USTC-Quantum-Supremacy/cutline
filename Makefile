@@ -1,4 +1,4 @@
-all: random.js CutlineInput.g4.js output/dimensionTasks.json output/orders_peps.json circuit.zip
+all: random g4 dimension order circuit
 
 .PHONY:random
 random:random.js
@@ -16,7 +16,7 @@ dimension:output/dimensionTasks.json
 order:output/orders_peps.json
 
 .PHONY:circuit
-circuit:circuit.zip
+circuit:output/circuits.json
 
 random.js: generateRandomNumber.py random_.js
 	python3 generateRandomNumber.py
@@ -30,7 +30,7 @@ output/dimensionTasks.json: generateCircuit.js random.js main.js in/generateCirc
 output/orders_peps.json: dimensionTasks.js main.js pepsPath.js output/dimensionTasks.json
 	node dimensionTasks.js
 
-circuit.zip: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json output/orders_peps.json
+output/circuits.json: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json output/orders_peps.json
 	node generateCircuit.js order
 	python3 convertToXlsx.py output/circuits.json
 	7z a circuit.zip ../MeteorCircuit

@@ -141,4 +141,6 @@ inputs.forEach(input=>{
     })
 })
 
-fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],data:[taskDisplay],outFileName:'output/circuits.xlsx'},null,4),{encoding:'utf-8'})
+if (withOrder) {
+    fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],data:[taskDisplay],outFileName:'output/circuits.xlsx'},null,4),{encoding:'utf-8'})
+}
