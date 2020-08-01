@@ -184,6 +184,6 @@ function changePatten(params) {
 
 function showCircuit(params) {
     sd.generateCircuit(args=>{
-        document.querySelector('#formatedGateArray').innerText=`circuit:\n${args.circuit}\n\nauxiliary:\n${args.auxiliaryText}`
+        document.querySelector('#formatedGateArray').innerText=`experiment:\n${args.experiment}\n\ncircuit:\n${args.circuit}\n\nauxiliary:\n${args.auxiliaryText}`
     })
 }

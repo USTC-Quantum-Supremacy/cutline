@@ -138,6 +138,9 @@ inputs.forEach(input=>{
         if (args.auxiliaryFilename) {
             fs.writeFileSync(baseDir+'/'+args.auxiliaryFilename,args.auxiliaryText,{encoding:'utf-8'})
         }
+        if (args.experimentFilename) {
+            fs.writeFileSync(baseDir+'/'+args.experimentFilename,args.experiment,{encoding:'utf-8'})
+        }
     })
 })
 

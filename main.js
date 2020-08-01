@@ -1251,9 +1251,43 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
  * @param {String} elidedMod 'number' or 'layer', default 'number'
  * @param {{String:Number[]}} gateArgs 
  */
-StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elided,elidedMod,gateArgs) {
+StructDataClass.prototype.renderCircuitProtoToQCIS = function (proto,saveBitList,elided,elidedMod,gateArgs) {
+    let singleGate = (layerno,gateType,qi)=>{
+        return [`X2P Q${qi}`,`Y2P Q${qi}`,`XY2P Q${qi} 0.785398163397448`][gateType]
+    }
+    let doubleGate = (layerno,edgeargs,q1,q2)=>{
+        if (q1>q2)[q1,q2]=[q2,q1];
+        return `FSIM G${q1}_${q2} 0`
+    }
+    return this.renderCircuitProto(singleGate,doubleGate,'',proto,saveBitList,elided,elidedMod,gateArgs)
+}
+
+/**
+ * 
+ * @param {String} elidedMod 'number' or 'layer', default 'number'
+ * @param {{String:Number[]}} gateArgs 
+ */
+StructDataClass.prototype.renderCircuitProtoToSimulation = function (proto,saveBitList,elided,elidedMod,gateArgs) {
+    let singleGate = (layerno,gateType,qi)=>{
+        let gatestr=['x_1_2','y_1_2','hz_1_2'][gateType]
+        return `${layerno} ${gatestr} ${qi}`
+    }
+    let doubleGate = (layerno,edgeargs,q1,q2)=>{
+        return `${layerno} fsimplus(${edgeargs(q1,q2).join(', ')}) ${q1} ${q2}`
+    }
+    return this.renderCircuitProto(singleGate,doubleGate,saveBitList.length+'\n',proto,saveBitList,elided,elidedMod,gateArgs)
+}
+
+/**
+ * @param {(layerno,gateType,qi)=>String} singleGate
+ * @param {(layerno,edgeargs,q1,q2)=>String} doubleGate
+ * @param {String} head
+ * @param {String} elidedMod 'number' or 'layer', default 'number'
+ * @param {{String:Number[]}} gateArgs 
+ */
+StructDataClass.prototype.renderCircuitProto = function (singleGate,doubleGate,head,proto,saveBitList,elided,elidedMod,gateArgs) {
     elidedMod=elidedMod==='layer'?'layer':'number'
-    let text=[saveBitList.length]
+    let text=[]
     let existCheck={}
     saveBitList.forEach((v,i)=>existCheck[v]=i)
     let edgeargs=()=>[]
@@ -1301,8 +1335,7 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
                 if (layer.hasOwnProperty(gi)) {
                     const gate = layer[gi];
                     if (existCheck[gate.qi]==null) continue;
-                    let gatestr=['x_1_2','y_1_2','hz_1_2'][gate.type]
-                    text.push(`${layerno} ${gatestr} ${gate.qi}`)
+                    text.push(singleGate(layerno,gate.type,gate.qi))
                 }
             }
         } else {
@@ -1311,13 +1344,13 @@ StructDataClass.prototype.renderCircuitProto = function (proto,saveBitList,elide
                     const gate = layer[gi];
                     if (existCheck[gate.q1]==null || existCheck[gate.q2]==null) continue;
                     if (elided!=null && gate.cut!=null && gate.cut<=savedCut) continue;
-                    text.push(`${layerno} fsimplus(${edgeargs(gate.q1,gate.q2).join(', ')}) ${gate.q1} ${gate.q2}`)
+                    text.push(doubleGate(layerno,edgeargs,gate.q1,gate.q2))
                     if(gate.cut!=null)crossGateNumber++
                 }
             }
         }
     }
-    return {circuit:text.join('\n'),crossGateNumber}
+    return {circuit:head+text.join('\n'),crossGateNumber}
 }
 
 StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber,pepsPath,pepsCut,sfaCut) {
@@ -1363,13 +1396,15 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         let sfaCut=eval(circuitInput.sfaCut)
         let simulationFilename=circuitInput.simulationFilename
         let auxiliaryFilename=circuitInput.auxiliaryFilename
+        let experimentFilename=circuitInput.experimentFilename
         let elided=circuitInput.elided===''?null:parseInt(circuitInput.elided)
         let elidedMod=circuitInput.elided.slice(-5)==='layer'?'layer':'number'
         let circuitProto = this.generateCircuitProto(circle,depth)
-        let {circuit,crossGateNumber} = this.renderCircuitProto(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
+        let {circuit,crossGateNumber} = this.renderCircuitProtoToSimulation(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
         let {auxiliaryText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut,sfaCut)
+        let {circuit:experiment} = this.renderCircuitProtoToQCIS(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
         if (outputFunc) {
-            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,auxiliaryFilename,elided,elidedMod,circuitProto,circuit,crossGateNumber,auxiliaryText})
+            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,auxiliaryFilename,experimentFilename,elided,elidedMod,circuitProto,circuit,crossGateNumber,auxiliaryText,experiment})
         }
     }
     return this
