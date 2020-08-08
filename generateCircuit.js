@@ -133,7 +133,7 @@ tasks.forEach(t=>{
             input.generatingCircuit[0].elided=r(t.e)
             input.generatingCircuit[0].simulationFilename=r(t.s)
             input.generatingCircuit[0].auxiliaryFilename=r(t.s)+'.json'
-            input.generatingCircuit[0].sfaCut=t(t.sfaCut||'-1')
+            input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
             if (t.target.indexOf('PEPS')!==-1) {
