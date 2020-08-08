@@ -75,6 +75,30 @@ let tasks=[
     {n:[60,66],d:[8],p:'IJKLKLIJ',e:'6',s:'circuit/sycamore{n}_{d}_IJKL_E6.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',target:['superSFATest']},
     {n:[60,66],d:[8],p:'IJKLKLIJ',e:'7',s:'circuit/sycamore{n}_{d}_IJKL_E7.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',target:['superSFATest']},
     {n:[60,66],d:[8],p:'IJKLKLIJ',e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'1',s:'circuit/sycamore{n}_{d}_IJKL_E1_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'2',s:'circuit/sycamore{n}_{d}_IJKL_E2_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'3',s:'circuit/sycamore{n}_{d}_IJKL_E3_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'4',s:'circuit/sycamore{n}_{d}_IJKL_E4_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'5',s:'circuit/sycamore{n}_{d}_IJKL_E5_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'6',s:'circuit/sycamore{n}_{d}_IJKL_E6_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'7',s:'circuit/sycamore{n}_{d}_IJKL_E7_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8_C0.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'0',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'1',s:'circuit/sycamore{n}_{d}_IJKL_E1_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'2',s:'circuit/sycamore{n}_{d}_IJKL_E2_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'3',s:'circuit/sycamore{n}_{d}_IJKL_E3_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'4',s:'circuit/sycamore{n}_{d}_IJKL_E4_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'5',s:'circuit/sycamore{n}_{d}_IJKL_E5_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'6',s:'circuit/sycamore{n}_{d}_IJKL_E6_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'7',s:'circuit/sycamore{n}_{d}_IJKL_E7_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8_C1.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'1',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'1',s:'circuit/sycamore{n}_{d}_IJKL_E1_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'2',s:'circuit/sycamore{n}_{d}_IJKL_E2_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'3',s:'circuit/sycamore{n}_{d}_IJKL_E3_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'4',s:'circuit/sycamore{n}_{d}_IJKL_E4_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'5',s:'circuit/sycamore{n}_{d}_IJKL_E5_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'6',s:'circuit/sycamore{n}_{d}_IJKL_E6_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'7',s:'circuit/sycamore{n}_{d}_IJKL_E7_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
+    {n:[60],d:[8],p:'IJKLKLIJ',e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8_C2.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'2',target:['superSFATest']},
     {n:[30,32,34,36],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,6,7,8,9]',target:['SA']},
 
     {n:[60],d:[7],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:'[0,1,10,11,12,13,14,15,16,2,20,21,22,23,26,27,28,3,33,34,35,39,4,40,46,47,6,7,8,9]',target:['SFA','PEPS']},
@@ -109,6 +133,7 @@ tasks.forEach(t=>{
             input.generatingCircuit[0].elided=r(t.e)
             input.generatingCircuit[0].simulationFilename=r(t.s)
             input.generatingCircuit[0].auxiliaryFilename=r(t.s)+'.json'
+            input.generatingCircuit[0].sfaCut=t(t.sfaCut||'-1')
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
             if (t.target.indexOf('PEPS')!==-1) {
