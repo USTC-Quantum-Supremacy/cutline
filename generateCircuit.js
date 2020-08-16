@@ -141,6 +141,10 @@ let tasks=[
     {n:[60],d:[8],p:'IJKLKLIJ',e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8_C7.txt',part1:'[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]',sfaCut:'7',target:['superSFATest']},
     {n:[30,32,34,36],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,6,7,8,9]',target:['SA']},
 
+    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C4.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,6,7,8,9]',sfaCut:'4',target:['superSFATest']},
+    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C5.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,6,7,8,9]',sfaCut:'5',target:['superSFATest']},
+
+
     {n:[60],d:[7],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:'[0,1,10,11,12,13,14,15,16,2,20,21,22,23,26,27,28,3,33,34,35,39,4,40,46,47,6,7,8,9]',target:['SFA','PEPS']},
     {n:[60],d:[8],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,54,6,7,8,9]',target:['SFA','PEPS']},
     {n:[66],d:[7],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:'[0,12,13,18,19,24,25,30,31,32,36,37,38,42,43,44,45,48,49,50,51,54,55,56,57,58,6,60,61,62,63,64,7]',target:['SFA','PEPS']},
