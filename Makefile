@@ -33,4 +33,5 @@ output/orders_peps.json: dimensionTasks.js main.js pepsPath.js output/dimensionT
 output/circuits.json: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json output/orders_peps.json
 	node generateCircuit.js order
 	python3 convertToXlsx.py output/circuits.json
+	cp cp2circuit/* ../MeteorCircuit/
 	7z a circuit.zip ../MeteorCircuit

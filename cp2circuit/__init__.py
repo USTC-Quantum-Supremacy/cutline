@@ -4,8 +4,13 @@ __all__=[
     'checkState',
 ]
 import os
+import re
 from openpyxl import load_workbook
 ThisPath=os.path.split(os.path.realpath(__file__))[0]
+
+# [markdown]
+# ## definition  
+
 
 def readXlsx(filename = ThisPath+'\\circuits.xlsx'):
     wb = load_workbook(filename = filename)
@@ -28,11 +33,30 @@ def build_info():
 
 Info=build_info()
 
+def fillFSIM(src):
+    re.match(r"(?:[XY].*\n)+",'')
+    return src
+
+
+# [markdown]
+# global values
+
+class g:
+    ThisPath=ThisPath
+    Info=Info
+    FSIMTime=1
+
+# [markdown]
+# ## user part
+
+def setFSIMTime(time):
+    g.FSIMTime=time
+
 def getCircuit(index):
     filename = Info.get(index,'name')
     with open(ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
-        sourceContent = fid.read()
-    return fillFSIM(sourceContent)
+        src = fid.read()
+    return fillFSIM(src)
 def getTask(resultDir,index):
     pass
 def checkState(resultDir,index):
