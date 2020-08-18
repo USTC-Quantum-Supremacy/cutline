@@ -21,3 +21,4 @@ output/*.json
 output/*.xlsx
 output/*.zip
 pushall.cmd
+__pycache__

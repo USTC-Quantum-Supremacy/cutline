@@ -11,5 +11,6 @@
         "xstring": "cpp",
         "iostream": "cpp",
         "ostream": "cpp"
-    }
+    },
+    "python.pythonPath": "E:\\workspace\\qos_python\\python365\\python.exe"
 }
