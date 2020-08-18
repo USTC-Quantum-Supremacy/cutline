@@ -34,4 +34,5 @@ output/circuits.json: generateCircuit.js random.js main.js in/generateCircuit.js
 	node generateCircuit.js order
 	python3 convertToXlsx.py output/circuits.json
 	cp cp2circuit/* ../MeteorCircuit/
+	cp output/circuits.xlsx ../MeteorCircuit/
 	7z a circuit.zip ../MeteorCircuit
