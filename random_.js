@@ -36,6 +36,7 @@ random.rand=rand;
 random.randn=randn;
 random.reset=reset;
 random.seed=seed;
+random.seeds=randData.seeds;
 return random;
 })();
 if (typeof exports === "undefined") exports = {};
