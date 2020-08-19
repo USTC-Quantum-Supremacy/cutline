@@ -66,7 +66,7 @@ def setFSIMTime(time):
     g.FSIMTime=time
 
 def getCircuit(index):
-    filename = Info.get(index,'name')
+    filename = Info.get(index,'name')+'.qcis'
     with open(ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
         src = fid.read()
     out = fillFSIM(src)
