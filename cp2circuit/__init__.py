@@ -1,4 +1,5 @@
 __all__=[
+    'setFSIMTime',
     'getTask',
     'getCircuit',
     'checkState',
