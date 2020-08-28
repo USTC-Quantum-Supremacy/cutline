@@ -176,7 +176,8 @@ let tasks=[
     {n:[66],d:[16],p:'MMMNNNNOOOOPPPPM',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample5.txt',target:['PEPS']},
     {n:[66],d:[16],p:'MMMNNNNOOOOPPPMP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample6.txt',target:['PEPS']},
 
-    // 1~8 i~iiiii total 40
+    // i~iiiii total 40
+    // I IJ IJK IJKL IJKLI IJKLIL IJKLKLI IJKLKLIJ IJKLK IJKLKL
     // {n:[51],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike_for_sample.txt',target:['PEPS']},
 
 
