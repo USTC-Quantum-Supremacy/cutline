@@ -1205,8 +1205,8 @@ StructDataClass.prototype.calExpectation = function () {
  * @param {String|String[]} circle 
  * @param {Number} depth 
  */
-StructDataClass.prototype.generateCircuitProto = function (circle,depth) {
-    rand.reset()
+StructDataClass.prototype.generateCircuitProto = function (circle,depth,seed) {
+    rand.seed(seed)
     circle=Array.from(circle)
     let proto={circle,depth,layer:[],cut:0}
     let pushSingleLayer=()=>{
@@ -1399,12 +1399,13 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         let experimentFilename=circuitInput.experimentFilename
         let elided=circuitInput.elided===''?null:parseInt(circuitInput.elided)
         let elidedMod=circuitInput.elided.slice(-5)==='layer'?'layer':'number'
-        let circuitProto = this.generateCircuitProto(circle,depth)
+        let seed=circuitInput.seed+''
+        let circuitProto = this.generateCircuitProto(circle,depth,seed)
         let {circuit,crossGateNumber} = this.renderCircuitProtoToSimulation(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
         let {auxiliaryText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut,sfaCut)
         let {circuit:experiment} = this.renderCircuitProtoToQCIS(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
         if (outputFunc) {
-            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,auxiliaryFilename,experimentFilename,elided,elidedMod,circuitProto,circuit,crossGateNumber,auxiliaryText,experiment})
+            outputFunc({depth,circle,orderList,qubitNumber,pepsPath,pepsCut,simulationFilename,auxiliaryFilename,experimentFilename,elided,elidedMod,seed,circuitProto,circuit,crossGateNumber,auxiliaryText,experiment})
         }
     }
     return this
@@ -1661,4 +1662,4 @@ VisualClass.prototype.getExpectation = function () {
 if (typeof exports === "undefined") exports = {};
 exports.StructDataClass = StructDataClass
 exports.VisualClass = VisualClass
-
+exports.seeds = rand.seeds

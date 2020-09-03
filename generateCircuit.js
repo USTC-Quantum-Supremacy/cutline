@@ -7,7 +7,7 @@ if (process.argv[2]==='order') {
     withOrder=true
 }
 
-const {StructDataClass} = require('./main.js')
+const {StructDataClass,seeds} = require('./main.js')
 const fs = require('fs')
 
 let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
