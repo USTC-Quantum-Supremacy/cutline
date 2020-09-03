@@ -30,7 +30,7 @@ generatingCircuits
 
 generatingCircuit
     :   'qubit number' Int 'elided' NormalStr? 'pattern' NormalStr BGNL 
-        'seed (can not change now)' Int BGNL
+        'seed' Seed_List BGNL
         'output file name' BGNL
         '> simulation' NormalStr? BGNL
         '> auxiliary' NormalStr? BGNL
@@ -154,6 +154,7 @@ PatternA_List : 'A'|'B'|'G'|'H'|'I'|'J' ;
 PatternC_List : 'C'|'D'|'E'|'F'|'K'|'L' ;
 Search_List : 'Min Cut'|'All Balanced'
     /*Search_List ['prune','notprune']*/ ;
+Seed_List : '13874234'|'10285102'|'22886724'|'92997209'|'18392462'|'58869319'|'80531470'|'53535483'|'43935200'|'23239930' ;
 
 MulDivAddSub_List : '*'|'/'|'+'|'-' ;
 
