@@ -231,22 +231,22 @@ let SFATimeInputs=[]
 tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
-            let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
-            let tpli=~~r(t.tpl)
-            let input=JSON.parse(JSON.stringify(tplInput[tpli]))
-            input.generatingCircuit[0].qubitNumber=n
-            input.depth=d+''
-            input.part1=r(t.part1)||input.part1
-            input.generatingCircuit[0].pattern=r(t.p)
-            input.generatingCircuit[0].elided=r(t.e)
-            input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
-            input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
-            input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
             seeds.forEach((seed,seedi)=>{
                 if (seedi!==0 && (t.target.indexOf('EXP')===-1 || t.target.indexOf('once')!==-1)) {
                     // 不含EXP 或 含once 时只用 seedi==0
                     return;
                 }
+                let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
+                let tpli=~~r(t.tpl)
+                let input=JSON.parse(JSON.stringify(tplInput[tpli]))
+                input.generatingCircuit[0].qubitNumber=n
+                input.depth=d+''
+                input.part1=r(t.part1)||input.part1
+                input.generatingCircuit[0].pattern=r(t.p)
+                input.generatingCircuit[0].elided=r(t.e)
+                input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
+                input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
+                input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
                 let rr=s=>r(s).split('.txt').join((seedi===0?'':'.s'+seedi)+'.txt')
                 input.generatingCircuit[0].simulationFilename=rr(t.s)
                 input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
