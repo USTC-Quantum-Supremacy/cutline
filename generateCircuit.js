@@ -239,9 +239,6 @@ tasks.forEach(t=>{
             input.part1=r(t.part1)||input.part1
             input.generatingCircuit[0].pattern=r(t.p)
             input.generatingCircuit[0].elided=r(t.e)
-            input.generatingCircuit[0].simulationFilename=r(t.s)
-            input.generatingCircuit[0].experimentFilename=r(t.s)+'.qcis'
-            input.generatingCircuit[0].auxiliaryFilename=r(t.s)+'.json'
             input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
             input.generatingCircuit[0].pepsCut=JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
             input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
@@ -250,6 +247,10 @@ tasks.forEach(t=>{
                     // 不含EXP 或 含once 时只用 seedi==0
                     return;
                 }
+                let rr=s=>r(s).split('.txt').join((seedi===0?'':'.s'+seedi)+'.txt')
+                input.generatingCircuit[0].simulationFilename=rr(t.s)
+                input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
+                input.generatingCircuit[0].auxiliaryFilename=rr(t.s)+'.json'
                 input.generatingCircuit[0].seed=seed
                 if (t.target.indexOf('PEPS')!==-1) {
                     if (withOrder) {
