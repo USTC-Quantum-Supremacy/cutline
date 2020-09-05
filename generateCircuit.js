@@ -223,11 +223,14 @@ let tasks=[
     {n:[60,66],d:[20],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt',target:[]},
 ]
 
-let taskDisplay=[['n','depth','name','task','input','targets','seedi']]
+let taskDisplay=[['n','depth','name','task','input','targets','seedi','circuitIndex']]
 let inputs=[]
 let PEPSInputs=[]
 let PEPSTimeInputs=[]
 let SFATimeInputs=[]
+
+let circuitIndex =1;
+
 tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
@@ -261,7 +264,8 @@ tasks.forEach(t=>{
                 }
                 if (t.target.indexOf('SFATime')!==-1) SFATimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
                 inputs.push(input)
-                taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],JSON.stringify(t),JSON.stringify(input),t.target.join('_')||'null',seedi])
+                taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],JSON.stringify(t),JSON.stringify(input),t.target.join('_')||'null',seedi,circuitIndex])
+                circuitIndex++;
             })
         })
     })

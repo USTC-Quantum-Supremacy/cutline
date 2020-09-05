@@ -22,14 +22,14 @@ def readXlsx(filename = ThisPath+'\\circuits.xlsx'):
 def build_info():
     class InfoClass:
         def pos(self,index):
-            return self.taskIndexes.index(index)
+            return self.circuitIndexes.index(index)
         def get(self,index,field):
             return self.data[self.pos(index)][self.fields.index(field)]
     Info = InfoClass()
     data=readXlsx()
     Info.fields=data[0]
     Info.data=data[1:]
-    Info.taskIndexes=[line[Info.fields.index('taskIndex')] for line in Info.data]
+    Info.circuitIndexes=[line[Info.fields.index('circuitIndex')] for line in Info.data]
     return Info
 
 Info=build_info()
