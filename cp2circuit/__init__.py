@@ -1,4 +1,11 @@
+# [markdown]
+# ## export and import  
+
 __all__=[
+    
+    'getSimulation',
+    'reRenderSimulation',
+
     'setFSIMTime',
     'getTask',
     'getCircuit',
@@ -7,13 +14,13 @@ __all__=[
 import os
 import re
 from openpyxl import load_workbook
-ThisPath=os.path.split(os.path.realpath(__file__))[0]
 
 # [markdown]
 # ## definition  
 
+ThisPath=os.path.split(os.path.realpath(__file__))[0]
 
-def readXlsx(filename = ThisPath+'\\circuits.xlsx'):
+def readXlsx(filename):
     wb = load_workbook(filename = filename)
     ws = wb[wb.sheetnames[0]]
     data = ws.values
@@ -26,7 +33,7 @@ def build_info():
         def get(self,index,field):
             return self.data[self.pos(index)][self.fields.index(field)]
     Info = InfoClass()
-    data=readXlsx()
+    data=readXlsx(ThisPath+'\\circuits.xlsx')
     Info.fields=data[0]
     Info.data=data[1:]
     Info.circuitIndexes=[line[Info.fields.index('circuitIndex')] for line in Info.data]
@@ -61,14 +68,38 @@ class g:
     FSIMTime=1
 
 # [markdown]
-# ## user part
+# ## simulation part
+
+def getSimulation(index, algorithm=''):
+    al='SFA'
+    filename = g.Info.get(index,'name')
+    if algorithm=='':
+        target=g.Info.get(index,'targets')
+        if re.search(r'(^|_)SFA($|_)',target):al='SFA'
+        if re.search(r'(^|_)SFA_?LESSMEM($|_)',target):al='SFA_LESSMEM'
+        if re.search(r'(^|_)PEPS($|_)',target):al='PEPS'
+        if re.search(r'(^|_)SA($|_)',target):al='SA'
+    else:
+        al=algorithm
+    return dict(name=filename,algorithm=al)
+
+def reRenderSimulation(index,gateArgs):
+    filename = g.Info.get(index,'name')
+    with open(g.ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
+        src = fid.read()
+    # todo: change arguments by `gateArgs`
+    out = src 
+    return out
+
+# [markdown]
+# ## experiment part
 
 def setFSIMTime(time):
     g.FSIMTime=time
 
 def getCircuit(index):
-    filename = Info.get(index,'name')+'.qcis'
-    with open(ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
+    filename = g.Info.get(index,'name')+'.qcis'
+    with open(g.ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
         src = fid.read()
     out = fillFSIM(src)
     return out
