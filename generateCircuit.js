@@ -235,8 +235,8 @@ tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
-                if (seedi!==0 && (t.target.indexOf('EXP')===-1 || t.target.indexOf('seeds')===-1 || t.target.indexOf('once')!==-1)) {
-                    // (不含EXP 或 不含seeds 或 含once) 时只用 seedi==0
+                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1) || t.target.indexOf('once')!==-1)) {
+                    // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
                     return;
                 }
                 let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
