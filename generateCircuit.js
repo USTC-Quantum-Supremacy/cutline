@@ -182,7 +182,7 @@ let tasks=[
     {n:[60],d:[8],p:'IJKLKLIJ',e:'7',s:'circuit/sycamore{n}_{d}_IJKL_E7_C7.txt',sfaCut:'7',target:['superSFATest']},
     {n:[60],d:[8],p:'IJKLKLIJ',e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8_C7.txt',sfaCut:'7',target:['superSFATest']},
     // 40核，跑10个种子，预计3600*10， 记录总耗时
-    {n:[30,32,34,36],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:part1s[0],target:['SA']},
+    {n:[30,32,34,36],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:part1s[0],target:['SA','seeds']},
 
     {n:[30],d:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_for_sample.txt',part1:part1s[0],target:['SA']},
     {n:[54],d:[14],p:'IJKLKLIJIJKLIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[1],target:['SFA']},
@@ -235,8 +235,8 @@ tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
-                if (seedi!==0 && (t.target.indexOf('EXP')===-1 || t.target.indexOf('once')!==-1)) {
-                    // 不含EXP 或 含once 时只用 seedi==0
+                if (seedi!==0 && (t.target.indexOf('EXP')===-1 || t.target.indexOf('seeds')===-1 || t.target.indexOf('once')!==-1)) {
+                    // (不含EXP 或 不含seeds 或 含once) 时只用 seedi==0
                     return;
                 }
                 let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)

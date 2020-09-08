@@ -4,7 +4,7 @@
 __all__=[
     
     'getSimulation',
-    'reRenderSimulation',
+    'reRenderSimulationFile',
 
     'setFSIMTime',
     'getTask',
@@ -72,7 +72,7 @@ class g:
 
 def getSimulation(index, algorithm=''):
     al='SFA'
-    filename = g.Info.get(index,'name')
+    filename = 'circuit/'+g.Info.get(index,'name')
     if algorithm=='':
         target=g.Info.get(index,'targets')
         if re.search(r'(^|_)SFA($|_)',target):al='SFA'
@@ -81,9 +81,9 @@ def getSimulation(index, algorithm=''):
         if re.search(r'(^|_)SA($|_)',target):al='SA'
     else:
         al=algorithm
-    return dict(name=filename,algorithm=al)
+    return dict(filename=filename,algorithm=al)
 
-def reRenderSimulation(index,gateArgs):
+def reRenderSimulationFile(index,gateArgs):
     filename = g.Info.get(index,'name')
     with open(g.ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
         src = fid.read()
