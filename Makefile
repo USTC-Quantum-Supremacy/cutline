@@ -25,8 +25,6 @@ CutlineInput.g4.js: CutlineInput.g4
 	python3 generateRandomNumber.py
 
 output/dimensionTasks.json: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json
-	mkdir ../MeteorCircuit
-	mkdir ../MeteorCircuit/circuit
 	node generateCircuit.js
 
 output/orders_peps.json: dimensionTasks.js main.js pepsPath.js output/dimensionTasks.json

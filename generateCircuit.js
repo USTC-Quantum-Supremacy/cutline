@@ -278,8 +278,9 @@ if (withOrder) {
     fs.writeFileSync('output/dimensionTasks.json','[\n'+PEPSInputs.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'});
 }
 
+let baseDir='../MeteorCircuit'
+fs.mkdirSync(baseDir+'/circuit',{recursive:true})
 inputs.forEach(input=>{
-    let baseDir='../MeteorCircuit'
     let sd=new StructDataClass();
     sd.import(input)
     sd.generateCircuit(args=>{
