@@ -81,7 +81,8 @@ def getSimulation(index, algorithm=''):
         if re.search(r'(^|_)SA($|_)',target):al='SA'
     else:
         al=algorithm
-    return dict(filename=filename,algorithm=al)
+    n=g.Info.get(index,'n')
+    return dict(filename=filename,algorithm=al,n=n)
 
 def reRenderSimulationFile(index,gateArgs):
     filename = g.Info.get(index,'name')
