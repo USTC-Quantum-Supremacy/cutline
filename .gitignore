@@ -3,7 +3,6 @@ run2.exe
 run
 run2
 in/*.in
-random.js
 ./syc*.txt
 circuit/*.txt
 circuit/*.cut
@@ -14,7 +13,6 @@ peps_path/inputs.json
 test.txt
 text.txt
 circuit.zip
-CutlineInput.g4.js
 output/*.txt
 output/*.log
 output/*.json

@@ -1,13 +1,7 @@
-all: random g4 dimension order circuit
-
-.PHONY:random
-random:random.js
-
-.PHONY:g4
-g4:CutlineInput.g4.js
+all: page dimension order circuit
 
 .PHONY:page
-page:random.js CutlineInput.g4.js
+page:CutlineInput.g4.js
 
 .PHONY:dimension
 dimension:output/dimensionTasks.json
@@ -18,11 +12,8 @@ order:output/orders_peps.json
 .PHONY:circuit
 circuit:output/circuits.json
 
-random.js: generateRandomNumber.py random_.js
-	python3 generateRandomNumber.py
-
 CutlineInput.g4.js: CutlineInput.g4
-	python3 generateRandomNumber.py
+	node g4tojs.js
 
 output/dimensionTasks.json: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json
 	node generateCircuit.js
