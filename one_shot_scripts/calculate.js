@@ -19,8 +19,9 @@ if (patternType) {
 }
 var broken=Array.from({length:sd.bitCount}).map((v,i)=>i).filter(v=>qubits.indexOf(v)===-1)
 
+// pepsPath.js#L146
 var tsd=new sd.constructor().import(sd.input,{brokenBits:JSON.stringify(broken),searchPattern,showPattern})
 blocklyinput.value=JSON.stringify(tsd.input,null,4)
 
 buildMainSVG()
-calulate()
+calculate()

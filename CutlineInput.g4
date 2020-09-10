@@ -10,7 +10,7 @@ prog:   'xsize' Number_List 'ysize' Number_List 'use00' Bool BGNL
         '> removed entrances' JsonStr BGNL
         '> n1-n2 no bigger than' Int BGNL
         '>' Search_List BGNL
-        'show mark ~1(only for mark)' BGNL marks+
+        'show mark ~n(only for mark)' BGNL marks+
         'show and define pattern ~n' BGNL patterns+
         'generating circuit ~1' BGNL generatingCircuits+
 /* prog
@@ -34,7 +34,7 @@ generatingCircuit
         'output file name' BGNL
         '> simulation' NormalStr? BGNL
         '> auxiliary' NormalStr? BGNL
-        '> experiment(unknown now)' NormalStr? BGNL
+        '> experiment' NormalStr? BGNL
         'order (bit indexes)' BGNL orderlist+
         'sfa cut' JsonStr BGNL
         'peps cut' JsonStr BGNL

@@ -201,8 +201,7 @@ let tasks=[
 
     // SFACutSearch // 跑sfacut+-1 53:1000条 prefix后的 单核SFA
     // 60:100  66:12条
-    // {"type":"prog","xsize":"12","ysize":"9","use00":true,"brokenBits":"[3]","part1":"[0,1,12,13,14,18,19,2,20,24,25,26,30,31,32,36,37,38,42,43,44,48,49,50,6,7,8]","depth":"20","searchPattern":"01232301","errorRates":"[0.0016,0.0062,0.038]","removedEntrances":"[]","balancedRange":6,"search":"notprune","showMark":[{"type":"markQi"}],"showPattern":[{"type":"patternA","pattern":"A","color":"#ff9900"},{"type":"patternA","pattern":"B","color":"#3333ff"},{"type":"patternC","pattern":"C","color":"#009900"},{"type":"patternC","pattern":"D","color":"#cc0000"}],"generatingCircuit":[{"type":"generatingCircuit","qubitNumber":53,"elided":"","pattern":"ABCDCDAB","seed":13874234,"simulationFilename":"","auxiliaryFilename":"","experimentFilename":"unknown now","order":[{"type":"orderlist","order":"[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"}],"sfaCut":"-1","pepsCut":"[]","pepsPath":[{"type":"orderlist","order":"[]"}],"gateArgs":[{"type":"gateArgs","unknow":"[0.5,0.1666666667,0,0,0]"}]}]}
-
+    {n:[53],d:[20],tpl:1,p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['superSFATest']},
 
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C4.txt',part1:part1s[3],sfaCut:'4',target:['superSFATest']},
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C5.txt',part1:part1s[3],sfaCut:'5',target:['superSFATest']},

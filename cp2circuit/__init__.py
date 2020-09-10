@@ -82,7 +82,8 @@ def getSimulation(index, algorithm=''):
     else:
         al=algorithm
     n=g.Info.get(index,'n')
-    return dict(filename=filename,algorithm=al,n=n)
+    depth=g.Info.get(index,'depth')
+    return dict(filename=filename,algorithm=al,n=n,depth=depth)
 
 def reRenderSimulationFile(index,gateArgs):
     filename = g.Info.get(index,'name')

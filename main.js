@@ -1213,9 +1213,12 @@ StructDataClass.prototype.generateCircuitProto = function (circle,depth,seed) {
         let gates={}
         let layerno=proto.layer.length
         for (let qindex = 0; qindex < this.bitCount; qindex++) {
-            // // always take random number -> do not use the following two lines
-            // let qubit=this.qubit(qindex)
-            // if (!qubit.area2) continue;
+            // always take random number
+            let qubit=this.qubit(qindex)
+            if (!qubit.area2) {
+                rand.rand();
+                continue;
+            }
             if (layerno===0) {
                 gates[qindex]={qi:qindex,type:rand.randn(3)}
             } else {
