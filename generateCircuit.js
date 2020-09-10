@@ -251,7 +251,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
                 let rr=s=>r(s).split('.txt').join((seedi===0?'':'.s'+seedi)+'.txt')
                 input.generatingCircuit[0].simulationFilename=rr(t.s)
-                input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
+                if(t.target.indexOf('EXP')!==-1)input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
                 input.generatingCircuit[0].auxiliaryFilename=rr(t.s)+'.json'
                 input.generatingCircuit[0].seed=seed
                 if (t.target.indexOf('PEPS')!==-1) {

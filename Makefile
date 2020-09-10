@@ -12,6 +12,16 @@ order:output/orders_peps.json
 .PHONY:circuit
 circuit:output/circuits.json
 
+.PHONT:clean_circuit
+clean_circuit:
+	rm -f circuit.zip
+	rm -rf ../MeteorCircuit
+
+.PHONT:clean_circuit_windows
+clean_circuit_windows:
+	del circuit.zip
+	rmdir /S /Q ..\MeteorCircuit
+
 CutlineInput.g4.js: CutlineInput.g4
 	node g4tojs.js
 
