@@ -13,18 +13,19 @@ __all__=[
 ]
 import os
 import re
-from openpyxl import load_workbook
+import json
+# from openpyxl import load_workbook
 
 # [markdown]
 # ## definition  
 
 ThisPath=os.path.split(os.path.realpath(__file__))[0]
 
-def readXlsx(filename):
-    wb = load_workbook(filename = filename)
-    ws = wb[wb.sheetnames[0]]
-    data = ws.values
-    return list(data)
+# def readXlsx(filename):
+#     wb = load_workbook(filename = filename)
+#     ws = wb[wb.sheetnames[0]]
+#     data = ws.values
+#     return list(data)
 
 def build_info():
     class InfoClass:
@@ -33,7 +34,9 @@ def build_info():
         def get(self,index,field):
             return self.data[self.pos(index)][self.fields.index(field)]
     Info = InfoClass()
-    data=readXlsx(ThisPath+'\\circuits.xlsx')
+    # data=readXlsx(ThisPath+'\\circuits.xlsx')
+    with open(ThisPath+'\\circuits_xlsx.json','r',encoding='utf-8') as fid:
+        data=json.load(fid)['data'][0]
     Info.fields=data[0]
     Info.data=data[1:]
     Info.circuitIndexes=[line[Info.fields.index('circuitIndex')] for line in Info.data]
