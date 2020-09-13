@@ -299,5 +299,5 @@ inputs.forEach(input=>{
 })
 
 if (withOrder) {
-    fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],data:[taskDisplay],outFileName:'output/circuits.xlsx'},null,4),{encoding:'utf-8'})
+    fs.writeFileSync('output/circuits.json',JSON.stringify({title:['circuits'],outFileName:'output/circuits.xlsx',data:[taskDisplay]},null,4),{encoding:'utf-8'})
 }
