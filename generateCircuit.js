@@ -223,7 +223,7 @@ let tasks=[
     {n:[60,66],d:[20],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt',target:[]},
 ]
 
-let taskDisplay=[['n','depth','name','task','input','targets','seedIndex','circuitIndex']]
+const taskDisplay=[['n','depth','name','task','input','targets','seedIndex','circuitIndex']]
 let inputs=[]
 let PEPSInputs=[]
 let PEPSTimeInputs=[]

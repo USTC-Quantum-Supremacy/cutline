@@ -1180,8 +1180,8 @@ StructDataClass.prototype.processPathsResult_bitString = function (params) {
 }
 
 StructDataClass.prototype.calExpectation = function () {
-    let cal=eval(sd.input.errorRates)
-    let e1=cal[0],e2=cal[1],er=cal[2],d=~~sd.input.depth;
+    let cal=eval(this.input.errorRates)
+    let e1=cal[0],e2=cal[1],er=cal[2],d=~~this.input.depth;
     let p=Object.assign({
         n1:this.n1,
         n2:this.n2,

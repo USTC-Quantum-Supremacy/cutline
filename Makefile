@@ -1,5 +1,5 @@
 .PHONT:all
-all: page dimension order circuit
+all: page dimension order circuit circuits_xlsx
 
 .PHONY:page
 page:CutlineInput.g4.js
@@ -12,6 +12,9 @@ order:output/orders_peps.json
 
 .PHONY:circuit
 circuit:output/circuits.json
+
+.PHONY:circuits_xlsx
+circuits_xlsx:output/circuits_xlsx.json
 
 .PHONT:clean_circuit
 clean_circuit:
@@ -31,5 +34,13 @@ output/circuits.json: generateCircuit.js random.js main.js in/generateCircuit.js
 	node generateCircuit.js order
 	python3 convertToXlsx.py output/circuits.json
 	cp cp2circuit/* ../MeteorCircuit/
+	cp output/circuits.xlsx ../MeteorCircuit/
+	7z a circuit.zip ../MeteorCircuit
+
+output/circuits_xlsx.json: calculateCountOfCircuit.js output/circuits.json
+	node calculateCountOfCircuit.js
+	python3 convertToXlsx.py output/circuits_xlsx.json
+	cp cp2circuit/* ../MeteorCircuit/
+	cp output/circuits_xlsx.json ../MeteorCircuit/
 	cp output/circuits.xlsx ../MeteorCircuit/
 	7z a circuit.zip ../MeteorCircuit
