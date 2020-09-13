@@ -103,7 +103,7 @@ let parsetask = async (tasks)=>{
         data2.push([pattern,source.join(''),source.length,...source])
     }
     
-    fs.writeFileSync('output/tasks_result.json',JSON.stringify({title:['tasks_result','patterns'],data:[data,data2],outFileName:'output/tasks_result.xlsx'}),{encoding:'utf-8'})
+    fs.writeFileSync('output/tasks_result.json',JSON.stringify({outFileName:'output/tasks_result.xlsx',title:['tasks_result','patterns'],data:[data,data2]}),{encoding:'utf-8'})
     await delay(50)
     execSync(`python3 convertToXlsx.py output/tasks_result.json`)
 }
