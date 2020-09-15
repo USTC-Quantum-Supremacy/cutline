@@ -7,6 +7,7 @@ __all__=[
     'reRenderSimulationFile',
 
     'setFSIMTime',
+    'getAllTask',
     'getTask',
     'getCircuit',
     'checkState',
@@ -69,6 +70,7 @@ class g:
     ThisPath=ThisPath
     Info=Info
     FSIMTime=1
+    packSize=100000
 
 # [markdown]
 # ## simulation part
@@ -108,6 +110,8 @@ def getCircuit(index):
         src = fid.read()
     out = fillFSIM(src)
     return out
+def getAllTask(resultDir):
+    pass
 def getTask(resultDir,index):
     pass
 def checkState(resultDir,index):

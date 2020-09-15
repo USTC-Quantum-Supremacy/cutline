@@ -33,6 +33,7 @@ const part1s=[
 ]
 
 let tasks=[
+    {meta:1},
     // Verification
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','PEPS','PEPSTime','once']},
     {n:[54,60,66],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
@@ -41,6 +42,7 @@ let tasks=[
     {n:[66],d:[8],p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[8],p:'IJKLKLIJ',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','SFA','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','once']},
+    {meta:2},
     // check and politics
     {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:part1s[0],target:['EXP','SFA','once']},
     {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:part1s[2],target:['EXP','once']},
@@ -103,7 +105,7 @@ let tasks=[
     {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',part1:part1s[8],target:['EXP','SFACutSearch']},
     {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[11],target:['EXP','SFA','SFATime','super']},
     {n:[66],d:[12],p:'MMMNNNOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super']},
-
+    {meta:3},
     // Auxliary
     {n:[60],d:[4,6],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']},
     {n:[66],d:[4,6],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['PEPS']},
@@ -223,15 +225,21 @@ let tasks=[
     {n:[60,66],d:[20],p:'IJCDCDIJ',s:'circuit/sycamore{n}_{d}_IJCD.txt',target:[]},
 ]
 
-const taskDisplay=[['n','depth','name','task','input','targets','seedIndex','circuitIndex']]
+const taskDisplay=[['n','depth','name','task','input','targets','seedIndex','circuitIndex','taskIndex']]
 let inputs=[]
 let PEPSInputs=[]
 let PEPSTimeInputs=[]
 let SFATimeInputs=[]
 
 let circuitIndex =1;
+let taskIndex =1;
+let meta=0
 
 tasks.forEach(t=>{
+    if (t.meta) {
+        meta=t.meta
+        return
+    }
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
@@ -264,7 +272,13 @@ tasks.forEach(t=>{
                 }
                 if (t.target.indexOf('SFATime')!==-1) SFATimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
                 inputs.push(input)
-                taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],JSON.stringify(t),JSON.stringify(input),t.target.join('_')||'null',seedi,circuitIndex])
+                if (meta===2) {
+                    taskIndex++
+                }
+                if (meta===3) {
+                    taskIndex=-1
+                }
+                taskDisplay.push([n,d,(input.generatingCircuit[0].simulationFilename||'/').split('/')[1],JSON.stringify(t),JSON.stringify(input),t.target.join('_')||'null',seedi,circuitIndex,taskIndex])
                 circuitIndex++;
             })
         })
