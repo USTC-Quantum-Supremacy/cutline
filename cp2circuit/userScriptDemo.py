@@ -84,7 +84,7 @@ qsti.failTask(taskIndex, reason='...')  # 指定一个任务设为失败
 # ## 运行指令集
 mc.setFSIMTime(123)
 for instruction in task:
-    qsti.join()  # 等待上一个指令运行完, 或者提供异步形式的api
+    qsti.join()  # 等待上一个指令运行完, 如果上一个是错误退出了这里会raise
     iType = instruction['type']
     if iType == 'circuit':
         circuit = mc.getCircuit(instruction['circuitIndex'])
