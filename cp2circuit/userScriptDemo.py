@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # %%
 import json
 import re
@@ -6,17 +7,18 @@ import re
 # python
 
 """ 
-假设软件组提供的包叫做`QSTaskInterface`和`QSExperimentInterface`
+假设软件组提供的包叫做`QSTaskInterface`  
 假设目录结构是
 ```
 ├─MeteorCircuit.zip
 ├─MeteorCircuit
 │  ├─circuit
+│  │  └─*.qcis
 │  ├─__init__.py
 │  ├─circuit_xlsx.json
 │  └─circuit.xlsx
 │
-│
+├─qsconfig.json
 └─userScript.py
 ```
 涉及的对象
@@ -27,13 +29,15 @@ task
 taskID <- todo  
 
 **指令级**  
-todo
+instruction  
+
 
  """
 
 import QSTaskInterface as qsti
 import MeteorCircuit as mc
 # %% [markdown]
+# # 初始化
 # ## 连接到服务器
 # qsconfig.json中记录了ip地址
 
@@ -48,6 +52,9 @@ qsti.createTasks(mc.getAllTask())
 
 
 # %% [markdown]
+# # 任务
+# 以下内容有一些`taskIndex`应该要换成`taskID`
+# 
 # ## 进行一个任务
 
 taskIndex = qsti.getNewTaskIndex() # 获取一个新待进行的任务(未进行过或者已有都是失败状态)
@@ -68,17 +75,38 @@ task = mc.getTask(taskIndex)
 # %% [markdown]
 # ## 把一个任务设置为失败
 
-qsti.failTask() # 把进行中的任务设置为失败
-qsti.failTask(taskIndex) # 指定一个任务设为失败
+qsti.failTask(reason='...') # 把进行中的任务设置为失败
+qsti.failTask(taskIndex,reason='...') # 指定一个任务设为失败
 
 
 # %% [markdown]
-# todo
-
-
-
+# # 指令
+# ## 运行指令集
 mc.setFSIMTime(123)
-src=mc.getCircuit(3)
-print(src)
+for instruction in task:
+    qsti.join() # 等待上一个指令运行完, 或者提供异步形式的api
+    iType=instruction['type']
+    if iType=='circuit':
+        circuit=mc.getCircuit(instruction['circuitIndex'])
+        count=instruction['count']
+        index=instruction['index']
+        qsti.runCircuit(index,circuit,count) # 提交式的
+    if iType=='calibration':
+        pass
+    if iType=='check':
+        circuit=mc.getCircuit(instruction['checkCircuit'])
+        count=instruction['count']
+        index=instruction['index']
+        checkBasis=qsti.runCheck(index,circuit,count) # 同步式的获取结果, check线路能很快跑完
+        mc.submitCheck(instruction,checkBasis)
 
+qsti.join()
+# 全部结束后
+taskBasis=qsti.queryTaskResult(taskIndex)
+mc.submitTask(taskIndex,taskBasis)
+# %% [markdown]
+# # 查询结果
+
+mc.queryCheck(taskIndex)
+mc.queryTask(taskIndex)
 
