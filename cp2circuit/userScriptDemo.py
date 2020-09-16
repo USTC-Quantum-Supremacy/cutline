@@ -53,7 +53,6 @@ qsti.createTasks(mc.getAllTask())
 taskIndex = qsti.getNewTaskIndex() # 获取一个新待进行的任务(未进行过或者已有都是失败状态)
 
 qsti.createTaskByIndex(taskIndex) # 会raise一个错误, 如果有进行中的任务
-qsti.setCurrentTaskIndex(taskIndex)
 task = mc.getTask(taskIndex)
 
 # %% [markdown]
