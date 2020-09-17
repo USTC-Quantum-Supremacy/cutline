@@ -48,8 +48,8 @@ mc.init('qsconfig.json')
 # 根据实验具体情况, 可以只使用`mc.getAllTask()[0:10]`等写法来只进行一部分实验
 
 qsti.createFromPack('MeteorCircuit.zip')
-qsti.createTasks(mc.getAllTask())
-
+qsti.addTasks(mc.getAllTask())
+# 任务集合间的切换待约定
 
 # %% [markdown]
 # # 任务
@@ -90,7 +90,7 @@ for instruction in task:
         circuit = mc.getCircuit(instruction['circuitIndex'])
         count = instruction['count']
         index = instruction['index']
-        qsti.runCircuit(index, circuit, count)  # 提交式的
+        qsti.runCircuit(index, circuit, count)  # 提交式的, 也可以是同步式的, 就不需要join了
     if iType == 'calibration':
         pass
     if iType == 'check':
@@ -99,7 +99,7 @@ for instruction in task:
         index = instruction['index']
         # 同步式的获取结果, check线路能很快跑完
         checkBasis = qsti.runCheck(index, circuit, count)
-        mc.submitCheck(instruction, checkBasis)
+        qsti.addCheckResult(mc.submitCheck(instruction, checkBasis))
 
 qsti.join()
 # 全部结束后
@@ -108,5 +108,5 @@ mc.submitTask(taskIndex, taskBasis)
 # %% [markdown]
 # # 查询结果
 
-mc.queryCheck(taskIndex)
-mc.queryTask(taskIndex)
+mc.showCheck(qsti.queryCheck(taskIndex))
+qsti.addSimulationResult(mc.queryTask(taskIndex))
