@@ -247,6 +247,10 @@ tasks.forEach(t=>{
                     // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
                     return;
                 }
+                if (seedi>=10 && t.target.indexOf('EXP')!==-1) {
+                    // EXP 只用 seedi<10
+                    return;
+                }
                 let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
                 let tpli=~~r(t.tpl)
                 let input=JSON.parse(JSON.stringify(tplInput[tpli]))
