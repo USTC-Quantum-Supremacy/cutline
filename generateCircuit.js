@@ -11,7 +11,7 @@ const {StructDataClass,seeds} = require('./main.js')
 const fs = require('fs')
 
 let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
-let peps=JSON.parse(fs.readFileSync('in/pepsCut.json',{encoding:'utf-8'}))
+let pepsCut=JSON.parse(fs.readFileSync('in/pepsCut.json',{encoding:'utf-8'}))
 if(withOrder)pepsOrder=JSON.parse(fs.readFileSync('output/orders_peps.json',{encoding:'utf-8'}));
 
 const part1s=[
@@ -254,6 +254,7 @@ tasks.forEach(t=>{
                 let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
                 let tpli=~~r(t.tpl)
                 let input=JSON.parse(JSON.stringify(tplInput[tpli]))
+                let peps=pepsCut[tpli]
                 input.generatingCircuit[0].qubitNumber=n
                 input.depth=d+''
                 input.part1=r(t.part1)||input.part1
