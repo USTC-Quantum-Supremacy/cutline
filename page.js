@@ -18,7 +18,7 @@ function buildBlocks(params) {
     try {
         CutlineInputFunctions.parse(eval('('+document.querySelector('#blocklyinput').value+')'))
     } catch (error) {
-        console.error(error)
+        if(error.message!=='CutlineInputFunctions is not defined')console.error(error)
     }
 }
 function buildMainSVG(params) {
