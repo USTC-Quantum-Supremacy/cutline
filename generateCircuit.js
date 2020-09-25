@@ -205,7 +205,7 @@ let tasks=[
     // 跑sfacut+-1 53:1000条 prefix后的 单核SFA
     // 60:100  66:12条
     {n:[53],d:[20],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['SFACutSearch']},
-    {n:[53],d:[10,11,12,13,14,15],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']},
+    
 
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C4.txt',part1:part1s[3],sfaCut:'4',target:['superSFATest']},
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C5.txt',part1:part1s[3],sfaCut:'5',target:['superSFATest']},
@@ -215,6 +215,8 @@ let tasks=[
     {n:[60],d:[8],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:part1s[5],target:['SFA','PEPS']},
     {n:[66],d:[7],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:part1s[13],target:['SFA','PEPS']},
     {n:[66],d:[8],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:part1s[14],target:['SFA','PEPS']},
+
+    {n:[53],d:[10,11,12,13,14],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']}, //slow
 
     // {n:[15,18,21,24,27,30,33,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',target:[]},
     // {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt',target:[]},
