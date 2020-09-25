@@ -271,6 +271,15 @@ let searchPathPlus=function (edgeDimension,edgeMax) {
 if (typeof exports === "undefined") exports = {};
 exports.searchPathPlus=searchPathPlus
 
+/* 
+允许cut长度最多至22
+unbalance 20
+定义连通性为：1、直接相连，2、边界点自动连接
+黑或白是一个整体
+
+
+
+*/
 
 if (typeof require !== 'undefined' && require.main === module) {
 
@@ -283,7 +292,7 @@ if (typeof require !== 'undefined' && require.main === module) {
 
     console.log(JSON.stringify(input,null,4))
 
-    // input.generatingCircuit[0].pepsCut='[]'
+    input.generatingCircuit[0].pepsCut='[]'
     sd.import(input)
 
     let result = searchPathPlus.apply(sd)
