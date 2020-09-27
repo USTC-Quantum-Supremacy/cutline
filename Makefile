@@ -19,7 +19,8 @@ circuits_xlsx:output/circuits_xlsx.json
 .PHONT:clean_circuit
 clean_circuit:
 	rm -f circuit.zip
-	rm -rf ../MeteorCircuit
+	rm -f ../MeteorCircuit/*
+	rm -rf ../MeteorCircuit/circuit
 
 CutlineInput.g4.js: CutlineInput.g4
 	node g4tojs.js
