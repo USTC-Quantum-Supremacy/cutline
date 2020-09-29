@@ -54,6 +54,7 @@ let searchPathPlus=function (edgeMax,unbalance) {
         n=qubits.length
         ecount=~~((n+unbalance)/2)
         scount=n-ecount
+        ecount=~~(n/2)
         let broken=Array.from({length:sd.bitCount}).map((v,i)=>i).filter(v=>qubits.indexOf(v)===-1)
         /** @type {import('./main.js').StructDataClass} */
         let tsd=new sd.constructor().import(sd.input,{brokenBits:JSON.stringify(broken),part1:'[]'})
@@ -95,7 +96,7 @@ let searchPathPlus=function (edgeMax,unbalance) {
         Object.assign(gs,{n,qubit,qubits,edge,bitCount,scount,ecount})
     }
     let mainBFS=(gs)=>{
-        const debug=0
+        const debug=1
         const n=gs.n
         const bitCount=gs.bitCount
         const scount=gs.scount
@@ -137,6 +138,7 @@ let searchPathPlus=function (edgeMax,unbalance) {
                 currentBitCount++
                 queue.push(MARK)
                 map1=Object.create(null)
+                if(debug)console.log('currentBitCount', currentBitCount);
                 continue;
             }
             let key=area.join('')
@@ -149,7 +151,7 @@ let searchPathPlus=function (edgeMax,unbalance) {
             if (currentBitCount>ecount) {
                 break;
             } else {
-                for(const v of newPoints(gs,area,connecting)){
+                for(const v of newPoints(gs,area)){
                     let newArea=Array.from(area)
                     newArea[v]=1
                     queue.push(newArea)
@@ -166,54 +168,45 @@ let searchPathPlus=function (edgeMax,unbalance) {
         let pts = gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
         return pts
     }
-    throw 'here' //////////////////////////////////////////////////////////////////////////////////
     /**
      * @param {Number[]} area_
-     * @param {Number} connecting
-     * @returns {Number[][]} [(pt,times,connecting)...]
+     * @returns {Number[][]} [(pt)...]
      */
-    let newPoints = (gs,area_,connecting)=>{
+    let newPoints = (gs,area_)=>{
         edgeMax=edgeMax
-        area=Array.from(area_)
-        let edges=[1]
+        let area=Array.from(area_)
+        let edges=0
         let pts=[]
         for (const qi of gs.qubits) {
             if (area[qi]!==1) continue;
             for (const qj of gs.qubit[qi].link) {
-                if (area[qj]!==1) edges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
-                if (qi===connecting) continue; // connecting 只算乘积不扩张
+                if (area[qj]!==1) edges++
                 if (area[qj]) continue;
                 pts.push([qj])
                 area[qj]=2
             }
-            if (connecting>-1) continue; // 两个区域时不增加弱连接
             for (const qj of gs.qubit[qi].weakLink) {
                 if (area[qj]) continue;
                 pts.push([qj])
                 area[qj]=2
             }
         }
-        let times=edges.reduce((p,c)=>p*c)
-        let count=edges.length-1
         for (const ptarr of pts) {
             const qi=ptarr[0]
-            let pedges=[times]
+            let pedges=edges
             let mcount=0
-            let c=connecting
             for (const qj of gs.qubit[qi].link) {
-                if (area[qj]!==1) pedges.push(qi<qj?gs.edge[qi][qj]:gs.edge[qj][qi])
+                if (area[qj]!==1) pedges++
                 else mcount++;
-                if (qj===connecting) c=-1; // 两个区域连成了一个
             }
-            if (mcount===0 && connecting===-1) c=qi; // 新点是新的区域
-            let ncount=pedges.length-1+count-mcount
+            let ncount=pedges-mcount
             if (ncount>edgeMax) {
-                ptarr.push(-1,-1)
+                ptarr.push(-1)
             } else {
-                ptarr.push(pedges.reduce((p,c)=>p*c),c)
+                ptarr.push(0)
             }
         }
-        return pts.filter(v=>v[1]>=0)
+        return pts.filter(v=>v[1]>=0).map(v=>v.slice(0,1))
     }
     buildGraphStructure(gs)
     let result = mainBFS(gs)
@@ -239,8 +232,8 @@ if (typeof require !== 'undefined' && require.main === module) {
     input.generatingCircuit[0].pepsCut='[]'
     sd.import(input)
 
-    let result = searchPathPlus.apply(sd,[22,20])
-    console.log(result)
+    let result = searchPathPlus.apply(sd,[13,10])
+    console.log(result.length)
 
 }
 
