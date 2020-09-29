@@ -305,7 +305,7 @@ if (typeof require !== 'undefined' && require.main === module) {
     const {StructDataClass} = require('./main.js')
     const fs = require('fs');
 
-    let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
+    let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))[0]
     let edgeDimension=JSON.parse(fs.readFileSync('../callMeteor/output/s2.json',{encoding:'utf-8'}))
 
     let sd=new StructDataClass();
