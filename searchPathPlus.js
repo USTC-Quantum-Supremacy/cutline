@@ -232,8 +232,15 @@ if (typeof require !== 'undefined' && require.main === module) {
     input.generatingCircuit[0].pepsCut='[]'
     sd.import(input)
 
-    let result = searchPathPlus.apply(sd,[13,10])
+    let result = searchPathPlus.apply(sd,[14,20])
     console.log(result.length)
 
 }
 
+/* 
+unbalanced 20
+12 88678
+13 165568
+14 659195
+15 ---
+*/
