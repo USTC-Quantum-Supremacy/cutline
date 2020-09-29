@@ -30,13 +30,15 @@ unbalance 20
  * >>({点集}并{新点})入队
  * 
  * @param {Number} edgeMax 
+ * @param {Number} unbalance 
  */
-let searchPathPlus=function (edgeMax) {
+let searchPathPlus=function (edgeMax,unbalance) {
     /** @type {import('./main.js').StructDataClass} */
     let sd=this
-    let n,qubit,qubits,edge,bitCount;
-    let gs={n,qubit,qubits,edge,bitCount};
+    let n,qubit,qubits,edge,bitCount,scount,ecount;
+    let gs={n,qubit,qubits,edge,bitCount,scount,ecount};
     let buildGraphStructure=(gs)=>{
+        unbalance=unbalance
         let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
         let n=sd.input.generatingCircuit[0].qubitNumber
         let bitCount=sd.bitCount
@@ -50,6 +52,8 @@ let searchPathPlus=function (edgeMax) {
         
         let qubits=orderList.slice(0,n)
         n=qubits.length
+        ecount=~~((n+unbalance)/2)
+        scount=n-ecount
         let broken=Array.from({length:sd.bitCount}).map((v,i)=>i).filter(v=>qubits.indexOf(v)===-1)
         /** @type {import('./main.js').StructDataClass} */
         let tsd=new sd.constructor().import(sd.input,{brokenBits:JSON.stringify(broken),part1:'[]'})
@@ -88,12 +92,14 @@ let searchPathPlus=function (edgeMax) {
                 })
             }
         }
-        Object.assign(gs,{n,qubit,qubits,edge,bitCount})
+        Object.assign(gs,{n,qubit,qubits,edge,bitCount,scount,ecount})
     }
     let mainBFS=(gs)=>{
-        let debug=0
-        let n=gs.n
-        let bitCount=gs.bitCount
+        const debug=0
+        const n=gs.n
+        const bitCount=gs.bitCount
+        const scount=gs.scount
+        const ecount=gs.ecount
         /** 存是否已经使用过 */
         let map1=Object.create(null)
         /** 
@@ -109,34 +115,44 @@ let searchPathPlus=function (edgeMax) {
             shift:function(){return this.data[this.head++%MAX_COUNT]},
             size:function(){return this.current-this.head},
         }
-        throw 'here' //////////////////////////////////////////////////////////////////////////////////
+        const MARK = 'mark'
+        queue.push(MARK)
         for (const v of initalBoundaryPoints(gs)) {
             let area=Array.from({length:bitCount}).map(v=>0)
             area[v]=1
-            queue.push([area,[v],0,-1])
+            queue.push(area)
         }
         let count=0
         let node=0
         if(debug)console.log('count node size');
         if(debug)console.log('-----------------');
-        let result={times:null,order:[]}
+        let result=[]
+        let currentBitCount=0
         while (queue.size()) {
             if (debug && ++count%10000==0) {
                 console.log(count,node,queue.size())
             }
-            let [area,order,times,connecting]=queue.shift()
+            let area=queue.shift()
+            if (area===MARK) {
+                currentBitCount++
+                queue.push(MARK)
+                map1=Object.create(null)
+                continue;
+            }
             let key=area.join('')
             if (map1[key]===true) continue;
             map1[key]=true
             node++
-            if (order.length===n) {
-                result = {times,order}
+            if (currentBitCount>=scount && currentBitCount<=ecount) {
+                result.push(area)
+            }
+            if (currentBitCount>ecount) {
                 break;
             } else {
-                for(const [v,t,c] of newPoints(gs,area,connecting)){
+                for(const v of newPoints(gs,area,connecting)){
                     let newArea=Array.from(area)
                     newArea[v]=1
-                    queue.push([newArea,order.concat([v]),times+t,c])
+                    queue.push(newArea)
                 }
             }
         }
@@ -150,6 +166,7 @@ let searchPathPlus=function (edgeMax) {
         let pts = gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
         return pts
     }
+    throw 'here' //////////////////////////////////////////////////////////////////////////////////
     /**
      * @param {Number[]} area_
      * @param {Number} connecting
@@ -222,7 +239,7 @@ if (typeof require !== 'undefined' && require.main === module) {
     input.generatingCircuit[0].pepsCut='[]'
     sd.import(input)
 
-    let result = searchPathPlus.apply(sd,[22])
+    let result = searchPathPlus.apply(sd,[22,20])
     console.log(result)
 
 }
