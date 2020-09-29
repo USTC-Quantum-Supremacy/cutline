@@ -16,63 +16,32 @@ unbalance 20
  * 伪代码:
  * 
  * edgeMax 最大的边数
- * Queue 优先队列,次数小的先出队
+ * Queue 队列,先入先出
  * Map 存是否已经使用过
- * 把所有({边界点},[边界点],0,-1)加入队列
+ * 把所有({边界点})加入队列
  * while队列非空
- * >取队首 (点集,顺序,次数,联通性)
+ * >取队首 (点集)
  * >如果map(点集)非空
  * >>continue
  * >map(点集)设为true
- * >如果:全满
- * >>得到结果(顺序,次数)
+ * >如果:unbalance满足
+ * >>追加结果(点集)
  * >否则:对于每个满足前提的扩张新点:
- * >>({点集}并{新点},顺序+[新点],次数+扩新点的计算次数,新联通性)入队
+ * >>({点集}并{新点})入队
  * 
- * 问题规模为 edgeMax*点集数
- * 正常时为66*2^66
- * 由于前提的存在使得edgeMax为11,点集数为10万左右
- * @param {Number[][]} edgeDimension [[mapQ1,mapQ2,dimension]...]
  * @param {Number} edgeMax 
  */
-let searchPathPlus=function (edgeDimension,edgeMax) {
+let searchPathPlus=function (edgeMax) {
     /** @type {import('./main.js').StructDataClass} */
     let sd=this
     let n,qubit,qubits,edge,bitCount;
     let gs={n,qubit,qubits,edge,bitCount};
     let buildGraphStructure=(gs)=>{
-        edgeDimension=edgeDimension
         let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
         let n=sd.input.generatingCircuit[0].qubitNumber
-        let cutInput=eval(sd.input.generatingCircuit[0].pepsCut)
         let bitCount=sd.bitCount
 
-        let cut_obj={}
-        cutInput.map((v,i,a)=>[v,a[i+1]]).filter((v,i)=>i%2===0).forEach(v=>{
-            let a=v[0],b=v[1];
-            if (a>b) {
-                [a,b]=[b,a]
-            }
-            if(cut_obj[a]==null)cut_obj[a]={};
-            cut_obj[a][b]=true
-        })
-        let cut=(a,b)=>{
-            if (a>b) {
-                [a,b]=[b,a]
-            }
-            if(cut_obj[a]==null)return false;
-            return cut_obj[a][b]===true;
-        }
-
         let edge={}
-        edgeDimension.forEach(v => {
-            let a=orderList[v[0]],b=orderList[v[1]];
-            if (a>b) {
-                [a,b]=[b,a]
-            }
-            if(edge[a]==null)edge[a]={};
-            edge[a][b]=v[2]
-        });
         sd.maxAreaEdges.forEach(v=>{
             let [a,b]=v
             if(edge[a]==null)edge[a]={};
@@ -99,26 +68,20 @@ let searchPathPlus=function (edgeDimension,edgeMax) {
             ]
             _f1(o).forEach(v=>{
                 let tq=tsd.getxy(v)
-                if (tq.save && !cut(qi,tq.qi)) {
+                if (tq.save) {
                     q.link.push(tq.qi)
                 }
             })
             qubit[qi]=q
         }
         for (let qi of qubits) {
-            let o=tsd.qi2xy(qi)
             let q=qubit[qi]
-            let _f2=(o)=>[
-                                  {x:o.x-2,y:o.y}, 
-                {x:o.x-0,y:o.y-2},                {x:o.x-0,y:o.y+2},
-                                  {x:o.x+2,y:o.y}
-            ]
             if (q.link.length!==4) {
-                _f2(o).forEach(v=>{
-                    if (v.x+1<0||v.x+1>tsd.xsize+1||v.y+1<0||v.y+1>tsd.ysize+1) {
+                qubits.forEach(qj=>{
+                    if (qi===qj) {
                         return
                     }
-                    let tq=tsd.getxy(v)
+                    let tq=qubit[qj]
                     if (tq.save && qubit[tq.qi].link.length!==4) {
                         q.weakLink.push(tq.qi)
                     }
@@ -137,12 +100,16 @@ let searchPathPlus=function (edgeDimension,edgeMax) {
          * 优先队列,次数小的先出队 [(点集,顺序,次数,联通性)...] 
          * 联通性-1为只有一个区域, >=0时即为前提2中单独的区域的qi
          */
+        const MAX_COUNT = 2000000
         let queue={
-            data:new PriorityQueue().init((a,b)=>b[2]-a[2],2000000),
-            push:function(v){this.data.offer(v)},
-            shift:function(){return this.data.poll()},
-            size:function(){return this.data.length},
+            data:new Array(MAX_COUNT),
+            head:0,
+            current:0,
+            push:function(v){this.data[this.current++%MAX_COUNT]=v;},
+            shift:function(){return this.data[this.head++%MAX_COUNT]},
+            size:function(){return this.current-this.head},
         }
+        throw 'here' //////////////////////////////////////////////////////////////////////////////////
         for (const v of initalBoundaryPoints(gs)) {
             let area=Array.from({length:bitCount}).map(v=>0)
             area[v]=1
@@ -246,7 +213,7 @@ if (typeof require !== 'undefined' && require.main === module) {
     const {StructDataClass} = require('./main.js')
     const fs = require('fs');
 
-    let input=JSON.parse(fs.readFileSync('in/tasks_allcircles.json',{encoding:'utf-8'}))
+    let input=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))[0]
 
     let sd=new StructDataClass();
 
@@ -255,7 +222,7 @@ if (typeof require !== 'undefined' && require.main === module) {
     input.generatingCircuit[0].pepsCut='[]'
     sd.import(input)
 
-    let result = searchPathPlus.apply(sd)
+    let result = searchPathPlus.apply(sd,[22])
     console.log(result)
 
 }
