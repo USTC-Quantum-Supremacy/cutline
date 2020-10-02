@@ -132,6 +132,9 @@ let searchPathPlus=function (edgeMax,unbalance) {
         while (queue.size()) {
             if (debug && ++count%10000==0) {
                 console.log(count,node,queue.size())
+                if (queue.size()>MAX_COUNT-20000) {
+                    throw 'change size'
+                }
             }
             let area=queue.shift()
             if (area===MARK) {
