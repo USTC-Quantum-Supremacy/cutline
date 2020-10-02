@@ -11,14 +11,14 @@ unbalance 20
 /**
  * 前提:
  * 1.任意时刻边数不超过edgeMax(22)
- * 2.其中一边始终是联通整体, 联通性定义:直接相连或均为边界点
+ * 2.较小的一方每个局部是联通整体, 且都连着边界, 至多4个局部, 联通性定义:直接相连
  * 
  * 伪代码:
  * 
  * edgeMax 最大的边数
  * Queue 队列,先入先出
  * Map 存是否已经使用过
- * 把所有({边界点})加入队列
+ * 把所有({4个边界点})加入队列
  * while队列非空
  * >取队首 (点集)
  * >如果map(点集)非空
@@ -37,6 +37,7 @@ let searchPathPlus=function (edgeMax,unbalance) {
     let sd=this
     let n,qubit,qubits,edge,bitCount,scount,ecount;
     let gs={n,qubit,qubits,edge,bitCount,scount,ecount};
+    const START_PART=4
     let buildGraphStructure=(gs)=>{
         unbalance=unbalance
         let orderList=eval(sd.input.generatingCircuit[0].order[0].order)
@@ -79,20 +80,20 @@ let searchPathPlus=function (edgeMax,unbalance) {
             })
             qubit[qi]=q
         }
-        for (let qi of qubits) {
-            let q=qubit[qi]
-            if (q.link.length!==4) {
-                qubits.forEach(qj=>{
-                    if (qi===qj) {
-                        return
-                    }
-                    let tq=qubit[qj]
-                    if (tq.save && qubit[tq.qi].link.length!==4) {
-                        q.weakLink.push(tq.qi)
-                    }
-                })
-            }
-        }
+        // for (let qi of qubits) {
+        //     let q=qubit[qi]
+        //     if (q.link.length!==4) {
+        //         qubits.forEach(qj=>{
+        //             if (qi===qj) {
+        //                 return
+        //             }
+        //             let tq=qubit[qj]
+        //             if (tq.save && qubit[tq.qi].link.length!==4) {
+        //                 q.weakLink.push(tq.qi)
+        //             }
+        //         })
+        //     }
+        // }
         Object.assign(gs,{n,qubit,qubits,edge,bitCount,scount,ecount})
     }
     let mainBFS=(gs)=>{
@@ -104,10 +105,9 @@ let searchPathPlus=function (edgeMax,unbalance) {
         /** 存是否已经使用过 */
         let map1=Object.create(null)
         /** 
-         * 优先队列,次数小的先出队 [(点集,顺序,次数,联通性)...] 
-         * 联通性-1为只有一个区域, >=0时即为前提2中单独的区域的qi
+         * 队列,先入先出
          */
-        const MAX_COUNT = 2000000
+        const MAX_COUNT = 5000000
         let queue={
             data:new Array(MAX_COUNT),
             head:0,
@@ -118,9 +118,9 @@ let searchPathPlus=function (edgeMax,unbalance) {
         }
         const MARK = 'mark'
         queue.push(MARK)
-        for (const v of initalBoundaryPoints(gs)) {
+        for (const pts of initalBoundaryPoints(gs)) {
             let area=Array.from({length:bitCount}).map(v=>0)
-            area[v]=1
+            pts.forEach(v=>area[v]=1)
             queue.push(area)
         }
         let count=0
@@ -128,7 +128,7 @@ let searchPathPlus=function (edgeMax,unbalance) {
         if(debug)console.log('count node size');
         if(debug)console.log('-----------------');
         let result=[]
-        let currentBitCount=0
+        let currentBitCount=START_PART-1
         while (queue.size()) {
             if (debug && ++count%10000==0) {
                 console.log(count,node,queue.size())
@@ -165,8 +165,21 @@ let searchPathPlus=function (edgeMax,unbalance) {
      * @returns {Number[]} [pt...]
      */
     let initalBoundaryPoints = (gs)=>{
-        let pts = gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
-        return pts
+        let bpts = gs.qubits.filter(qi=>gs.qubit[qi].link.length!==4)
+        let indexArr=Array.from({length:1+START_PART}).map(v=>-1)
+        let ptsArr=[]
+        let f=(indexPos)=>{
+            if (indexPos<indexArr.length) {
+                for (let index = indexArr[indexPos-1]+1; index < bpts.length; index++) {
+                    indexArr[indexPos]=index
+                    f(indexPos+1)
+                }
+            } else {
+                ptsArr.push(indexArr.slice(1).map(v=>bpts[v]))
+            }
+        }
+        f(1)
+        return ptsArr
     }
     /**
      * @param {Number[]} area_
@@ -232,15 +245,27 @@ if (typeof require !== 'undefined' && require.main === module) {
     input.generatingCircuit[0].pepsCut='[]'
     sd.import(input)
 
-    let result = searchPathPlus.apply(sd,[14,20])
+    let result = searchPathPlus.apply(sd,[13,20])
     console.log(result.length)
 
 }
 
 /* 
+node --max-old-space-size=4096 ./searchPathPlus
+*/
+
+/* 
+1.任意时刻边数不超过edgeMax(22)
+2.其中一边始终是联通整体, 联通性定义:直接相连或均为边界点
 unbalanced 20
 12 88678
 13 165568
 14 659195
 15 ---
+*/
+
+/* 
+4起点
+12 86256
+13 384998
 */
