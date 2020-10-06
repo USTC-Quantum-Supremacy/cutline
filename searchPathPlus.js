@@ -286,6 +286,48 @@ unbalanced 20
 12 71568
 13 351238
 14 1459677
+15 5346631
+16 : htop显示14G
+
+node --max-old-space-size=300960 ./searchPathPlus
+
+5280000 1438162 5880709
+5290000 1440601 5887568
+
+<--- Last few GCs --->
+
+[33019:0x3a29b70]   138999 ms: Scavenge 9209.9 (10839.1) -> 9198.0 (10842.6) MB, 21.1 / 0.0 ms  (average mu = 0.914, current mu = 0.897) allocation failure 
+[33019:0x3a29b70]   139049 ms: Scavenge 9211.8 (10842.6) -> 9199.7 (10846.1) MB, 21.7 / 0.0 ms  (average mu = 0.914, current mu = 0.897) allocation failure 
+[33019:0x3a29b70]   139097 ms: Scavenge 9213.6 (10846.1) -> 9201.6 (10849.6) MB, 20.4 / 0.0 ms  (average mu = 0.914, current mu = 0.897) allocation failure 
+
+
+<--- JS stacktrace --->
+
+==== JS stack trace =========================================
+
+    0: ExitFrame [pc: 0x3bd156a5be1d]
+Security context: 0x0848d459e6e9 <JSObject>
+    1: mainBFS [0x1882c3b506c1] [/home/user/guochu/Packages/cutline/searchPathPlus.js:~99] [pc=0x3bd156afc5a0](this=0x16bba111ad81 <JSGlobal Object>,gs=0x1882c3b506f9 <Object map = 0xe8fd45d9549>)
+    2: searchPathPlus [0xcb9a62bf661] [/home/user/guochu/Packages/cutline/searchPathPlus.js:228] [bytecode=0x32de8a7ccad9 offset=194](this=0x1882c3b50749 <StructDa...
+
+FATAL ERROR: invalid array length Allocation failed - JavaScript heap out of memory
+ 1: 0x8dc510 node::Abort() [node]
+ 2: 0x8dc55c  [node]
+ 3: 0xad9b5e v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [node]
+ 4: 0xad9d94 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [node]
+ 5: 0xec7bf2  [node]
+ 6: 0xea0cd4 v8::internal::Factory::NewFixedArrayWithFiller(v8::internal::Heap::RootListIndex, int, v8::internal::Object*, v8::internal::PretenureFlag) [node]
+ 7: 0xea12a7 v8::internal::Factory::NewUninitializedFixedArray(int, v8::internal::PretenureFlag) [node]
+ 8: 0xe62a20  [node]
+ 9: 0xe62cdf  [node]
+10: 0xfd9afe v8::internal::JSObject::AddDataElement(v8::internal::Handle<v8::internal::JSObject>, unsigned int, v8::internal::Handle<v8::internal::Object>, v8::internal::PropertyAttributes, v8::internal::ShouldThrow) [node]
+11: 0xff3262 v8::internal::Object::AddDataProperty(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::PropertyAttributes, v8::internal::ShouldThrow, v8::internal::Object::StoreFromKeyed) [node]
+12: 0x100dd7d v8::internal::Object::SetProperty(v8::internal::LookupIterator*, v8::internal::Handle<v8::internal::Object>, v8::internal::LanguageMode, v8::internal::Object::StoreFromKeyed) [node]
+13: 0x11686c5 v8::internal::Runtime::SetObjectProperty(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, v8::internal::LanguageMode) [node]
+14: 0xf3bf8d v8::internal::Runtime_KeyedStoreIC_Slow(int, v8::internal::Object**, v8::internal::Isolate*) [node]
+15: 0x3bd156a5be1d 
+已放弃(吐核)
+
 */
 
 /*
