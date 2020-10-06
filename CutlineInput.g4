@@ -19,7 +19,7 @@ default : ['12','11',true,'[]','[]','20','01232301','[0.0016,0.0062,0.038]','[]'
 if (searchPattern==='') {
     throw "examples: 01232301, 0123, 012323010123230121, 012323010123230103"
 }
-var code = CutlineInputFunctions.defaultCode('prog',eval('['+CutlineInputBlocks['prog'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('prog',eval('['+CutlineInputBlocks['prog'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -44,7 +44,7 @@ generatingCircuit
 name : ['qubitNumber','elided','pattern','seed','simulationFilename','auxiliaryFilename','experimentFilename','order','sfaCut','pepsCut','pepsPath','gateArgs']
 default : [60,'','EFGH',13874234,'circuit/sycamore60_20_EFGH.txt','circuit/sycamore60_20_EFGH.txt.json','unknown now','-1','[8,3,8,15,20,15,20,27]']
 colour : this.generatingCircuitColor
-var code = CutlineInputFunctions.defaultCode('generatingCircuit',eval('['+CutlineInputBlocks['generatingCircuit'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('generatingCircuit',eval('['+CutlineInputBlocks['generatingCircuit'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -54,7 +54,7 @@ gateArgs
 name : ['unknow']
 default : ['[0.5,0.1666666667,0,0,0]']
 colour : this.gateArgsColor
-var code = CutlineInputFunctions.defaultCode('gateArgs',eval('['+CutlineInputBlocks['gateArgs'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('gateArgs',eval('['+CutlineInputBlocks['gateArgs'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -62,7 +62,7 @@ generatingCircuitNone
     :   'pass'
 /* generatingCircuitNone
 colour : this.generatingCircuitColor
-var code = CutlineInputFunctions.defaultCode('generatingCircuitNone',eval('['+CutlineInputBlocks['generatingCircuitNone'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('generatingCircuitNone',eval('['+CutlineInputBlocks['generatingCircuitNone'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -75,7 +75,7 @@ marks
 markQi : 'original qubit index' 
 /* markQi
 colour : this.markColor
-var code = CutlineInputFunctions.defaultCode('markQi',eval('['+CutlineInputBlocks['markQi'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('markQi',eval('['+CutlineInputBlocks['markQi'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -84,14 +84,14 @@ orderlist : 'order' JsonStr
 name : ['order']
 default : ['[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]']
 colour : this.markColor
-var code = CutlineInputFunctions.defaultCode('orderlist',eval('['+CutlineInputBlocks['orderlist'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('orderlist',eval('['+CutlineInputBlocks['orderlist'].args.join(',')+']'),block);
       return code;
 */;
 
 markNone : 'pass' 
 /* markNone
 colour : this.markColor
-var code = CutlineInputFunctions.defaultCode('markNone',eval('['+CutlineInputBlocks['markNone'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('markNone',eval('['+CutlineInputBlocks['markNone'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -107,7 +107,7 @@ patternA : '/' PatternA_List Colour
 /* patternA
 name : ['pattern','color']
 default : ['A','#3333ff']
-var code = CutlineInputFunctions.defaultCode('patternA',eval('['+CutlineInputBlocks['patternA'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('patternA',eval('['+CutlineInputBlocks['patternA'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -115,7 +115,7 @@ patternC : '\\' PatternC_List Colour
 /* patternC
 name : ['pattern','color']
 default : ['C','#009900']
-var code = CutlineInputFunctions.defaultCode('patternC',eval('['+CutlineInputBlocks['patternC'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('patternC',eval('['+CutlineInputBlocks['patternC'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -123,7 +123,7 @@ patternNormal : 'show' NormalStr Colour
 /* patternNormal
 name : ['pattern','color']
 default : ['M','#993399']
-var code = CutlineInputFunctions.defaultCode('patternNormal',eval('['+CutlineInputBlocks['patternNormal'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('patternNormal',eval('['+CutlineInputBlocks['patternNormal'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -134,7 +134,7 @@ default : ['M','1_0100100100']
 if (['A','B','C','D','E','F','G','H'].indexOf(pattern)!==-1) {
     throw 'can not cover A~H'
 }
-var code = CutlineInputFunctions.defaultCode('patternDefine',eval('['+CutlineInputBlocks['patternDefine'].args.join(',')+']'));
+var code = CutlineInputFunctions.defaultCode('patternDefine',eval('['+CutlineInputBlocks['patternDefine'].args.join(',')+']'),block);
       return code;
 */;
 
@@ -174,7 +174,7 @@ NEWLINE:'\r'? '\n' ;
 WS  :   [ \t]+ -> skip ;         // toss out whitespace
 
 
-/* Function_0
+/* Call_BeforeType
 //this.evisitor.recieveOrder='ORDER_NONE';
 // this.evisitor.valueColor=330;
 this.evisitor.statementColor=300;
@@ -188,13 +188,13 @@ this.evisitor.generatingCircuitColor=130;
 // this.evisitor.soundColor=20;
 */
 
-/* Function_1
+/* Call_BeforeBlock
 // this.block('prog').inputsInline=true;
 // this.block('idString_1_e').output='idString_e';
 // this.block('idString_2_e').output='idString_e';
 */
 
-/* Functions
+/* Insert_FunctionStart
 CutlineInputFunctions.JsonStr_pre = function(str) {
     if (str===''||str==='JsonStr_default') {
         

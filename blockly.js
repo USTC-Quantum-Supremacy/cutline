@@ -2,34 +2,6 @@
 function initscriptfunc(params) {
 ///insert-initscriptfunc///
 
-/**
- * @class
- */
-function CutlineBlocklyConverter(params) {
-}
-CutlineBlocklyConverter.prototype.parse = function (obj,next) {
-    let rule = CutlineInputBlocks[obj.type]
-    let input = []
-    for (let index = 0; index < rule.args.length; index++) {
-        const dobj = obj[rule.args[index]];
-        if (rule.argsType[index]==='statement') {
-            let snext=null
-            while (dobj.length) {
-                let ds=dobj.pop()
-                snext=this.parse(ds,snext)
-            }
-            input.push(snext)
-        } else {
-            input.push(dobj)
-        }
-    }
-    if (rule.type==='statement' && next!=null) {
-        input.push(next)
-    }
-    return rule.xmlText(input)
-}
-CutlineInputFunctions.parser=new CutlineBlocklyConverter()
-
 var toolbox = (function(){
 
 var toolboxXml=document.createElement('xml')
@@ -367,35 +339,6 @@ workspace.addChangeListener(omitedcheckUpdateFunction);
 workspace.addChangeListener(Blockly.Events.disableOrphans);
 //自动禁用任何未连接到根块的块
 
-
-CutlineInputFunctions.defaultCode = function (ruleName,args) {
-    var rule = CutlineInputBlocks[ruleName];
-    let values=args.filter(v=>v!=='\n')
-    let output={}
-    for (let index = 0; index < values.length; index++) {
-        const value = values[index];
-        if (rule.argsType[index]==='statement') {
-            output[rule.args[index]]=eval('['+value+']')
-        } else {
-            output[rule.args[index]]=value
-        }
-    }
-    let ret
-    if (rule.type==='statement') {
-        ret=JSON.stringify(Object.assign({type:rule.json.type},output))+','
-    } else {
-        ret=JSON.stringify(output)
-    }
-    return ret
-}
-
-
-CutlineInputFunctions.parse=function(obj){
-    CutlineInputFunctions.workspace().clear();
-    xml_text = CutlineInputFunctions.parser.parse(obj);
-    xml = Blockly.Xml.textToDom('<xml>'+xml_text+'</xml>');
-    Blockly.Xml.domToWorkspace(xml, CutlineInputFunctions.workspace());
-}
 window.buildBlocks&&window.buildBlocks()
 
 ///insert-initscriptfunc///
@@ -412,14 +355,30 @@ var initscript=initscriptfunc.toString().split('///insert-initscriptfunc///')[1]
 
 function func_Run(){
     var script = document.createElement('script');
-    script.innerHTML = converter.mainFile[5]+initscript;
+    converter.js._text=[
+        'generatedMark',
+        'blocks_collection',
+        'blocks_field',
+        'blocks_block',
+        'OmitedError',
+        'Functions_define',
+        'Insert_FunctionStart',
+        'Functions_pre',
+        'Functions_fieldDefault',
+        'Functions_defaultCode',
+        'Functions_xmlText',
+        'Functions_blocksIniter',
+        'Insert_BeforeCallIniter',
+        'callIniter',
+    ]
+    script.innerHTML = converter.js.text()+initscript;
     document.body.appendChild(script);
 }
 
 function runOne(callback){
     converter = new Converter().init();
     converter.generBlocks(grammerFile);
-    converter.renderGrammerName();
+    converter.renderGrammarName();
     converter.generToolbox();
     converter.generMainFile();
     console.log(converter);
