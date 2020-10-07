@@ -2,7 +2,7 @@
 all: page dimension order circuit circuits_xlsx
 
 .PHONY:page
-page:CutlineInput.g4.js
+page:CutlineInput.js
 
 .PHONY:dimension
 dimension:output/dimensionTasks.json
@@ -22,7 +22,7 @@ clean_circuit:
 	rm -f ../MeteorCircuit/*
 	rm -rf ../MeteorCircuit/circuit
 
-CutlineInput.g4.js: CutlineInput.g4
+CutlineInput.js: CutlineInput.g4 g4tojs.js
 	node g4tojs.js
 
 output/dimensionTasks.json: generateCircuit.js random.js main.js in/generateCircuit.json in/pepsCut.json
