@@ -212,50 +212,50 @@
             }),
             '<label text="google"></label>',
             CutlineInputFunctions.parser.parse({
-            "type": "prog",
-            "xsize": "12",
-            "ysize": "9",
-            "use00": true,
-            "brokenBits": "[3]",
-            "part1": "[0,1,12,13,14,18,19,2,20,24,25,26,30,31,32,36,37,38,42,43,44,48,49,50,6,7,8]",
-            "depth": "20",
-            "searchPattern": "01232301",
-            "errorRates": "[0.0016,0.0062,0.038]",
-            "removedEntrances": "[]",
-            "balancedRange": 6,
-            "search": "notprune",
-            "generatingCircuit": [
-                {
-                    "type": "generatingCircuitNone"
-                }
-            ],
-            "showMark": [
-                {
-                    "type": "markQi"
-                }
-            ],
-            "showPattern": [
-                {
-                    "type": "patternA",
-                    "pattern": "A",
-                    "color": "#ff9900"
-                },
-                {
-                    "type": "patternA",
-                    "pattern": "B",
-                    "color": "#3333ff"
-                },
-                {
-                    "type": "patternC",
-                    "pattern": "C",
-                    "color": "#009900"
-                },
-                {
-                    "type": "patternC",
-                    "pattern": "D",
-                    "color": "#cc0000"
-                }
-            ]
+                "type": "prog",
+                "xsize": "12",
+                "ysize": "9",
+                "use00": true,
+                "brokenBits": "[3]",
+                "part1": "[0,1,12,13,14,18,19,2,20,24,25,26,30,31,32,36,37,38,42,43,44,48,49,50,6,7,8]",
+                "depth": "20",
+                "searchPattern": "01232301",
+                "errorRates": "[0.0016,0.0062,0.038]",
+                "removedEntrances": "[]",
+                "balancedRange": 6,
+                "search": "notprune",
+                "generatingCircuit": [
+                    {
+                        "type": "generatingCircuitNone"
+                    }
+                ],
+                "showMark": [
+                    {
+                        "type": "markQi"
+                    }
+                ],
+                "showPattern": [
+                    {
+                        "type": "patternA",
+                        "pattern": "A",
+                        "color": "#ff9900"
+                    },
+                    {
+                        "type": "patternA",
+                        "pattern": "B",
+                        "color": "#3333ff"
+                    },
+                    {
+                        "type": "patternC",
+                        "pattern": "C",
+                        "color": "#009900"
+                    },
+                    {
+                        "type": "patternC",
+                        "pattern": "D",
+                        "color": "#cc0000"
+                    }
+                ]
             }),
         ],
         //   "value" : [
@@ -1167,6 +1167,7 @@ CutlineInputFunctions.JsonStr_pre = function(str) {
 }
 
 CutlineInputBlocks.generatingCircuit.json.nextStatement=undefined;
+CutlineInputBlocks.generatingCircuitNone.json.nextStatement=undefined;
 CutlineInputFunctions.Int_pre = function(intstr) {
     return parseInt(intstr);
 }

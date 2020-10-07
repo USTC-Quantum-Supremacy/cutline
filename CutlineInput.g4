@@ -183,4 +183,5 @@ CutlineInputFunctions.JsonStr_pre = function(str) {
 }
 
 CutlineInputBlocks.generatingCircuit.json.nextStatement=undefined;
+CutlineInputBlocks.generatingCircuitNone.json.nextStatement=undefined;
 */
