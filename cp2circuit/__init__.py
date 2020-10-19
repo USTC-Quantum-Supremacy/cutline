@@ -35,8 +35,8 @@ def build_info():
         def get(self,index,field):
             return self.data[self.pos(index)][self.fields.index(field)]
     Info = InfoClass()
-    # data=readXlsx(ThisPath+'\\circuits.xlsx')
-    with open(ThisPath+'\\circuits_xlsx.json','r',encoding='utf-8') as fid:
+    # data=readXlsx(ThisPath+'/circuits.xlsx')
+    with open(ThisPath+'/circuits_xlsx.json','r',encoding='utf-8') as fid:
         data=json.load(fid)['data'][0]
     Info.fields=data[0]
     Info.data=data[1:]
@@ -92,7 +92,7 @@ def getSimulation(index, algorithm=''):
 
 def reRenderSimulationFile(index,gateArgs):
     filename = g.Info.get(index,'name')
-    with open(g.ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
+    with open(g.ThisPath+'/circuit/'+filename,encoding='utf-8') as fid:
         src = fid.read()
     # todo: change arguments by `gateArgs`
     out = src 
@@ -106,7 +106,7 @@ def setFSIMTime(time):
 
 def getCircuit(index):
     filename = g.Info.get(index,'name')+'.qcis'
-    with open(g.ThisPath+'\\circuit\\'+filename,encoding='utf-8') as fid:
+    with open(g.ThisPath+'/circuit/'+filename,encoding='utf-8') as fid:
         src = fid.read()
     out = fillFSIM(src)
     return out
