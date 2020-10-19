@@ -21,3 +21,4 @@ output/*.zip
 pushall.cmd
 __pycache__
 downloadCircuits.cmd
+cp2circuit/*.json

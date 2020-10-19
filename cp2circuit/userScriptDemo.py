@@ -26,7 +26,7 @@ import re
 **任务级**  
 taskIndex  
 task  
-taskID <- todo  
+taskID <- 改为再引入一个运行id,表示是这个taskIndex的第几次运行  
 
 **指令级**  
 instruction  
@@ -77,7 +77,7 @@ task = mc.getTask(taskIndex)
 
 qsti.failTask(reason='...')  # 把进行中的任务设置为失败
 qsti.failTask(taskIndex, reason='...')  # 指定一个任务设为失败
-
+# 加入修改回成功
 
 # %% [markdown]
 # # 指令
@@ -93,6 +93,7 @@ for instruction in task:
         qsti.runCircuit(index, circuit, count)  # 提交式的, 也可以是同步式的, 就不需要join了
     if iType == 'calibration':
         pass
+        # 以别的机制来做
     if iType == 'check':
         circuit = mc.getCircuit(instruction['checkCircuit'])
         count = instruction['count']
