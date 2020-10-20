@@ -10,10 +10,15 @@ fields.push('count','show','split','expectation')
 taskDisplay.slice(1).forEach(line => {
     const task=JSON.parse(line[fields.indexOf('task')])
     const input=JSON.parse(line[fields.indexOf('input')])
-    if (task.target.indexOf('EXP')===-1) {
-        line.push(0,'','','')
-    } else {
+    // if (task.target.indexOf('EXP')===-1) {
+    //     line.push(0,'','','')
+    // } else {
+    //     pushLine(task,input,line)
+    // }
+    try {
         pushLine(task,input,line)
+    } catch (error) {
+        line.push(0,'','','')
     }
 })
 
