@@ -1,3 +1,4 @@
 [submodule "antlr-blockly"]
 	path = antlr-blockly
 	url = https://github.com/zhaouv/antlr-blockly.git
+	branch = master
