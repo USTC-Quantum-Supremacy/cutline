@@ -211,6 +211,7 @@ let tasks=[
     {n:[54,60,66,72],d:[4,5,6,7,8,9,10],tpl:'2',p:'IJKLKLIJ',s:'circuit/stask2_{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS','stask2']},
     {n:[72],d:[4,5,6,7,8,9,10],tpl:'2',p:'IJKLKLIJ',s:'circuit/stask2_{n}_{d}_IJKL_fullcircuit_pc5.txt',pc:'[3,8,8,15,15,20,20,27,27,32]',target:['PEPS','stask2']},
     {n:[72],d:[4,5,6,7,8,9,10],tpl:'2',p:'IJKLKLIJ',s:'circuit/stask2_{n}_{d}_IJKL_fullcircuit_pc4.txt',pc:'[3,8,8,15,15,20,20,27]',target:['PEPS','stask2']},
+    {n:[104],d:[4,5,6,7,8,9,10],tpl:'3',p:'IJKLKLIJ',s:'circuit/stask2_{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS','stask2']},
 
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C4.txt',part1:part1s[3],sfaCut:'4',target:['superSFATest']},
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C5.txt',part1:part1s[3],sfaCut:'5',target:['superSFATest']},

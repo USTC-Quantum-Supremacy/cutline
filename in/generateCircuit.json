@@ -338,5 +338,118 @@
             ]
         }
     ]
+},
+{
+    "type": "prog",
+    "xsize": "16",
+    "ysize": "13",
+    "use00": true,
+    "brokenBits": "[]",
+    "part1": "[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]",
+    "depth": "20",
+    "searchPattern": "01232301",
+    "errorRates": "[0.0016,0.0062,0.038]",
+    "removedEntrances": "[]",
+    "balancedRange": 6,
+    "search": "notprune",
+    "showMark": [
+        {
+            "type": "markQi"
+        }
+    ],
+    "showPattern": [
+        {
+            "type": "patternDefine",
+            "pattern": "I",
+            "bitString": "0_0000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "J",
+            "bitString": "0_1111111111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "K",
+            "bitString": "1_0000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "L",
+            "bitString": "1_1111111111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "M",
+            "bitString": "0_0000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "N",
+            "bitString": "0_1111111111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "O",
+            "bitString": "1_0000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "P",
+            "bitString": "1_1111111111"
+        },
+        {
+            "type": "patternA",
+            "pattern": "I",
+            "color": "#ff9900"
+        },
+        {
+            "type": "patternA",
+            "pattern": "J",
+            "color": "#3333ff"
+        },
+        {
+            "type": "patternC",
+            "pattern": "K",
+            "color": "#009900"
+        },
+        {
+            "type": "patternC",
+            "pattern": "L",
+            "color": "#cc0000"
+        }
+    ],
+    "generatingCircuit": [
+        {
+            "type": "generatingCircuit",
+            "qubitNumber": 104,
+            "elided": "",
+            "pattern": "IJKLKLIJ",
+            "seed": "13874234",
+            "simulationFilename": "",
+            "auxiliaryFilename": "",
+            "experimentFilename": "",
+            "order": [
+                {
+                    "type": "orderlist",
+                    "order": "[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103]"
+                }
+            ],
+            "sfaCut": "-1",
+            "pepsCut": "[]",
+            "pepsPath": [
+                {
+                    "type": "orderlist",
+                    "order": "[]"
+                }
+            ],
+            "gateArgs": [
+                {
+                    "type": "gateArgs",
+                    "unknow": "[0.5,0.1666666667,0,0,0]"
+                }
+            ]
+        }
+    ]
 }
 ]
