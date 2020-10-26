@@ -21,11 +21,11 @@ function createAndDownloadFile(contents, filename, fileType) {
 }
 
 function getSVGText(params) {
-    return document.querySelector("#insertHere").children[0].outerHTML
+    return document.querySelector("#insertHere").children[0].outerHTML.replace(/(viewBox.*?)(width[^>]*)(>)/,'$1$3')
 }
 
 function downloadSVG(filename) {
-    createAndDownloadFile(getSVGText(), filename || 'export.svg', 'svg')
+    createAndDownloadFile(getSVGText(), (filename || 'export')+'.svg', 'svg')
 }
 
 
@@ -91,28 +91,32 @@ var convertOneSVGStr=function(SVGstr,file){
 var getSVGSize=function(SVGstr){
     let match=/svg.*viewBox=['"]([^'"]*)['"]/.exec(SVGstr||'')
     if(!match)return [595,842];
-    return match[1].replace(/^[^ ,]+.[^ ,]+./,'').split(/[ ,]/).map(v=>parseFloat(v));
+    let [a,b,c,d]=match[1].split(/[ ,]/).map(v=>parseFloat(v));
+    return [c-a,d-b]
 }
 
-var loadOneScript=function(src,callback){
-    var script = document.createElement('script')
-    script.src = src
-    document.body.appendChild(script)
-    script.onload = function () {
-        callback()
-    }
-}
-var lnum=0
-var tnum=3
-var cb=function(){
-    lnum++
-    if(lnum==tnum)callback();
+function downloadPDF(filename) {
+    convertOneSVGStr(getSVGText(),{name:(filename || 'export')+'.pdf'})
 }
 
 var loadScripts=function(callback){
-    if(lnum==tnum){
+    if(window.submitFileAndConvert){
         callback();
         return;
+    }
+    var loadOneScript=function(src,callback){
+        var script = document.createElement('script')
+        script.src = src
+        document.body.appendChild(script)
+        script.onload = function () {
+            callback()
+        }
+    }
+    var lnum=0
+    var tnum=3
+    var cb=function(){
+        lnum++
+        if(lnum==tnum)callback();
     }
     let d1 = document.createElement('div')
     d1.innerHTML=`<div style="display:none">
@@ -126,6 +130,15 @@ var loadScripts=function(callback){
     loadOneScript('./svg2pdf/source.js',cb)
 }
 
+function main(callback) {
+    loadScripts(function(){
+        window.submitFileAndConvert=function(){fileElem.click()}
+        loading.value='Convert SVG Files'
+        loading.disabled=false
+        callback()
+    })
+}
+
 
 
 // The export format is SVG, you can convert them to PDF by the button.
@@ -134,5 +147,13 @@ var loadScripts=function(callback){
 
 // Converting by [SVG-to-PDFKit](https://github.com/alafr/SVG-to-PDFKit). Its License is [MIT](http://choosealicense.com/licenses/mit/).
 
-return {adjust,createAndDownloadFile,downloadSVG};
+return {adjust,createAndDownloadFile,downloadSVG,downloadPDF,main};
 })();
+
+exportfile.main(function () {
+    let name='export'
+    console.log(name);
+    exportfile.adjust()
+    exportfile.downloadSVG(name)
+    exportfile.downloadPDF(name)
+})
