@@ -28,4 +28,16 @@ let mainProcess = async ()=>{
 
 mainProcess()
 
+
+/* 
+cat "cutline/output/orders_peps.json"|python3 -c 'import json;a=json.load(open(0));print([l["times"] for l in a])'
+
+echo `
+for ii in 7 9 11 13
+do
+    cat "cutline/output/orders_peps $ii.json"|python3 -c 'import json;a=json.load(open(0));print(",".join([str(l["times"]) for l in a])+"&")'
+done `| python3 -c 'import json;t=json.load(open("cutline/output/dimensionTasks.json"));a=list(zip(*[l.split(",") for l in open(0).read().split("&")[:-1]]));print("\n".join([",".join([str(c[-3]),str(c[-2]),c[-1],*b]) for b,c in zip(a,t)]))'
+
+ */
+
 // node check_dimensionTasks.js
