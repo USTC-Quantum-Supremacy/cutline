@@ -198,7 +198,7 @@ let searchPepsOrder=function (edgeDimension,edgeMax) {
          * 联通性-1为只有一个区域, >=0时即为前提2中单独的区域的qi
          */
         let queue={
-            data:new PriorityQueue().init((a,b)=>b[2]-a[2],2000000),
+            data:new PriorityQueue().init((a,b)=>b[2]-a[2],40000000),
             push:function(v){this.data.offer(v)},
             shift:function(){return this.data.poll()},
             size:function(){return this.data.length},
