@@ -22,7 +22,7 @@ let mainProcess = async ()=>{
         const [input,task,n,d,filename] = dimensionTasks[index];
         let sd=new StructDataClass();
         sd.import(input)
-        let result = searchPepsOrder.apply(sd,[dimension,11])
+        let result = searchPepsOrder.apply(sd,[dimension,])
         results.push(result)
     }
     fs.writeFileSync('output/orders_peps.json','[\n'+results.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'})
