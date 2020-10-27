@@ -20,7 +20,7 @@ let mainProcess = async ()=>{
             execSync('bash ../callMeteor/runDimensionTasks.sh')
             await delay(50)
             let dimensions = JSON.parse(fs.readFileSync('../callMeteor/output/dimensionTasks.json',{encoding:'utf-8'}))
-            fs.writeFileSync('output/dimensions_'+ii+'.json',dimensions.map(v=>JSON.stringify(v)).join('\n\n'),{encoding:'utf-8'})
+            fs.writeFileSync('output/dimensions_'+ii+'.json','\n'+dimensions.map(v=>JSON.stringify(v)).join('\n\n'),{encoding:'utf-8'})
         }
     }
     
