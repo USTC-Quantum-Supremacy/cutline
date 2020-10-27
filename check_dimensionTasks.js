@@ -30,6 +30,7 @@ let mainProcess = async ()=>{
     if (true) {
         // check js-searchPepsOrder is stable
         let times=10
+        let maxedge=11
         for (let ii = 0; ii < times; ii++) {
             let dimensions = JSON.parse(fs.readFileSync('../callMeteor/output/dimensionTasks.json',{encoding:'utf-8'}))
             let results=[]
@@ -38,10 +39,10 @@ let mainProcess = async ()=>{
                 const [input,task,n,d,filename] = dimensionTasks[index];
                 let sd=new StructDataClass();
                 sd.import(input)
-                let result = searchPepsOrder.apply(sd,[dimension,7])
+                let result = searchPepsOrder.apply(sd,[dimension,maxedge])
                 results.push(result)
             }
-            fs.writeFileSync('output/orders_peps_11_'+ii+'.json','[\n'+results.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'})
+            fs.writeFileSync('output/orders_peps_'+maxedge+'_'+ii+'.json','[\n'+results.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'})
         }
     }
 }
