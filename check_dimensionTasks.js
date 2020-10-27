@@ -11,7 +11,7 @@ let mainProcess = async ()=>{
     for (const [input,task,n,d,filename] of dimensionTasks) {
         pepsDimensionInput.push([n,d,filename])
     }
-    if (true) {
+    if (false) {
         // check julia-DimensionTask is stable
         let times=20
         fs.writeFileSync('../callMeteor/in/dimensionTasks.json',JSON.stringify(pepsDimensionInput),{encoding:'utf-8'})
@@ -23,7 +23,27 @@ let mainProcess = async ()=>{
             fs.writeFileSync('output/dimensions_'+ii+'.json','\n'+dimensions.map(v=>JSON.stringify(v)).join('\n\n'),{encoding:'utf-8'})
         }
     }
-    
+    fs.writeFileSync('../callMeteor/in/dimensionTasks.json',JSON.stringify(pepsDimensionInput),{encoding:'utf-8'})
+    await delay(50)
+    execSync('bash ../callMeteor/runDimensionTasks.sh')
+    await delay(50)
+    if (true) {
+        // check js-searchPepsOrder is stable
+        let times=10
+        for (let ii = 0; ii < times; ii++) {
+            let dimensions = JSON.parse(fs.readFileSync('../callMeteor/output/dimensionTasks.json',{encoding:'utf-8'}))
+            let results=[]
+            for (let index = 0; index < dimensions.length; index++) {
+                const dimension = dimensions[index];
+                const [input,task,n,d,filename] = dimensionTasks[index];
+                let sd=new StructDataClass();
+                sd.import(input)
+                let result = searchPepsOrder.apply(sd,[dimension,7])
+                results.push(result)
+            }
+            fs.writeFileSync('output/orders_peps_11_'+ii+'.json','[\n'+results.map(v=>JSON.stringify(v)).join('\n,\n')+'\n]',{encoding:'utf-8'})
+        }
+    }
 }
 
 mainProcess()
