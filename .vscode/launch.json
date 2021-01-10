@@ -20,6 +20,12 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Launch demo.html",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/demo.html"
         }
     ]
 }
