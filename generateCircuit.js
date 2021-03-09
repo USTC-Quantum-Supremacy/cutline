@@ -106,6 +106,15 @@ let tasks=[
     {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[11],target:['EXP','SFA','SFATime','super']},
     {n:[66],d:[12],p:'MMMNNNOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super']},
     {meta:3},
+
+    // Check
+    {n:[66],d:[8],tpl:'5',p:'IJKLKLIJ',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_CheckARun.txt',target:['Check','A_Run','SFA']},
+    {n:[33],d:[8],tpl:'5',p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_CheckAP1.txt',target:['Check','A_P1','SA']},
+    {n:[33],d:[8],tpl:'6',p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_CheckAP2.txt',target:['Check','A_P2','SA']},
+    {n:[66],d:[8],tpl:'7',p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_CheckBRun.txt',target:['Check','B_Run','SFA']},
+    {n:[33],d:[8],tpl:'7',p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_CheckBP1.txt',target:['Check','B_P1','SA']},
+    {n:[33],d:[8],tpl:'8',p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_CheckBP2.txt',target:['Check','B_P2','SA']},
+
     // Auxliary
     {n:[60],d:[4,6],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']},
     {n:[66],d:[4,6],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['PEPS']},
