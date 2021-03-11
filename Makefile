@@ -19,7 +19,8 @@ circuits_xlsx:output/circuits_xlsx.json
 .PHONT:clean_circuit
 clean_circuit:
 	rm -f circuit.zip
-	rm -f ../MeteorCircuit/*
+	rm -f ../MeteorCircuit/circuits_xlsx.json
+	rm -f ../MeteorCircuit/circuits.xlsx
 	rm -rf ../MeteorCircuit/circuit
 
 CutlineInput.js: CutlineInput.g4 g4tojs.js
@@ -37,7 +38,6 @@ output/circuits.json: generateCircuit.js random.js main.js in/generateCircuit.js
 output/circuits_xlsx.json: calculateCountOfCircuit.js output/circuits.json
 	node calculateCountOfCircuit.js
 	python3 convertToXlsx.py output/circuits_xlsx.json
-	cp cp2circuit/* ../MeteorCircuit/
 	cp output/circuits_xlsx.json ../MeteorCircuit/
 	cp output/circuits.xlsx ../MeteorCircuit/
 	7z a circuit.zip ../MeteorCircuit
