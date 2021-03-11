@@ -69,7 +69,7 @@ let parsetask = async (tasks)=>{
             continue
         }
         let line = [screenName,'running']
-        line.push(xsize==='11'?60:66,balancedRange,searchPattern.length,searchPattern)
+        line.push(61,balancedRange,searchPattern.length,searchPattern)
 
         let content=log.split(/\d+ of \d+/).slice(-1)[0].trim().replace(/..\d+m/g,'')
         if (!content) {

@@ -2,14 +2,14 @@
     "type": "prog",
     "xsize": "11",
     "ysize": "11",
-    "use00": false,
+    "use00": true,
     "brokenBits": "[]",
     "part1": "[]",
     "depth": "16",
-    "searchPattern": "012323010123230121",
+    "searchPattern": "0123230101232301",
     "errorRates": "[0.0016,0.0062,0.038]",
     "removedEntrances": "[]",
-    "balancedRange": 6,
+    "balancedRange": 14,
     "search": "notprune",
     "showMark": [
         {
@@ -20,22 +20,22 @@
         {
             "type": "patternDefine",
             "pattern": "I",
-            "bitString": "0_1111100000"
+            "bitString": "0_0000000000"
         },
         {
             "type": "patternDefine",
             "pattern": "J",
-            "bitString": "0_0000011111"
+            "bitString": "0_1111111111"
         },
         {
             "type": "patternDefine",
             "pattern": "K",
-            "bitString": "1_0000011111"
+            "bitString": "1_0000001100"
         },
         {
             "type": "patternDefine",
             "pattern": "L",
-            "bitString": "1_1111100000"
+            "bitString": "1_1111110011"
         },
         {
             "type": "patternA",
@@ -62,24 +62,24 @@
         {
             "type": "generatingCircuit",
             "qubitNumber": 66,
-            "elided": "0",
-            "pattern": "IJKLKLIJIJKLKLIJKJ",
-            "seed": 13874234,
-            "simulationFilename": "circuit/sycamore60_20_EFGH.txt",
-            "auxiliaryFilename": "circuit/sycamore60_20_EFGH.txt.json",
+            "elided": "",
+            "pattern": "IJKLKLIJ",
+            "seed": "13874234",
+            "simulationFilename": "",
+            "auxiliaryFilename": "",
             "experimentFilename": "unknown now",
             "order": [
                 {
                     "type": "orderlist",
-                    "order": "[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"
+                    "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
                 }
             ],
             "sfaCut": "-1",
-            "pepsCut": "[8,3,8,15,20,15,20,27]",
+            "pepsCut": "[]",
             "pepsPath": [
                 {
                     "type": "orderlist",
-                    "order": "[41,35,29,34,46,22,40,28,45,21,47,23,33,53,52,17,16,39,27,15,51,32,20,44,8,56,26,38,14,50,57,58,9,10,62,63,2,3,64,4,31,19,43,7,55,25,37,13,49,1,61,30,18,42,6,54,48,12,24,36,65,5,59,11,60,0]"
+                    "order": "[]"
                 }
             ],
             "gateArgs": [
@@ -88,9 +88,6 @@
                     "unknow": "[0.5,0.1666666667,0,0,0]"
                 }
             ]
-        },
-        {
-            "type": "generatingCircuitNone"
         }
     ]
 }
