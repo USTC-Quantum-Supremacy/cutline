@@ -1,5 +1,5 @@
 .PHONT:all
-all: page dimension order circuit circuits_xlsx
+all: dimension order circuit circuits_xlsx
 
 .PHONY:page
 page:CutlineInput.js
