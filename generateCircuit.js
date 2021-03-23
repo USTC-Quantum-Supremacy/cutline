@@ -20,49 +20,36 @@ const part1s=[
 let tasks=[
     {meta:1},
     // Verification
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','PEPS','PEPSTime','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','PEPS','PEPSTime','once']},
     
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
  
-    {n:[27],d:[8],p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'IJKLKLIJ',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MMNNOOPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','once']},
     {meta:2},
     
-    // 60qubit SFA supremacy
-    {n:[27],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[18],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','SFA','SFATime','once']},
-    {n:[27],d:[18],p:'IIIIIJJJJKKKKLLLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','PEPSTime','once']},
-
-
-    {n:[27],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[16],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','SFA','SFATime','once']},
-    {n:[27],d:[16],p:'IIIIJJJJKKKKLLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','once']},
-
-
-
-    {n:[27],d:[14],p:'IJKLKLIJIJKLIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[14],p:'IJKLKLIJIJKLIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','SFA','SFATime','once']},
-    {n:[27],d:[14],p:'IIIIJJJKKKLLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','once']},
-
-    
-    {n:[27],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[12],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','SFA','SFATime','once']},
-    {n:[27],d:[12],p:'IIIJJJKKKLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','once']},
-
-
-    {n:[27],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_all.txt',target:['EXP','SFA','SFATime']},
-    
-    // 66qubit SFA supremacy
-
+    // 66qubit SFA supremacy -> 27
     {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
     {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','once']},
-    {n:[27],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','once']},
+    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','super','once']},
+    {n:[27],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super','once']},
+
+
+    {n:[27],d:[14],p:'MNOPOPMNMNOPON',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
+    {n:[27],d:[14],p:'MNOPOPMNMNOPON',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
+    {n:[27],d:[14],p:'MNOPOPMNMNOPON',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','super','once']},
+    {n:[27],d:[14],p:'MMMNNNNOOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super','once']},
+
+
+
+    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
+    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
+    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','super','once']},
+    {n:[27],d:[12],p:'MMMNNNOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super','once']},
+
+
+    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer_all.txt',target:['EXP','SFA','SFATime']},
+    
 
     {meta:3},
     // Check
@@ -72,6 +59,10 @@ let tasks=[
     {n:[27],d:[8],tpl:'4',p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_CheckBRun.txt',target:['EXP','Check','B_Run','SFA','once']},
     {n:[14],d:[8],tpl:'5',p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_CheckBP1.txt',target:['Check','B_P1','SA']},
     {n:[13],d:[8],tpl:'6',p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_CheckBP2.txt',target:['Check','B_P2','SA']},
+
+    // Auxliary
+    {n:[15],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_Auxliary.txt',target:['SFA']},
+    {n:[15],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['PEPS','PEPSTime']},
 
 ]
 

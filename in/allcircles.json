@@ -5,11 +5,11 @@
     "use00": true,
     "brokenBits": "[]",
     "part1": "[]",
-    "depth": "16",
-    "searchPattern": "0123230101232301",
+    "depth": "20",
+    "searchPattern": "01232301012323010123",
     "errorRates": "[0.0016,0.0062,0.038]",
     "removedEntrances": "[]",
-    "balancedRange": 14,
+    "balancedRange": 20,
     "search": "notprune",
     "showMark": [
         {
@@ -63,7 +63,7 @@
             "type": "generatingCircuit",
             "qubitNumber": 66,
             "elided": "",
-            "pattern": "IJKLKLIJ",
+            "pattern": "IJKLKLIJIJKLKLIJIJKL",
             "seed": "13874234",
             "simulationFilename": "",
             "auxiliaryFilename": "",
