@@ -241,10 +241,10 @@ let tasks=[
 
     // {n:[53],d:[12,14],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']}, //very slow, cancel when not used
 
-    {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_1_fullcircuit.txt',part1:part1s[6],target:[]},
-    {n:[60],d:[20],tpl:'12',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_2_fullcircuit.txt',part1:part1s[6],target:[]},
-    {n:[66],d:[18],tpl:'13',p:'IJKLKLIJIJKLKLIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_3_fullcircuit.txt',part1:part1s[6],target:[]},
-    {n:[66],d:[20],tpl:'14',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_4_fullcircuit.txt',part1:part1s[6],target:[]},
+    {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_1_fullcircuit.txt',target:[]},
+    {n:[60],d:[20],tpl:'12',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_2_fullcircuit.txt',target:[]},
+    {n:[66],d:[18],tpl:'13',p:'IJKLKLIJIJKLKLIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_3_fullcircuit.txt',target:[]},
+    {n:[66],d:[20],tpl:'14',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_4_fullcircuit.txt',target:[]},
 
     // {n:[15,18,21,24,27,30,33,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',target:[]},
     // {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt',target:[]},
