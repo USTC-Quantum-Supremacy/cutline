@@ -200,13 +200,14 @@ let tasks=[
     {n:[30],d:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_for_sample.txt',part1:part1s[0],target:['SA']},
     {n:[54],d:[14],p:'IJKLKLIJIJKLIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[1],target:['SFA']},
 
+    // // v slow, cancel when not used
+    // {n:[60],d:[18],p:'IIIIJJJJKKKKLLLLLI',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike_for_sample5.txt',target:['PEPS']},
+    // {n:[60],d:[18],p:'IIIIJJJJKKKKLLLLIL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike_for_sample6.txt',target:['PEPS']},
 
-    {n:[60],d:[18],p:'IIIIJJJJKKKKLLLLLI',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike_for_sample5.txt',target:['PEPS']},
-    {n:[60],d:[18],p:'IIIIJJJJKKKKLLLLIL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike_for_sample6.txt',target:['PEPS']},
-
-    {n:[66],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample4.txt',target:['PEPS']},
-    {n:[66],d:[16],p:'MMMNNNNOOOOPPPPM',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample5.txt',target:['PEPS']},
-    {n:[66],d:[16],p:'MMMNNNNOOOOPPPMP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample6.txt',target:['PEPS']},
+    // {n:[66],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample4.txt',target:['PEPS']},
+    // {n:[66],d:[16],p:'MMMNNNNOOOOPPPPM',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample5.txt',target:['PEPS']},
+    // {n:[66],d:[16],p:'MMMNNNNOOOOPPPMP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike_for_sample6.txt',target:['PEPS']},
+    // // ^ slow, cancel when not used
 
     // i~iiiii total 40
     // I IJ IJK IJKL IJKLI IJKLIL IJKLKLI IJKLKLIJ IJKLK IJKLKL
@@ -233,11 +234,12 @@ let tasks=[
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C4.txt',part1:part1s[3],sfaCut:'4',target:['superSFATest']},
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_C5.txt',part1:part1s[3],sfaCut:'5',target:['superSFATest']},
 
-
-    {n:[60],d:[7],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:part1s[12],target:['SFA','PEPS']},
-    {n:[60],d:[8],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:part1s[5],target:['SFA','PEPS']},
-    {n:[66],d:[7],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:part1s[13],target:['SFA','PEPS']},
-    {n:[66],d:[8],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:part1s[14],target:['SFA','PEPS']},
+    // // v slow, cancel when not used
+    // {n:[60],d:[7],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:part1s[12],target:['SFA','PEPS']},
+    // {n:[60],d:[8],p:'IJKLKLIJIJKLKLIJIL',e:'3layer',s:'circuit/sycamore{n}_{d}_IJKL_E3layer.txt',part1:part1s[5],target:['SFA','PEPS']},
+    // {n:[66],d:[7],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:part1s[13],target:['SFA','PEPS']},
+    // {n:[66],d:[8],p:'MNOPOPMNMNOPOPMN',e:'3layer',s:'circuit/sycamore{n}_{d}_MNOP_E3layer.txt',part1:part1s[14],target:['SFA','PEPS']},
+    // // ^ slow, cancel when not used
 
     // {n:[53],d:[12,14],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']}, //very slow, cancel when not used
 
@@ -247,9 +249,9 @@ let tasks=[
     {n:[66],d:[20],tpl:'14',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_4_fullcircuit.txt',target:[]},
 
     // cal xeb when perfect
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E4layer.txt',target:['SA','xebcal','seeds']},
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],d:[8],p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_fullcircuit.txt',target:['SA','xebcal','seeds']},
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_ABCDlike.txt',target:['SA','xebcal','seeds']},
+    {n:[15,18,21,24,27,30,33,36],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E4layer.txt',target:['SA','xebcal','eseeds']},
+    {n:[15,18,21,24,27,30,33,36],d:[8],p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_fullcircuit.txt',target:['SA','xebcal','eseeds']},
+    {n:[15,18,21,24,27,30,33,36],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_ABCDlike.txt',target:['SA','xebcal','eseeds']},
 
     // {n:[15,18,21,24,27,30,33,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,66],d:[1],p:'IJCDCDIJ',c:'peps_path/sycamore{n}_cut.txt',target:[]},
     // {n:[66],d:[1],p:'IJCDCDIJ',m:'peps_path/sycamore.txt',target:[]},
@@ -279,11 +281,11 @@ tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
-                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1) || t.target.indexOf('once')!==-1)) {
+                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1 && t.target.indexOf('eseeds')===-1) || t.target.indexOf('once')!==-1)) {
                     // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
                     return;
                 }
-                if (seedi>=10 && t.target.indexOf('EXP')!==-1) {
+                if (seedi>=10 && (t.target.indexOf('EXP')!==-1 || t.target.indexOf('eseeds')!==-1)) {
                     // EXP 只用 seedi<10
                     return;
                 }
