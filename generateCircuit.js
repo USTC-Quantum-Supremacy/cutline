@@ -20,43 +20,43 @@ const part1s=[
 let tasks=[
     {meta:1},
     // Verification
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','PEPS','PEPSTime','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SA','xebcal','once']},
     
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','xebcal','once']},
  
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MMNNOOPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SA','once']},
+    {n:[15,16,17,18,19,20,21,22,23,24,25,26,27],d:[8],p:'MMNNOOPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','SA','xebcal','once']},
     {meta:2},
     
     // 66qubit SFA supremacy -> 27
-    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','super','once']},
-    {n:[27],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super','once']},
+    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SA','once']},
+    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
+    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SA','once']},
+    {n:[27],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','SA','once']},
 
 
-    {n:[27],d:[14],p:'MNOPOPMNMNOPON',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[14],p:'MNOPOPMNMNOPON',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[14],p:'MNOPOPMNMNOPON',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','super','once']},
-    {n:[27],d:[14],p:'MMMNNNNOOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super','once']},
+    {n:[27],d:[14],p:'MNOPOPMNMNOPON',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SA','once']},
+    {n:[27],d:[14],p:'MNOPOPMNMNOPON',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
+    {n:[27],d:[14],p:'MNOPOPMNMNOPON',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SA','once']},
+    {n:[27],d:[14],p:'MMMNNNNOOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','SA','once']},
 
 
 
-    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SFA','once']},
-    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SFACutSearch','once']},
-    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SFA','SFATime','super','once']},
-    {n:[27],d:[12],p:'MMMNNNOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super','once']},
+    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','SA','once']},
+    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
+    {n:[27],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',target:['EXP','SA','once']},
+    {n:[27],d:[12],p:'MMMNNNOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','SA','once']},
 
 
-    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer_all.txt',target:['EXP','SFA','SFATime']},
+    {n:[27],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer_all.txt',target:['EXP','SA','SFATime']},
     
 
     {meta:3},
     // Check
-    {n:[27],d:[8],tpl:'1',p:'IJKLKLIJ',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_CheckARun.txt',target:['EXP','Check','A_Run','SFA','once']},
+    {n:[27],d:[8],tpl:'1',p:'IJKLKLIJ',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_CheckARun.txt',target:['EXP','Check','A_Run','SA','once']},
     {n:[14],d:[8],tpl:'2',p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_CheckAP1.txt',target:['Check','A_P1','SA']},
     {n:[13],d:[8],tpl:'3',p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_CheckAP2.txt',target:['Check','A_P2','SA']},
-    {n:[27],d:[8],tpl:'4',p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_CheckBRun.txt',target:['EXP','Check','B_Run','SFA','once']},
+    {n:[27],d:[8],tpl:'4',p:'MNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_CheckBRun.txt',target:['EXP','Check','B_Run','SA','once']},
     {n:[14],d:[8],tpl:'5',p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_CheckBP1.txt',target:['Check','B_P1','SA']},
     {n:[13],d:[8],tpl:'6',p:'MNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_CheckBP2.txt',target:['Check','B_P2','SA']},
 
@@ -84,11 +84,11 @@ tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
-                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1) || t.target.indexOf('once')!==-1)) {
+                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1 && t.target.indexOf('eseeds')===-1) || t.target.indexOf('once')!==-1)) {
                     // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
                     return;
                 }
-                if (seedi>=10 && t.target.indexOf('EXP')!==-1) {
+                if (seedi>=10 && (t.target.indexOf('EXP')!==-1 || t.target.indexOf('eseeds')!==-1)) {
                     // EXP 只用 seedi<10
                     return;
                 }
