@@ -737,7 +737,7 @@ Object.assign(CutlineInputBlocks,{
             "args0": [
                 Object.assign({},CutlineInputBlocks.JsonStr,{
                     "name": "unknow",
-                    "text": "[0.5,0.1666666667,0,0,0]"
+                    "text": "[1.5707963267948966,0.5235987755982988,0,0,0]"
                 })
             ],
             "inputsInline": true,

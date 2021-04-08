@@ -47,7 +47,7 @@ gateArgs
     :   'unknow format' JsonStr
 /* gateArgs
 name : ['unknow']
-default : ['[0.5,0.1666666667,0,0,0]']
+default : ['[1.5707963267948966,0.5235987755982988,0,0,0]']
 colour : this.gateArgsColor
 */;
 
