@@ -46,43 +46,43 @@ let tasks=[
     // check and politics
     {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:part1s[0],target:['EXP','PATCH','once']},
     {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:part1s[2],target:['EXP','once']},
-    {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[0],target:['EXP','SFA','SFATime','super','once']},
+    {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[0],target:['EXP','SFA','super','once']},
 
     {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:part1s[1],target:['EXP','PATCH','once']},
     {n:[60],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:part1s[0],target:['EXP','once']},
-    {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[1],target:['EXP','SFA','SFATime','super','once']},
+    {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[1],target:['EXP','SFA','super','once']},
     
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:part1s[3],target:['EXP','PATCH','once']},
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:part1s[4],target:['EXP','once']},
-    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[3],target:['EXP','SFA','SFATime','super','once']},
+    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[3],target:['EXP','SFA','super','once']},
     
     {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:part1s[5],target:['EXP','PATCH','once']},
     {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:part1s[6],target:['EXP','once']},
-    {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[5],target:['EXP','SFA','SFATime','super','once']},
+    {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:part1s[5],target:['EXP','SFA','super','once']},
     
     // 60qubit SFA supremacy
     {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[5],target:['EXP','PATCH']},
     {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:part1s[6],target:['EXP','SFACutSearch']},
-    {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[5],target:['EXP','SFA','SFATime','super']},
+    {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[5],target:['EXP','SFA','super']},
     {n:[60],d:[18],p:'IIIIIJJJJKKKKLLLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','PEPSTime','super']},
 
 
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[3],target:['EXP','PATCH']},
     {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:part1s[4],target:['EXP','SFACutSearch']},
-    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[3],target:['EXP','SFA','SFATime','super']},
+    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[3],target:['EXP','SFA','super']},
     {n:[60],d:[16],p:'IIIIJJJJKKKKLLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','super']},
 
 
 
     {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[1],target:['EXP','PATCH']},
     {n:[60],d:[14],p:'IJKLKLIJIJKLIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:part1s[0],target:['EXP','SFACutSearch']},
-    {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[1],target:['EXP','SFA','SFATime','super']},
+    {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[1],target:['EXP','SFA','super']},
     {n:[60],d:[14],p:'IIIIJJJKKKLLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','super']},
 
     
     {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[0],target:['EXP','PATCH']},
     {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:part1s[2],target:['EXP','SFACutSearch']},
-    {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[0],target:['EXP','SFA','SFATime','super']},
+    {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:part1s[0],target:['EXP','SFA','super']},
     {n:[60],d:[12],p:'IIIJJJKKKLLL',s:'circuit/sycamore{n}_{d}_IJKL_ABCDlike.txt',target:['EXP','PEPS','super']},
 
     
@@ -90,20 +90,20 @@ let tasks=[
 
     {n:[66],d:[16],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',part1:part1s[7],target:['EXP','PATCH']},
     {n:[66],d:[16],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',part1:part1s[8],target:['EXP','SFACutSearch']},
-    {n:[66],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[7],target:['EXP','SFA','SFATime','super']},
+    {n:[66],d:[16],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[7],target:['EXP','SFA','super']},
     {n:[66],d:[16],p:'MMMMNNNNOOOOPPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super']},
 
 
     {n:[66],d:[14],p:'MNOPOPMNMNOPON',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',part1:part1s[9],target:['EXP','PATCH']},
     {n:[66],d:[14],p:'MNOPOPMNMNOPON',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',part1:part1s[10],target:['EXP','SFACutSearch']},
-    {n:[66],d:[14],p:'MNOPOPMNMNOPON',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[9],target:['EXP','SFA','SFATime','super']},
+    {n:[66],d:[14],p:'MNOPOPMNMNOPON',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[9],target:['EXP','SFA','super']},
     {n:[66],d:[14],p:'MMMNNNNOOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super']},
 
 
 
     {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',part1:part1s[11],target:['EXP','PATCH']},
     {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',part1:part1s[8],target:['EXP','SFACutSearch']},
-    {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[11],target:['EXP','SFA','SFATime','super']},
+    {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',e:'4layer',s:'circuit/sycamore{n}_{d}_MNOP_E4layer.txt',part1:part1s[11],target:['EXP','SFA','super']},
     {n:[66],d:[12],p:'MMMNNNOOOPPP',s:'circuit/sycamore{n}_{d}_MNOP_ABCDlike.txt',target:['EXP','PEPS','super']},
     {meta:3},
 
@@ -244,7 +244,18 @@ let tasks=[
 
     // {n:[53],d:[12,14],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']}, //very slow, cancel when not used
 
-    {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:[]},
+    
+    {n:[66],d:[12],p:'MNOPOPMNMNOPOPMN',e:'6layer',s:'circuit/sycamore{n}_{d}_MNOP_E6layer.txt',part1:part1s[11],target:['SFATime']},
+    {n:[66],d:[14],p:'MNOPOPMNMNOPON',e:'6layer',s:'circuit/sycamore{n}_{d}_MNOP_E6layer.txt',part1:part1s[9],target:['SFATime']},
+    {n:[66],d:[16],p:'MNOPOPMNMNOPOPMN',e:'6layer',s:'circuit/sycamore{n}_{d}_MNOP_E6layer.txt',part1:part1s[7],target:['SFATime']},
+    {n:[66],d:[18],tpl:'13',p:'IJKLKLIJIJKLKLIJKL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['SFATime']},
+
+    {n:[60],d:[12],p:'IJKLKLIJIJKLKLIJIL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',part1:part1s[0],target:['SFATime']},
+    {n:[60],d:[14],p:'IJKLKLIJIJKLIL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',part1:part1s[1],target:['SFATime']},
+    {n:[60],d:[16],p:'IJKLKLIJIJKLKLIJIL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',part1:part1s[3],target:['SFATime']},
+    {n:[60],d:[18],p:'IJKLKLIJIJKLKLIJIL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',part1:part1s[5],target:['SFATime']},
+    {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['SFATime']},
+
     {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',e:'8layer',s:'circuit/sycamore{n}_{d}_IJKL_E8layer.txt',target:[]},
 
     {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_1_fullcircuit.txt',target:[]},
