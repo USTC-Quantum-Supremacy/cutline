@@ -253,7 +253,7 @@ let tasks=[
     {n:[66],d:[20],tpl:'14',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_4_fullcircuit.txt',target:[]},
 
     // cal xeb when perfect
-    {n:[15,18,21,24,27,30,33,36],d:[10],p:'IJKLKLIJIJ',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E4layer.txt',target:['SA','xebcal','eseeds']},
+    {n:[15,18,21,24,27,30,33,36],d:[10],p:'IJKLKLIJIJ',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E6layer.txt',target:['SA','xebcal','eseeds']},
     // {n:[15,18,21,24,27,30,33,36],d:[8],p:'IJKLKLIJ',e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E4layer.txt',target:['SA','xebcal','eseeds']},
     // {n:[15,18,21,24,27,30,33,36],d:[8],p:'IJKLKLIJ',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_fullcircuit.txt',target:['SA','xebcal','eseeds']},
     // {n:[15,18,21,24,27,30,33,36],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_ABCDlike.txt',target:['SA','xebcal','eseeds']},
