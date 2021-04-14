@@ -244,6 +244,7 @@ let tasks=[
 
     // {n:[53],d:[12,14],tpl:'1',p:'IJKLKLIJ',s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']}, //very slow, cancel when not used
 
+    {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:[]},
     {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',e:'8layer',s:'circuit/sycamore{n}_{d}_IJKL_E8layer.txt',target:[]},
 
     {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',s:'circuit/sycamore{n}_{d}_IJKL_extra_1_fullcircuit.txt',target:[]},
