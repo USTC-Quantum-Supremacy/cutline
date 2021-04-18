@@ -7,10 +7,19 @@
  * 模仿 `StructDataClass.prototype.calCutLengthWithWedge` 和 `StructDataClass.prototype.processPathsResult` 新增函数作为接口  
  * 不会干扰已有函数的计算 (确信)
  * 
- * 目前仅仅复制了模板还没改
+ * 尚未验证
  */
 
-const {StructDataClass} = require('../main.js')
+// const {StructDataClass} = require('../main.js')
+
+var isNodejs = typeof document === "undefined"
+if (isNodejs) {
+    var cutlineMain = require('../main.js')
+} else {
+    var cutlineMain = exports
+}
+/** @type {import('../main.js').StructDataClass} */
+var StructDataClass = cutlineMain.StructDataClass
 
 StructDataClass.prototype.processPathsResultOfElided = function (params) {
     let circles = this.circles 
@@ -32,6 +41,10 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
     this.getPotentialWedgeList()
     this.getPotentialDCDList()
     let wedge={}
+    const elidedLayer = ~~this.elidedLayerForSearch
+    if (elidedLayer==0) {
+        throw 'elided 0, nothing to search'
+    }
     for (let pi = 0; pi < patterns.length; pi++) {
         const pattern = patterns[pi];
         let [pa,pb,pc,pd]=Array.from(pattern[1])
@@ -71,7 +84,16 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
         }
         // 
         let useds={0:{}}
-        for (let index = 0; index < depth; index++) {
+        
+        // build useds
+        let tplusedlayer={}
+        for (let ii = 0; ii < this.splitEdges.length; ii++) {
+            tplusedlayer[ii]=true
+        }
+        for (let index = 0; index < depth-elidedLayer; index++) {
+            useds[ii] = JSON.parse(JSON.stringify(tplusedlayer))
+        }
+        for (let index = Math.max(0,depth-elidedLayer); index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
             if (index==0) continue;
             let p0=i2p(index),p1=i2p(index-1)
@@ -118,3 +140,8 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
     this.wedge=wedge
     return this
 }
+
+function pageInjectPart(params) {
+    document.querySelector("#extra-elided-search > input[type=button]").remove()
+}
+

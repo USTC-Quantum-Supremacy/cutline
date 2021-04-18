@@ -74,9 +74,12 @@
         <br style="clear: both;">
         <div id="blocklyDiv" style="height: 550px; width: 1000px;float: left;"></div>
         <br style="clear: both;">
-        <details>
+        <details id='extra-base'>
         <summary>extra content</summary>
-        <div style="width: 100%;height: 80vh;">
+        <div id='extra-elided-search'>
+            <input type="button" value="load elided search" onclick="(function(){var s=document.createElement('script');s.src='one_shot_scripts/calCutLengthWithWedgeOfElided.js';s.onload=function(){pageInjectPart()};document.body.appendChild(s);})()">
+        </div>
+        <div id='extra-html-content' style="width: 100%;height: 80vh;">
             <iframe src="extra-content.html" frameborder="0" style="width: 100%;height: 100%;"></iframe>
         </div>
         </details>
