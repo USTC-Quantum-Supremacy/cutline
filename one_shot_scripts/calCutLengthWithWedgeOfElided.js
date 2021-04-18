@@ -7,7 +7,7 @@
  * 模仿 `StructDataClass.prototype.calCutLengthWithWedge` 和 `StructDataClass.prototype.processPathsResult` 新增函数作为接口  
  * 不会干扰已有函数的计算 (确信)
  * 
- * 尚未验证
+ * 尚未验证, 出现了似乎可信的计算结果
  */
 
 // const {StructDataClass} = require('../main.js')
@@ -91,7 +91,7 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
             tplusedlayer[ii]=true
         }
         for (let index = 0; index < depth-elidedLayer; index++) {
-            useds[ii] = JSON.parse(JSON.stringify(tplusedlayer))
+            useds[index] = JSON.parse(JSON.stringify(tplusedlayer))
         }
         for (let index = Math.max(0,depth-elidedLayer); index < depth; index++) {
             cut+=cutLengthOfPattern[i2p(index)]
@@ -144,7 +144,7 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
 function pageInjectPart(params) {
     document.querySelector("#extra-elided-search > input[type=button]").remove()
     document.querySelector("#extra-elided-search").insertAdjacentHTML('beforeend',String.raw/* html */`
-        <span>elided:</span>
+        <span>elided layer:</span>
         <input type="number" name="elided-number" id="elided-number" value=6>
         <input type="button" onclick="buildMainSVG();calculate_elided()" value="Calculate">
         <input type="button" onclick="buildMainSVG();submit_elided()" value="Search">
@@ -153,16 +153,55 @@ function pageInjectPart(params) {
 }
 
 function calculate_elided(params) {
-    console.log('not done now');
-
+    document.getElementById('postresult').innerHTML=''
+    sd.constructor.prototype.pathsSplit=[sd.removeList]
+    sd.circles=[['IJKLKLIJ','IJKL']]
+    reRenderResult_elided(20)
 }
 
 function submit_elided(params) {
-    console.log('not done now');
-    
+    document.getElementById('postresult').innerHTML='waiting'
+    document.getElementById('postresult').innerHTML=sd.searchPath()
+    sd.circles=[['IJKLKLIJ','IJKL']]
+    reRenderResult_elided(20)
 }
 
-function reRenderResult_elided(params) {
-    console.log('not done now');
+function reRenderResult_elided(shownumber) {
+    processPathsResult_page_elided()
+    processPathsResult_page_elided(null,shownumber,1)
+}
+
+function processPathsResult_page_elided(result,showall,target) {
+    /** @type {import('../main.js').StructDataClass} */
+    let sd=window.sd
     
+    target=target?'resultlist2':'resultlist'
+
+    if (showall) {
+        if (result==null) {
+            result=sd.pathsSplit
+        }
+        let list=[]
+        /** @type {import('./main.js').StructDataClass} */
+        let newins=new sd.constructor().import(sd.input,{part1:'[]'})
+        for (let index = 0; index < Math.min(showall,result.length); index++) {
+            const removeList = result[index];
+            list.push(newins.copyThis().setSplit(removeList))
+        }
+        let viewList=list.map(v=>new view.constructor().init().importData(v).generateBaseSVG().generateSVGCSS().generateSVG())
+        document.getElementById(target).innerHTML=viewList.map(v=>v.SVG).join('\n<br>\n')
+
+    } else {
+        sd.constructor.prototype.elidedLayerForSearch = document.querySelector("#elided-number").value
+        let output = sd.processPathsResultOfElided()
+        window.PathsResultOutput=output
+        window.ssd=output.instance
+        console.log(output)
+        let wedgestr='<br><br> maxofmin: <br>'+JSON.stringify(output.maxofmin)+'<br><br> all pattern: <br>'+JSON.stringify(output.min)+'<br>'
+        output.instance.calExpectation()
+        
+        let view1=new window.view.constructor().init().importData(output.instance).generateBaseSVG().generateSVGCSS().generateSVG()
+        
+        document.getElementById(target).innerHTML=view1.SVG+view1.getExpectation().expectation+wedgestr
+    }
 }
