@@ -143,5 +143,26 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
 
 function pageInjectPart(params) {
     document.querySelector("#extra-elided-search > input[type=button]").remove()
+    document.querySelector("#extra-elided-search").insertAdjacentHTML('beforeend',String.raw/* html */`
+        <span>elided:</span>
+        <input type="number" name="elided-number" id="elided-number" value=6>
+        <input type="button" onclick="buildMainSVG();calculate_elided()" value="Calculate">
+        <input type="button" onclick="buildMainSVG();submit_elided()" value="Search">
+        <input type="button" onclick="reRenderResult_elided(20)" value="ReRenderResult">
+    `)
 }
 
+function calculate_elided(params) {
+    console.log('not done now');
+
+}
+
+function submit_elided(params) {
+    console.log('not done now');
+    
+}
+
+function reRenderResult_elided(params) {
+    console.log('not done now');
+    
+}
