@@ -28,13 +28,13 @@
                 "xsize": "12",
                 "ysize": "11",
                 "use00": false,
-                "brokenBits": "[5,17,29,41,53,65]",
-                "part1": "[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,26,27,28,3,30,34,35,4,40,6,7,8,9,5,17,29]",
-                "depth": "18",
-                "searchPattern": "012323010123230103",
-                "errorRates": "[0.0016,0.0062,0.038]",
+                "brokenBits": "[5,17,29,53,65,41]",
+                "part1": "[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]",
+                "depth": "20",
+                "searchPattern": "01232301012323010123",
+                "errorRates": "[0.0016,0.008,0.038]",
                 "removedEntrances": "[]",
-                "balancedRange": 20,
+                "balancedRange": 6,
                 "search": "notprune",
                 "showMark": [
                     {
@@ -45,22 +45,22 @@
                     {
                         "type": "patternDefine",
                         "pattern": "I",
-                        "bitString": "0_0011100000"
+                        "bitString": "1_0111100000"
                     },
                     {
                         "type": "patternDefine",
                         "pattern": "J",
-                        "bitString": "0_1100011111"
+                        "bitString": "1_1000011111"
                     },
                     {
                         "type": "patternDefine",
                         "pattern": "K",
-                        "bitString": "1_0100011100"
+                        "bitString": "0_0000011110"
                     },
                     {
                         "type": "patternDefine",
                         "pattern": "L",
-                        "bitString": "1_1011100011"
+                        "bitString": "0_1111100001"
                     },
                     {
                         "type": "patternA",
@@ -88,11 +88,11 @@
                         "type": "generatingCircuit",
                         "qubitNumber": 60,
                         "elided": "",
-                        "pattern": "IJKLKLIJIJKLKLIJIL",
-                        "seed": 13874234,
+                        "pattern": "IJKLKLIJIJKLKLIJIJKL",
+                        "seed": "13874234",
                         "simulationFilename": "",
                         "auxiliaryFilename": "",
-                        "experimentFilename": "unknown now",
+                        "experimentFilename": "",
                         "order": [
                             {
                                 "type": "orderlist",
@@ -100,11 +100,11 @@
                             }
                         ],
                         "sfaCut": "-1",
-                        "pepsCut": "[]",
+                        "pepsCut": "[8,3,8,15,20,15,20,27]",
                         "pepsPath": [
                             {
                                 "type": "orderlist",
-                                "order": "[]"
+                                "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
                             }
                         ],
                         "gateArgs": [
@@ -123,12 +123,12 @@
                 "ysize": "11",
                 "use00": false,
                 "brokenBits": "[]",
-                "part1": "[0,1,12,13,14,18,19,2,20,21,24,25,26,3,30,31,32,33,36,37,38,42,43,44,48,49,54,55,6,60,7,8,9]",
-                "depth": "16",
-                "searchPattern": "0123230101232301",
-                "errorRates": "[0.0016,0.0062,0.038]",
+                "part1": "[0,1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,33,34,35,4,40,41,5,6,7,8,9]",
+                "depth": "20",
+                "searchPattern": "01232301012323010123",
+                "errorRates": "[0.0016,0.008,0.038]",
                 "removedEntrances": "[]",
-                "balancedRange": 14,
+                "balancedRange": 6,
                 "search": "notprune",
                 "showMark": [
                     {
@@ -139,22 +139,22 @@
                     {
                         "type": "patternDefine",
                         "pattern": "I",
-                        "bitString": "0_0000000000"
+                        "bitString": "0_0000001010"
                     },
                     {
                         "type": "patternDefine",
                         "pattern": "J",
-                        "bitString": "0_1111111111"
+                        "bitString": "0_1111110101"
                     },
                     {
                         "type": "patternDefine",
                         "pattern": "K",
-                        "bitString": "1_0000001100"
+                        "bitString": "1_0011000010"
                     },
                     {
                         "type": "patternDefine",
                         "pattern": "L",
-                        "bitString": "1_1111110011"
+                        "bitString": "1_1100111101"
                     },
                     {
                         "type": "patternA",
@@ -182,11 +182,11 @@
                         "type": "generatingCircuit",
                         "qubitNumber": 66,
                         "elided": "",
-                        "pattern": "IJKLKLIJ",
-                        "seed": 13874234,
+                        "pattern": "IJKLKLIJIJKLKLIJIJKL",
+                        "seed": "13874234",
                         "simulationFilename": "",
                         "auxiliaryFilename": "",
-                        "experimentFilename": "unknown now",
+                        "experimentFilename": "",
                         "order": [
                             {
                                 "type": "orderlist",
@@ -194,11 +194,11 @@
                             }
                         ],
                         "sfaCut": "-1",
-                        "pepsCut": "[]",
+                        "pepsCut": "[8,3,8,15,20,15,20,27]",
                         "pepsPath": [
                             {
                                 "type": "orderlist",
-                                "order": "[]"
+                                "order": "[30,24,31,36,42,43,18,19,37,25,44,20,32,48,49,12,13,50,38,14,26,45,21,33,51,39,15,27,54,55,6,7,56,57,8,9,58,46,10,22,34,52,40,16,28,60,61,0,1,62,63,2,3,64,59,4,11,47,23,35,53,41,17,29,65,5]"
                             }
                         ],
                         "gateArgs": [
