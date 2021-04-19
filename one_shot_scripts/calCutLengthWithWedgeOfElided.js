@@ -128,6 +128,8 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
                 end++
             }
         }
+        start=0
+        end=0
         wedge[pattern[0]]={
             length:cut-cwedge-DCD-start/2-end/2,
             cut:cut,
@@ -148,7 +150,7 @@ function pageInjectPart(params) {
         <input type="number" name="elided-number" id="elided-number" value=6>
         <input type="button" onclick="buildMainSVG();calculate_elided()" value="Calculate">
         <input type="button" onclick="buildMainSVG();submit_elided()" value="Search">
-        <input type="button" onclick="reRenderResult_elided(20)" value="ReRenderResult">
+        <span> (start end 被强制设为0)</span>
     `)
 }
 
