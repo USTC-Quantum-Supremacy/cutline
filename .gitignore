@@ -18,6 +18,7 @@ output/*.log
 output/*.json
 output/*.xlsx
 output/*.zip
+output/.~lock*
 pushall.cmd
 __pycache__
 downloadCircuits.cmd
