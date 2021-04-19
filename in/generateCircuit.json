@@ -5,7 +5,7 @@
     "ysize": "11",
     "use00": false,
     "brokenBits": "[]",
-    "part1": "[0,1,10,11,12,13,14,15,16,17,18,19,2,20,21,22,23,24,26,27,28,29,3,30,34,35,4,40,5,6,7,8,9]",
+    "part1": "[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]",
     "depth": "20",
     "searchPattern": "01232301",
     "errorRates": "[0.0016,0.008,0.038]",
@@ -21,42 +21,42 @@
         {
             "type": "patternDefine",
             "pattern": "I",
-            "bitString": "0_0011100000"
+            "bitString": "1_0111100000"
         },
         {
             "type": "patternDefine",
             "pattern": "J",
-            "bitString": "0_1100011111"
+            "bitString": "1_1000011111"
         },
         {
             "type": "patternDefine",
             "pattern": "K",
-            "bitString": "1_0100011100"
+            "bitString": "0_0000011110"
         },
         {
             "type": "patternDefine",
             "pattern": "L",
-            "bitString": "1_1011100011"
+            "bitString": "0_1111100001"
         },
         {
             "type": "patternDefine",
             "pattern": "M",
-            "bitString": "0_0000000000"
+            "bitString": "0_0000001010"
         },
         {
             "type": "patternDefine",
             "pattern": "N",
-            "bitString": "0_1111111111"
+            "bitString": "0_1111110101"
         },
         {
             "type": "patternDefine",
             "pattern": "O",
-            "bitString": "1_0000001100"
+            "bitString": "1_0011000010"
         },
         {
             "type": "patternDefine",
             "pattern": "P",
-            "bitString": "1_1111110011"
+            "bitString": "1_1100111101"
         },
         {
             "type": "patternA",
