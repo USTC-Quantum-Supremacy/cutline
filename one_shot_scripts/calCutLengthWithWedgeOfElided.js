@@ -76,10 +76,11 @@ StructDataClass.prototype._calCutLengthWithWedgeOfElided = function (pf,patterns
             return false
         }
         let toCheckDCD=(p0,p1,p2)=>{
-            if (p0!==p2) return false;
-            if ({pa:'pb',pb:'pa',pc:'pd',pd:'pc'}[p0]===p1) {
-                return true;
-            }
+            // // give up dcd
+            // if (p0!==p2) return false;
+            // if ({pa:'pb',pb:'pa',pc:'pd',pd:'pc'}[p0]===p1) {
+            //     return true;
+            // }
             return false
         }
         // 
@@ -150,7 +151,7 @@ function pageInjectPart(params) {
         <input type="number" name="elided-number" id="elided-number" value=6>
         <input type="button" onclick="buildMainSVG();calculate_elided()" value="Calculate">
         <input type="button" onclick="buildMainSVG();submit_elided()" value="Search">
-        <span> (start end 被强制设为0)</span>
+        <span> (start end 被强制设为0, 忽略dcd)</span>
     `)
 }
 
