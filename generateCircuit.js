@@ -37,8 +37,8 @@ let mp = (ps,ns)=>Array.from(ns).map(v=>ps[v]).join('')
 let tasks=[
     {meta:1},
     // Verification
-    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','once']},
-    {n:[54,60,66],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51],d:[10],p:mp('IJKL','0123230101'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','PEPS','PEPSTime','once']},
+    {n:[54,60,66],d:[10],p:mp('IJKL','0123230101'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
     {n:[54,60,66],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
     {n:[66],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
