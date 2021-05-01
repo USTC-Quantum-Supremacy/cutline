@@ -43,7 +43,6 @@ let tasks=[
     {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SA','once']},
     {n:[36,39],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
     {n:[42,45,48,51,54,60,66],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[66],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH','once']},
     {meta:2},
     // check and politics
@@ -113,13 +112,11 @@ let tasks=[
 
     {meta:3},
     // Check
-    {n:[66],d:[8],tpl:'5',p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_CheckARun.txt',target:['EXP','Check','A_Run','PATCH','once']},
-    {n:[33],d:[8],tpl:'6',p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_CheckAP1.txt',target:['Check','A_P1','SA']},
-    {n:[33],d:[8],tpl:'7',p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_CheckAP2.txt',target:['Check','A_P2','SA']},
-    {n:[66],d:[8],tpl:'8',p:mp('MNOP','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_CheckBRun.txt',target:['EXP','Check','B_Run','PATCH','once']},
-    // it takes 187.725920228 seconds...
-    {n:[33],d:[8],tpl:'9',p:mp('MNOP','01232301'),s:'circuit/sycamore{n}_{d}_MNOP_CheckBP1.txt',target:['Check','B_P1','SA']},
-    {n:[33],d:[8],tpl:'10',p:mp('MNOP','01232301'),s:'circuit/sycamore{n}_{d}_MNOP_CheckBP2.txt',target:['Check','B_P2','SA']},
+
+    {n:[60],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_CheckARun.txt',part1:'[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]',target:['EXP','Check','A_Run','PATCH','once']},
+
+    {n:[66],d:[10],p:mp('MNOP','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_CheckBRun.txt',part1:'[0,1,2,6,7,8,12,13,14,18,19,20,24,25,26,30,31,32,36,37,38,42,43,44,48,49,50,54,55,56,60,61,62]',target:['EXP','Check','B_Run','PATCH','once']},
+
 
     // Auxliary
     {n:[60],d:[4,6],p:'IJKLKLIJIJKLKLIJIL',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['PEPS']},
@@ -138,8 +135,6 @@ let tasks=[
 
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:'IJKLKLIJIJ',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_PYPEPSTime.txt',target:['PYPEPSTime']},
     {n:[66],d:[10],p:'MNOPOPMNMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit_PYPEPSTime.txt',target:['PYPEPSTime']},
-
-    {n:[60],d:[20],tpl:'11',p:'IJKLKLIJIJKLKLIJIJKL',e:'8layer',s:'circuit/sycamore{n}_{d}_IJKL_E8layer.txt',target:[]},
 
     // cal xeb when perfect
     {n:[15,18,21,24,27,30,33,36],d:[10],p:'IJKLKLIJIJ',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E6layer.txt',target:['SA','xebcal','eseeds']},
