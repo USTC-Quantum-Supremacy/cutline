@@ -43,6 +43,7 @@ let tasks=[
     {n:[15,18,21,24,27,30,33],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
     {n:[36,39],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
     {n:[42,45,48,51,54,60,66],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[15,16,17],d:[12,14,16,18,20,22,24,26,28,30],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:mp('MNOP','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','PATCH','once']},
     {meta:2},
     // check and politics
