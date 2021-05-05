@@ -1,3 +1,9 @@
+
+/*
+ * 12 10 use00
+ * 11 11 use00
+ */
+
 const {StructDataClass} = require('./main.js')
 
 const {execSync} = require('child_process')
@@ -12,7 +18,7 @@ let tasks=JSON.parse(fs.readFileSync('in/tasks.json',{encoding:'utf-8'}))
 
 let renderTaskInput=(task)=>{
     let input= JSON.parse(JSON.stringify(inputTPL))
-    let {xsize,balancedRange,searchPattern,screenName}=task
+    let {xsize,ysize,balancedRange,searchPattern,screenName}=task
 
     input.generatingCircuit[0].pattern=Array.from(searchPattern).map(v=>('IJKL')[v]).join('')
     input.depth=searchPattern.length+''
@@ -20,6 +26,7 @@ let renderTaskInput=(task)=>{
     input.balancedRange=balancedRange
     input.searchPattern=searchPattern
     input.xsize=xsize
+    input.ysize=ysize
     return input
 }
 
@@ -28,7 +35,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 let dotask = async (tasks)=>{
     for (const task of tasks) {
         let input= renderTaskInput(task)
-        let {xsize,balancedRange,searchPattern,screenName}=task
+        let {xsize,ysize,balancedRange,searchPattern,screenName}=task
         //
         console.log(JSON.stringify(task))
         if (task.giveup) continue;
@@ -41,7 +48,7 @@ let dotask = async (tasks)=>{
 let giveuptask = async (tasks)=>{
     for (const task of tasks) {
         let input= renderTaskInput(task)
-        let {xsize,balancedRange,searchPattern,screenName}=task
+        let {xsize,ysize,balancedRange,searchPattern,screenName}=task
         //
         execSync(`screen -S ${screenName} -X quit`)
         await delay(10)
@@ -59,7 +66,7 @@ let parsetask = async (tasks)=>{
     // tasks result
     for (const task of tasks) {
         let input= renderTaskInput(task)
-        let {xsize,balancedRange,searchPattern,screenName}=task
+        let {xsize,ysize,balancedRange,searchPattern,screenName}=task
         //
         let log;
         try {
@@ -69,7 +76,7 @@ let parsetask = async (tasks)=>{
             continue
         }
         let line = [screenName,'running']
-        line.push(xsize==='11'?60:66,balancedRange,searchPattern.length,searchPattern)
+        line.push(xsize==='11'?61:60,balancedRange,searchPattern.length,searchPattern)
 
         let content=log.split(/\d+ of \d+/).slice(-1)[0].trim().replace(/..\d+m/g,'')
         if (!content) {
@@ -139,7 +146,7 @@ let analysistask = async (tasks)=>{
             for (const ti of target) {
                 let task = tasks[ti-1]
                 let input= renderTaskInput(task)
-                let {xsize,balancedRange,searchPattern,screenName}=task
+                let {xsize,ysize,balancedRange,searchPattern,screenName}=task
                 p.forEach((v,i)=>input.showPattern[i].bitString=v)
                 let sd=new StructDataClass().import(input);
                 sd.circles=[['patternName','IJKL']]

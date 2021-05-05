@@ -2,7 +2,7 @@
     "type": "prog",
     "xsize": "11",
     "ysize": "11",
-    "use00": false,
+    "use00": true,
     "brokenBits": "[]",
     "part1": "[]",
     "depth": "16",
