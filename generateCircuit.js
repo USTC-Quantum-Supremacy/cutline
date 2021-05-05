@@ -43,8 +43,9 @@ let tasks=[
     {n:[15,18,21,24,27,30,33],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
     {n:[36,39],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
     {n:[42,45,48,51,54,60,66],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[15,16,17],d:[12,14,16,18,20,22,24,26,28,30],p:mp('MNOP','01232301'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:mp('MNOP','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','PATCH','once']},
+    {n:[15,16,17],d:[12,14,16,18,20,22,24,26,28,30],p:mp('MNOP','01232301'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','SA','once']},
+    {n:[15,16,17,18,19,20],d:[10,12,14,16],tpl:'2',p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_from_middle.txt',target:['EXP','SA','once']},
     {meta:2},
     // check and politics
     {n:[60],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH','once']},
