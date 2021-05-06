@@ -9,7 +9,7 @@
     "searchPattern": "01232301012323010123",
     "errorRates": "[0.0016,0.0062,0.038]",
     "removedEntrances": "[]",
-    "balancedRange": 14,
+    "balancedRange": 20,
     "search": "notprune",
     "showMark": [
         {

@@ -3,7 +3,7 @@
     "xsize": "11",
     "ysize": "11",
     "use00": true,
-    "brokenBits": "[]",
+    "brokenBits": "[0,5,22,55,60]",
     "part1": "[]",
     "depth": "16",
     "searchPattern": "012323010123230121",
@@ -88,9 +88,6 @@
                     "unknow": "[0.5,0.1666666667,0,0,0]"
                 }
             ]
-        },
-        {
-            "type": "generatingCircuitNone"
         }
     ]
 }

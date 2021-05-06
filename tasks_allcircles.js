@@ -2,6 +2,8 @@
 /*
  * 12 10 use00
  * 11 11 use00
+ * 01232301012323010123
+ * 20 21 02 03 12 13
  */
 
 const {StructDataClass} = require('./main.js')
@@ -30,7 +32,7 @@ let renderTaskInput=(task)=>{
     return input
 }
 
-const delay = ms => new Promise(res => setTimeout(res, ms+1000));
+const delay = ms => new Promise(res => setTimeout(res, ms+1));
 
 let dotask = async (tasks)=>{
     for (const task of tasks) {
@@ -51,7 +53,11 @@ let giveuptask = async (tasks)=>{
         let {xsize,ysize,balancedRange,searchPattern,screenName}=task
         if (task.giveup) continue;
         //
-        execSync(`screen -S ${screenName} -X quit`)
+        try {
+            execSync(`screen -S ${screenName} -X quit`)
+        } catch (error) {
+            console.log(screenName,error)
+        }
         await delay(10)
     }
 }
