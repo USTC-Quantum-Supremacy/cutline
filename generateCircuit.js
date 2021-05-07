@@ -39,53 +39,64 @@ let tasks=[
     // Verification
     {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','SA','once']},
     {n:[36,39],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','once']},
-    {n:[42,45,48,51,54,60,66],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[61,66],d:[10],p:mp('MNOP','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_MNOP_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
     {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SA','once']},
     {n:[36,39],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','once']},
-    {n:[42,45,48,51,54,60,66],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH','once']},
+    {n:[42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[61,66],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH','once']},
+    {n:[61,66],d:[10],p:mp('MNOP','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','PATCH','once']},
     {meta:2},
-    // check and politics
-    {n:[60],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH','once']},
-    {n:[60],d:[12],p:mp('IJKL','012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','once']},
-    {n:[60],d:[12],p:mp('IJKL','012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
+    // politics
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','PATCH','once']},
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','SFACutSearch','TNCTime','once']},
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
     
-    {n:[60],d:[14],p:mp('IJKL','01232301012303'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,54,6,7,8,9]',target:['EXP','PATCH','once']},
-    {n:[60],d:[14],p:mp('IJKL','01232301012303'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','once']},
-    {n:[60],d:[14],p:mp('IJKL','01232301012303'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,54,6,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
+    {n:[56],d:[14],p:mp('IJKL','01232301012320'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','PATCH','once']},
+    {n:[56],d:[14],p:mp('IJKL','01232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,4,7,8,9]',target:['EXP','SFACutSearch','TNCTime','once']},
+    {n:[56],d:[14],p:mp('IJKL','01232301012320'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
 
-    {n:[60],d:[16],p:mp('IJKL','0123230101232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,25,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH','once']},
-    {n:[60],d:[16],p:mp('IJKL','0123230101232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,25,26,27,3,30,31,32,33,36,4,6,7,8,9]',target:['EXP','once']},
-    {n:[60],d:[16],p:mp('IJKL','0123230101232301'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,25,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
+    {n:[56],d:[16],p:mp('IJKL','0123230101232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,12,13,19,25,31,32,36,37,38,43,44,45,48,49,50,51,55,56,57,58,59,61,62,63,64,7,8]',target:['EXP','PATCH','once']},
+    {n:[56],d:[16],p:mp('IJKL','0123230101232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,33,34,39,4,7,8,9]',target:['EXP','SFACutSearch','TNCTime','once']},
+    {n:[56],d:[16],p:mp('IJKL','0123230101232301'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[1,12,13,19,25,31,32,36,37,38,43,44,45,48,49,50,51,55,56,57,58,59,61,62,63,64,7,8]',target:['EXP','SFA','SFATime','super','once']},
 
-    {n:[60],d:[18],p:mp('IJKL','012323010123230103'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[0,1,10,11,13,14,15,16,2,20,21,22,23,26,27,28,3,33,34,35,39,4,40,46,47,52,59,7,8,9]',target:['EXP','PATCH','once']},
-    {n:[60],d:[18],p:mp('IJKL','012323010123230103'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','once']},
-    {n:[60],d:[18],p:mp('IJKL','012323010123230103'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[0,1,10,11,13,14,15,16,2,20,21,22,23,26,27,28,3,33,34,35,39,4,40,46,47,52,59,7,8,9]',target:['EXP','SFA','SFATime','once']},
+    {n:[56],d:[18],p:mp('IJKL','012323010123230103'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,10,11,14,15,16,17,2,21,22,23,27,28,29,3,34,35,4,40,41,46,47,52,53,59,7,8,9]',target:['EXP','PATCH','once']},
+    {n:[56],d:[18],p:mp('IJKL','012323010123230103'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,35,38,39,4,40,46,7,8,9]',target:['EXP','SFACutSearch','TNCTime','once']},
+    {n:[56],d:[18],p:mp('IJKL','012323010123230103'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[1,10,11,14,15,16,17,2,21,22,23,27,28,29,3,34,35,4,40,41,46,47,52,53,59,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
 
-    {n:[60],d:[20],p:mp('IJKL','01232301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH','once']},
-    {n:[60],d:[20],p:mp('IJKL','01232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','once']},
-    {n:[60],d:[20],p:mp('IJKL','01232301012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','PATCH','once']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,35,38,39,4,40,7,8,9]',target:['EXP','SFACutSearch','TNCTime','once']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
+
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','PATCH','once']},
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,4,7,8,9]',target:['EXP','SFACutSearch','TNCTime','once']},
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','SFA','SFATime','super','once']},
+
+    // 56qubit SFA supremacy
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','PATCH']},
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','SFA','SFATime','super']},
     
-    // 60qubit SFA supremacy
-    {n:[60],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH']},
-    {n:[60],d:[12],p:mp('IJKL','012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
-    {n:[60],d:[12],p:mp('IJKL','012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFA','SFATime','super']},
-    
-    {n:[60],d:[14],p:mp('IJKL','01232301012303'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,54,6,7,8,9]',target:['EXP','PATCH']},
-    {n:[60],d:[14],p:mp('IJKL','01232301012303'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
-    {n:[60],d:[14],p:mp('IJKL','01232301012303'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,54,6,7,8,9]',target:['EXP','SFA','SFATime','super']},
+    {n:[56],d:[14],p:mp('IJKL','01232301012320'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','PATCH']},
+    {n:[56],d:[14],p:mp('IJKL','01232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,4,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[56],d:[14],p:mp('IJKL','01232301012320'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','SFA','SFATime','super']},
 
-    {n:[60],d:[16],p:mp('IJKL','0123230101232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,25,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH']},
-    {n:[60],d:[16],p:mp('IJKL','0123230101232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,25,26,27,3,30,31,32,33,36,4,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
-    {n:[60],d:[16],p:mp('IJKL','0123230101232301'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,25,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFA','SFATime','super']},
+    {n:[56],d:[16],p:mp('IJKL','0123230101232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[1,12,13,19,25,31,32,36,37,38,43,44,45,48,49,50,51,55,56,57,58,59,61,62,63,64,7,8]',target:['EXP','PATCH']},
+    {n:[56],d:[16],p:mp('IJKL','0123230101232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,33,34,39,4,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[56],d:[16],p:mp('IJKL','0123230101232301'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[1,12,13,19,25,31,32,36,37,38,43,44,45,48,49,50,51,55,56,57,58,59,61,62,63,64,7,8]',target:['EXP','SFA','SFATime','super']},
 
-    {n:[60],d:[18],p:mp('IJKL','012323010123230103'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[0,1,10,11,13,14,15,16,2,20,21,22,23,26,27,28,3,33,34,35,39,4,40,46,47,52,59,7,8,9]',target:['EXP','PATCH']},
-    {n:[60],d:[18],p:mp('IJKL','012323010123230103'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,24,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
-    {n:[60],d:[18],p:mp('IJKL','012323010123230103'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[0,1,10,11,13,14,15,16,2,20,21,22,23,26,27,28,3,33,34,35,39,4,40,46,47,52,59,7,8,9]',target:['EXP','SFA','SFATime']},
+    {n:[56],d:[18],p:mp('IJKL','012323010123230103'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[1,10,11,14,15,16,17,2,21,22,23,27,28,29,3,34,35,4,40,41,46,47,52,53,59,7,8,9]',target:['EXP','PATCH']},
+    {n:[56],d:[18],p:mp('IJKL','012323010123230103'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,35,38,39,4,40,46,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[56],d:[18],p:mp('IJKL','012323010123230103'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[1,10,11,14,15,16,17,2,21,22,23,27,28,29,3,34,35,4,40,41,46,47,52,53,59,7,8,9]',target:['EXP','SFA','SFATime','super']},
 
-    {n:[60],d:[20],p:mp('IJKL','01232301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','PATCH']},
-    {n:[60],d:[20],p:mp('IJKL','01232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
-    {n:[60],d:[20],p:mp('IJKL','01232301012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[0,1,10,11,12,13,14,15,16,18,19,2,20,21,22,23,25,26,27,28,3,34,35,4,40,47,6,7,8,9]',target:['EXP','SFA','SFATime','super']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','PATCH']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,35,38,39,4,40,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','SFA','SFATime','super']},
+
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','PATCH']},
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,4,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,3,31,32,33,36,4,7,8,9]',target:['EXP','SFA','SFATime','super']},
 
     // 66qubit SFA supremacy
     // {n:[66],d:[12],p:mp('MNOP','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',part1:'[0,1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,25,26,27,28,29,3,32,33,34,35,4,41,5,6,7,8,9]',target:['EXP','PATCH','once']},
@@ -110,6 +121,8 @@ let tasks=[
 
     // elided - length: 9,5,9,5,9  ,  8,8,8,4,8
 
+    {n:[15,18,21,24,27,30,33],d:[10],tpl:'2',p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_start_from_right.txt',target:['EXP','SA','once']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],tpl:'2',p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_start_from_right.txt',target:['EXP','PATCH','once']},
     {meta:3},
     // Check
 
