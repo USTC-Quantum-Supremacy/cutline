@@ -121,6 +121,7 @@ let tasks=[
 
     // elided - length: 9,5,9,5,9  ,  8,8,8,4,8
 
+    {n:[15,21,30],d:[6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_fordepthdebug.txt',target:['EXP','SA','once']},
     {n:[15,18,21,24,27,30,33],d:[10],tpl:'2',p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_start_from_right.txt',target:['EXP','SA','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],tpl:'2',p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_start_from_right.txt',target:['EXP','PATCH','once']},
     {meta:3},
