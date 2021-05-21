@@ -214,6 +214,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
                 input.generatingCircuit[0].pepsCut=r(t.pc)||JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
                 input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
+                if (t.order)input.generatingCircuit[0].order[0].order=t.order
                 let rr=s=>r(s).split('.txt').join((seedi===0?'':'.s'+seedi)+'.txt')
                 input.generatingCircuit[0].simulationFilename=rr(t.s)
                 if(t.target.indexOf('EXP')!==-1)input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
