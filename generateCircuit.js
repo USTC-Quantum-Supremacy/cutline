@@ -124,6 +124,11 @@ let tasks=[
     {n:[15,21,30],d:[6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_fordepthdebug.txt',target:['EXP','SA','once']},
     {n:[15,18,21,24,27,30,33],d:[10],tpl:'2',p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_start_from_right.txt',target:['EXP','SA','once']},
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],tpl:'2',p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_start_from_right.txt',target:['EXP','PATCH','once']},
+    // [...Array(66)].map((v,i)=>i).filter(v=>a.indexOf(v)==-1).join(',')
+    {n:[16],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p1.txt',order:'[1,2,7,8,9,12,13,14,19,20,21,25,26,31,32,33,0,3,4,5,6,10,11,15,16,17,18,22,23,24,27,28,29,30,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65]',part1:'[1,2,7,8,9,12,13,14,19,20]',target:['EXP','SA','once']},
+    {n:[17],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p2.txt',order:'[3,4,9,10,11,15,16,17,21,22,23,27,28,29,33,34,35,0,1,2,5,6,7,8,12,13,14,18,19,20,24,25,26,30,31,32,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65]',part1:'[3,4,9,10,11,15,16,17,21]',target:['EXP','SA','once']},
+    {n:[17],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p3.txt',order:'[31,32,33,36,37,38,43,44,45,48,49,50,55,56,57,61,62,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,34,35,39,40,41,42,46,47,51,52,53,54,58,59,60,63,64,65]',part1:'[31,32,33,36,37,38,43,44,45]',target:['EXP','SA','once']},
+    {n:[17],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p4.txt',order:'[33,34,35,39,40,41,45,46,47,51,52,53,57,58,59,63,64,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,36,37,38,42,43,44,48,49,50,54,55,56,60,61,62,65]',part1:'[33,34,35,39,40,41,45,46,47]',target:['EXP','SA','once']},
     {meta:3},
     // Check
 
@@ -215,6 +220,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
                 input.generatingCircuit[0].pepsCut=r(t.pc)||JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
                 input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
+                if (t.order)input.generatingCircuit[0].order[0].order=t.order
                 let rr=s=>r(s).split('.txt').join((seedi===0?'':'.s'+seedi)+'.txt')
                 input.generatingCircuit[0].simulationFilename=rr(t.s)
                 if(t.target.indexOf('EXP')!==-1)input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
