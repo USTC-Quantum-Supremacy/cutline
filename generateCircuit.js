@@ -110,6 +110,17 @@ let tasks=[
 
     // elided - length: 9,5,9,5,9  ,  8,8,8,4,8
 
+    // [...Array(66)].map((v,i)=>i).filter(v=>a.indexOf(v)==-1).join(',')
+    {n:[18],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p1.txt',order:'[0,1,2,6,7,8,12,13,14,18,19,20,24,25,26,30,31,32,3,4,5,9,10,11,15,16,17,21,22,23,27,28,29,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65]',part1:'[0,1,2,6,7,8,12,13,14,18,19]',target:['EXP','SA','once']},
+    {n:[18],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p2.txt',order:'[2,3,4,9,10,11,14,15,16,21,22,23,26,27,28,33,34,35,0,1,5,6,7,8,12,13,17,18,19,20,24,25,29,30,31,32,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65]',part1:'[2,3,4,9,10,11,14,15,16]',target:['EXP','SA','once']},
+    {n:[18],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p3.txt',order:'[30,31,32,36,37,38,42,43,44,48,49,50,54,55,56,60,61,62,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,33,34,35,39,40,41,45,46,47,51,52,53,57,58,59,63,64,65]',part1:'[30,31,32,36,37,38,42]',target:['EXP','SA','once']},
+    {n:[18],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_reargs_p4.txt',order:'[33,34,35,38,39,40,45,46,47,50,51,52,57,58,59,62,63,64,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,36,37,41,42,43,44,48,49,53,54,55,56,60,61,65]',part1:'[33,34,35,38,39,40,45,46]',target:['EXP','SA','once']},
+
+    {n:[60],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p1.txt',part1:'[0,1,2,6,7,8,12,13,14,18,19,20,24,25,26,30,31,32]',target:['EXP','PATCH','once']},
+    {n:[60],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p2.txt',part1:'[2,3,4,9,10,11,14,15,16,21,22,23,26,27,28,33,34,35]',target:['EXP','PATCH','once']},
+    {n:[60],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p3.txt',part1:'[30,31,32,36,37,38,42,43,44,48,49,50,54,55,56,60,61,62]',target:['EXP','PATCH','once']},
+    {n:[60],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p4.txt',part1:'[33,34,35,38,39,40,45,46,47,50,51,52,57,58,59,62,63,64]',target:['EXP','PATCH','once']},
+
     {meta:3},
     // Check
 
@@ -201,6 +212,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'
                 input.generatingCircuit[0].pepsCut=r(t.pc)||JSON.stringify((peps[n]||peps[0]).c||peps[0].c)
                 input.generatingCircuit[0].pepsPath[0].order=JSON.stringify((peps[n]||peps[0]).p||peps[0].p)
+                if (t.order)input.generatingCircuit[0].order[0].order=t.order
                 let rr=s=>r(s).split('.txt').join((seedi===0?'':'.s'+seedi)+'.txt')
                 input.generatingCircuit[0].simulationFilename=rr(t.s)
                 if(t.target.indexOf('EXP')!==-1)input.generatingCircuit[0].experimentFilename=rr(t.s)+'.qcis'
