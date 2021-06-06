@@ -189,6 +189,12 @@ let tasks=[
     // {n:[15,18,21,24,27,30,33,36],d:[8],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_xebcal_fullcircuit.txt',target:['SA','xebcal','eseeds']},
     // {n:[15,18,21,24,27,30,33,36],d:[8],p:'IIJJKKLL',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_ABCDlike.txt',target:['SA','xebcal','eseeds']},
 
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer_scaltime.txt',target:['SFA','scaltime']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'5layer',s:'circuit/sycamore{n}_{d}_IJKL_E5layer_scaltime.txt',target:['SFA','scaltime']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_scaltime.txt',target:['SFA','scaltime']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'7layer',s:'circuit/sycamore{n}_{d}_IJKL_E7layer_scaltime.txt',target:['SFA','scaltime']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'8layer',s:'circuit/sycamore{n}_{d}_IJKL_E8layer_scaltime.txt',target:['SFA','scaltime']},
+
     // removed out exp
     {n:[15],d:[8],p:mp('IJKL','01232301'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:['PEPS']},
     {n:[18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[8],p:mp('IJKL','01232301'),e:'4layer',s:'circuit/sycamore{n}_{d}_IJKL_E4layer.txt',target:[]},
