@@ -99,6 +99,8 @@ let tasks=[
     {n:[58],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p3.txt',part1:'[30,31,32,36,37,38,42,43,44,48,49,50,54,55,56,60,61,62]',target:['EXP','PATCH','once']},
     {n:[58],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p4.txt',part1:'[33,34,35,38,39,40,45,46,47,50,51,52,57,58,59,62,63,64]',target:['EXP','PATCH','once']},
 
+    {n:[15,21,30],d:[6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_fordepthtest.txt',target:['EXP','SA','once']},
+
     {meta:3},
     // Check
 
