@@ -164,7 +164,7 @@ let tasks=[
     
     {n:[56],d:[14],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH']},
     {n:[56],d:[14],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime']},
-    {n:[56],d:[14],p:mp('IJKL','01232301'),e:'11',s:'circuit/sycamore{n}_{d}_IJKL_E11gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
+    {n:[56],d:[14],p:mp('IJKL','01232301'),e:'12',s:'circuit/sycamore{n}_{d}_IJKL_E11gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
 
     {n:[56],d:[16],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH']},
     {n:[56],d:[16],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime']},
