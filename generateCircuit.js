@@ -176,8 +176,9 @@ let tasks=[
     {n:[56],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime']},
     {n:[56],d:[20],p:mp('IJKL','01232301'),e:'12',s:'circuit/sycamore{n}_{d}_IJKL_E11gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
 
-    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','SA','once']},
-    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','SA','once']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','SA']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','SA']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
     
     {meta:3},
     // Check
