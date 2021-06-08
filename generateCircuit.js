@@ -37,14 +37,14 @@ let mp = (ps,ns)=>Array.from(ns).map(v=>ps[v]).join('')
 let tasks=[
     {meta:1},
     // Verification
-    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','SA','once']},
-    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[61,66],d:[10],p:mp('MNOP','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_MNOP_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SA','once']},
-    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[61,66],d:[10],p:mp('MNOP','0123230101'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
-    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH','once']},
-    {n:[61,66],d:[10],p:mp('MNOP','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','PATCH','once']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','SA','once']},
+    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[61,66],d:[10],p:mp('MNOP','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_MNOP_E6layer.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SA','once']},
+    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[61,66],d:[10],p:mp('MNOP','2323010123'),s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit.txt',target:['EXP','PEPS','PEPSTime','super','once']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH','once']},
+    {n:[61,66],d:[10],p:mp('MNOP','2323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_MNOP_E0layer.txt',target:['EXP','PATCH','once']},
     {meta:2},
     // politics
     {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_politics.txt',part1:'[1,10,11,12,13,14,15,16,17,19,2,20,21,22,23,26,27,28,29,3,33,34,35,4,41,7,8,9]',target:['EXP','PATCH','once']},
