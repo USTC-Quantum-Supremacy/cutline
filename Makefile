@@ -41,3 +41,13 @@ output/circuits_xlsx.json: calculateCountOfCircuit.js output/circuits.json
 	cp output/circuits_xlsx.json ../MeteorCircuit/
 	cp output/circuits.xlsx ../MeteorCircuit/
 	7z a circuit.zip ../MeteorCircuit
+
+.PHONT:counterorder
+counterorder:
+	node generateCircuit.js
+	node generateCircuit.js counterorder
+	node calculateCountOfCircuit.js
+	python3 convertToXlsx.py output/circuits_xlsx.json
+	cp output/circuits_xlsx.json ../MeteorCircuit/
+	cp output/circuits.xlsx ../MeteorCircuit/
+	7z a circuit.zip ../MeteorCircuit

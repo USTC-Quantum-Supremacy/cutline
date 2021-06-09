@@ -1,10 +1,14 @@
 // node generateCircuit.js
-
+let counterorder = false // give up order when using this flag but use same makefile process
 // node jsfile a1
 let withOrder=false
 let pepsOrder=[]
 if (process.argv[2]==='order') {
     withOrder=true
+}
+if (process.argv[2]==='counterorder') {
+    withOrder=true
+    counterorder = true // give up order when using this flag but use same makefile process
 }
 
 const {StructDataClass,seeds} = require('./main.js')
@@ -12,7 +16,7 @@ const fs = require('fs')
 
 let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
 let pepsCut=JSON.parse(fs.readFileSync('in/pepsCut.json',{encoding:'utf-8'}))
-if(withOrder)pepsOrder=JSON.parse(fs.readFileSync('output/orders_peps.json',{encoding:'utf-8'}));
+if(withOrder && !counterorder)pepsOrder=JSON.parse(fs.readFileSync('output/orders_peps.json',{encoding:'utf-8'}));
 
 const part1s=[
     '[0,1,10,11,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,6,7,8,9]', // 0
@@ -176,15 +180,18 @@ let tasks=[
     {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime']},
     {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'12',s:'circuit/sycamore{n}_{d}_IJKL_E11gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
 
-    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','SA']},
-    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','0123230101'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','SA']},
-    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','0123230101'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_seeds.txt',target:['EXP','PATCH']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','SA']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','SA']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_seeds.txt',target:['EXP','PATCH']},
     
     {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
     {n:[56],d:[14],p:mp('IJKL','01012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
     {n:[56],d:[16],p:mp('IJKL','2301012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
     {n:[56],d:[18],p:mp('IJKL','232301012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
     {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided']},
+
+    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','PEPS','PEPSTime','super']},
+    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','PEPS','PEPSTime','super']},
 
     {meta:3},
     // Check
@@ -290,7 +297,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].auxiliaryFilename=rr(t.s)+'.json'
                 input.generatingCircuit[0].seed=seed
                 if (t.target.indexOf('PEPS')!==-1) {
-                    if (withOrder) {
+                    if (withOrder && !counterorder) {
                         input.generatingCircuit[0].pepsPath[0].order=JSON.stringify(pepsOrder[PEPSInputs.length].order);
                         if (t.target.indexOf('PEPSTime')!==-1) PEPSTimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
                     }
