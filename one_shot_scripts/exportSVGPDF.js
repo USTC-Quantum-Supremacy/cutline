@@ -150,10 +150,29 @@ function main(callback) {
 return {adjust,createAndDownloadFile,downloadSVG,downloadPDF,main};
 })();
 
-exportfile.main(function () {
-    let name='export'
-    console.log(name);
-    exportfile.adjust()
-    exportfile.downloadSVG(name)
-    exportfile.downloadPDF(name)
-})
+
+
+function exportSVGPDF_inject_page(calling){
+    if (calling!=123478146) {
+        // old calling
+        exportfile.main(function () {
+            let name='export'
+            console.log(name);
+            exportfile.adjust()
+            exportfile.downloadSVG(name)
+            exportfile.downloadPDF(name)
+        })
+    } else {
+        // inject
+        exportfile.main(function () {
+            let name='export'
+            console.log(name);
+            Array.from(document.querySelectorAll('circle.qstart')).forEach(v=>v.style.display='none')
+            document.querySelector("#extra-exportSVGPDF > input[type=button]").remove()
+            document.querySelector("#extra-exportSVGPDF").style.margin="15px"
+            document.querySelector("#extra-exportSVGPDF").insertAdjacentHTML('beforeend',/* html */`<input type="button" value="download SVG" onclick="exportfile.downloadSVG('export')"><input type="button" value="download PDF" onclick="exportfile.downloadPDF('export')">`)
+            document.querySelector("#extra-exportSVGPDF").append(document.querySelector("#loading"))
+
+        })
+    }
+}
