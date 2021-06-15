@@ -21,7 +21,12 @@ function createAndDownloadFile(contents, filename, fileType) {
 }
 
 function getSVGText(params) {
-    return document.querySelector("#insertHere").children[0].outerHTML.replace(/(viewBox.*?)(width[^>]*)(>)/,'$1$3')
+    let SVGEle = document.querySelector("#insertHere").children[0]
+    let SVGStr = SVGEle.outerHTML.replace(/(viewBox.*?)(width[^>]*)(>)/,'$1$3')
+    let patternStyle = document.querySelector("#patternColor").innerText.replace(/#insertHere/g,'#'+SVGEle.getAttribute('id'))
+    let replaceToken = '<style xmlns="http://www.w3.org/2000/svg" type="text/css">'
+    SVGStr = SVGStr.replace(replaceToken,replaceToken+'\n'+patternStyle)
+    return SVGStr
 }
 
 function downloadSVG(filename) {
@@ -167,7 +172,10 @@ function exportSVGPDF_inject_page(calling){
         exportfile.main(function () {
             let name='export'
             console.log(name);
+
             Array.from(document.querySelectorAll('circle.qstart')).forEach(v=>v.style.display='none')
+            Array.from(document.querySelectorAll('text.mark')).forEach(v=>v.setAttribute('y',~~v.getAttribute('y')+10))
+
             document.querySelector("#extra-exportSVGPDF > input[type=button]").remove()
             document.querySelector("#extra-exportSVGPDF").style.margin="15px"
             document.querySelector("#extra-exportSVGPDF").insertAdjacentHTML('beforeend',/* html */`<input type="button" value="download SVG" onclick="exportfile.downloadSVG('export')"><input type="button" value="download PDF" onclick="exportfile.downloadPDF('export')">`)
