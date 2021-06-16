@@ -193,6 +193,36 @@ let tasks=[
     {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','PEPS','PEPSTime','super']},
     {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','PEPS','PEPSTime','super']},
 
+    // more seeds
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH','moreseeds','ms1']},
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime','moreseeds','ms1']},
+    {n:[56],d:[12],p:mp('IJKL','012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided','moreseeds','ms1']},
+    
+    {n:[56],d:[14],p:mp('IJKL','01012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH','moreseeds','ms1']},
+    {n:[56],d:[14],p:mp('IJKL','01012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime','moreseeds','ms1']},
+    {n:[56],d:[14],p:mp('IJKL','01012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided','moreseeds','ms1']},
+
+    {n:[56],d:[16],p:mp('IJKL','2301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH','moreseeds','ms1']},
+    {n:[56],d:[16],p:mp('IJKL','2301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime','moreseeds','ms1']},
+    {n:[56],d:[16],p:mp('IJKL','2301012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided','moreseeds','ms1']},
+
+    {n:[56],d:[18],p:mp('IJKL','232301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH','moreseeds','ms1']},
+    {n:[56],d:[18],p:mp('IJKL','232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime','moreseeds','ms1']},
+    {n:[56],d:[18],p:mp('IJKL','232301012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided','moreseeds','ms1']},
+
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH','moreseeds','ms1']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime','moreseeds','ms1']},
+    {n:[56],d:[20],p:mp('IJKL','01232301012323010123'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','list2elided','moreseeds','ms1']},
+
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','SA','moreseeds','ms1']},
+    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_E6layer_seeds.txt',target:['EXP','PEPS','PEPSTime','super','moreseeds','ms1']},
+    {n:[15,18,21,24,27,30,33],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','SA','moreseeds','ms1']},
+    {n:[36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_seeds.txt',target:['EXP','PEPS','PEPSTime','super','moreseeds','ms1']},
+    {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_seeds.txt',target:['EXP','PATCH','moreseeds','ms1']},
+
+
+    
+
     {meta:3},
     // Check
 
@@ -270,13 +300,20 @@ tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
-                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1 && t.target.indexOf('eseeds')===-1) || t.target.indexOf('once')!==-1)) {
-                    // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
-                    return;
-                }
-                if (seedi>=10 && (t.target.indexOf('EXP')!==-1 || t.target.indexOf('eseeds')!==-1)) {
-                    // EXP 只用 seedi<10
-                    return;
+                if (t.target.indexOf('moreseeds')===-1) {
+                    if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1 && t.target.indexOf('eseeds')===-1) || t.target.indexOf('once')!==-1)) {
+                        // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
+                        return;
+                    }
+                    if (seedi>=10 && (t.target.indexOf('EXP')!==-1 || t.target.indexOf('eseeds')!==-1)) {
+                        // EXP 或 eseeds 只用 seedi<10
+                        return;
+                    }
+                } else {
+                    if (t.target.indexOf('ms1')!==-1 && (seedi<10 || seedi>=20)){
+                        // ms1 只用 seedi 10~19
+                        return;
+                    }
                 }
                 let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
                 let tpli=~~r(t.tpl)
