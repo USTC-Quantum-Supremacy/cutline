@@ -1,4 +1,5 @@
 // node generateCircuit.js
+let counterorder = false // give up order when using this flag but use same makefile process
 
 // node jsfile a1
 let withOrder=false
@@ -6,13 +7,17 @@ let pepsOrder=[]
 if (process.argv[2]==='order') {
     withOrder=true
 }
+if (process.argv[2]==='counterorder') {
+    withOrder=true
+    counterorder = true // give up order when using this flag but use same makefile process
+}
 
 const {StructDataClass,seeds} = require('./main.js')
 const fs = require('fs')
 
 let tplInput=JSON.parse(fs.readFileSync('in/generateCircuit.json',{encoding:'utf-8'}))
 let pepsCut=JSON.parse(fs.readFileSync('in/pepsCut.json',{encoding:'utf-8'}))
-if(withOrder)pepsOrder=JSON.parse(fs.readFileSync('output/orders_peps.json',{encoding:'utf-8'}));
+if(withOrder && !counterorder)pepsOrder=JSON.parse(fs.readFileSync('output/orders_peps.json',{encoding:'utf-8'}));
 
 const part1s=[
     '[0,1,10,11,12,13,14,15,18,19,2,20,21,24,25,26,3,30,31,32,36,37,4,42,43,48,6,7,8,9]', // 0
@@ -209,7 +214,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].auxiliaryFilename=rr(t.s)+'.json'
                 input.generatingCircuit[0].seed=seed
                 if (t.target.indexOf('PEPS')!==-1) {
-                    if (withOrder) {
+                    if (withOrder && !counterorder) {
                         input.generatingCircuit[0].pepsPath[0].order=JSON.stringify(pepsOrder[PEPSInputs.length].order);
                         if (t.target.indexOf('PEPSTime')!==-1) PEPSTimeInputs.push([input,t,n,d,input.generatingCircuit[0].simulationFilename]);
                     }
