@@ -338,5 +338,118 @@
             ]
         }
     ]
+},
+{
+    "type": "prog",
+    "xsize": "12",
+    "ysize": "11",
+    "use00": false,
+    "brokenBits": "[]",
+    "part1": "[0,1,12,13,14,15,18,19,2,20,21,24,25,26,30,31,32,36,37,38,42,43,44,48,49,54,55,6,60,7,8,9]",
+    "depth": "20",
+    "searchPattern": "01232301",
+    "errorRates": "[0.0016,0.008,0.038]",
+    "removedEntrances": "[]",
+    "balancedRange": 4,
+    "search": "notprune",
+    "showMark": [
+        {
+            "type": "markQi"
+        }
+    ],
+    "showPattern": [
+        {
+            "type": "patternDefine",
+            "pattern": "I",
+            "bitString": "1_0111100000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "J",
+            "bitString": "1_1000011111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "K",
+            "bitString": "0_0000011110"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "L",
+            "bitString": "0_1111100001"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "M",
+            "bitString": "0_0000001010"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "N",
+            "bitString": "0_1111110101"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "O",
+            "bitString": "1_0011000010"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "P",
+            "bitString": "1_1100111101"
+        },
+        {
+            "type": "patternA",
+            "pattern": "I",
+            "color": "#ff9900"
+        },
+        {
+            "type": "patternA",
+            "pattern": "J",
+            "color": "#3333ff"
+        },
+        {
+            "type": "patternC",
+            "pattern": "K",
+            "color": "#009900"
+        },
+        {
+            "type": "patternC",
+            "pattern": "L",
+            "color": "#cc0000"
+        }
+    ],
+    "generatingCircuit": [
+        {
+            "type": "generatingCircuit",
+            "qubitNumber": 66,
+            "elided": "",
+            "pattern": "EFGH",
+            "seed": 13874234,
+            "simulationFilename": "",
+            "auxiliaryFilename": "",
+            "experimentFilename": "",
+            "order": [
+                {
+                    "type": "orderlist",
+                    "order": "[55,61,49,56,44,50,43,62,37,57,38,45,32,51,31,63,26,33,25,39,48,46,60,58,36,34,24,52,54,40,42,27,30,64,19,28,20,59,18,47,12,35,13,22,7,53,6,41,21,23,14,29,8,16,15,10,9,3,2,1,0,17,11,4,5,65]"
+                }
+            ],
+            "sfaCut": "-1",
+            "pepsCut": "[8,3,8,15,20,15,20,27]",
+            "pepsPath": [
+                {
+                    "type": "orderlist",
+                    "order": "[55,61,49,56,44,50,43,62,37,57,38,45,32,51,31,63,26,33,25,39,48,46,60,58,36,34,24,52,54,40,42,27,30,64,19,28,20,59,18,47,12,35,13,22,7,53,6,41,21,23,14,29,8,16,15,10,9,3,2,1,0,17,11,4,5,65]"
+                }
+            ],
+            "gateArgs": [
+                {
+                    "type": "gateArgs",
+                    "unknow": "[0.5,0.1666666667,0,0,0]"
+                }
+            ]
+        }
+    ]
 }
 ]
