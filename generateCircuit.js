@@ -108,6 +108,8 @@ let tasks=[
 
     {n:[43,44],d:[10],p:mp('IJKL','2323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH','once']},
 
+    {n:[18],d:[10],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_patchtest.txt',order:'[2,3,9,10,14,15,16,21,23,26,27,28,29,33,34,35,40,41,0,1,4,5,6,7,8,11,12,13,17,18,19,20,24,25,30,31,32,36,37,38,39,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,22]',part1:'[2,3,9,10,14,15,16,21,22]',target:['EXP','SA','once']},
+
     {meta:3},
     // Check(give up, use reargs circuit instead)
 
