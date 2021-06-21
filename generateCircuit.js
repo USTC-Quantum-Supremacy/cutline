@@ -221,7 +221,10 @@ let tasks=[
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,56],d:[10],p:mp('IJKL','2323010123'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_seeds.txt',target:['EXP','PATCH','moreseeds','ms1']},
 
 
-    
+    // 56 22
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_list2.txt',target:['EXP','PATCH','moreseeds','ms2']},
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_list2.txt',target:['EXP','SFACutSearch','TNCTime','moreseeds','ms2']},
+    {n:[56],d:[22],p:mp('IJKL','0123230101232301012320'),e:'9',s:'circuit/sycamore{n}_{d}_IJKL_E8gate_list2.txt',target:['EXP','SFA','SFATime','super','moreseeds','ms2']},
 
     {meta:3},
     // Check
@@ -316,6 +319,10 @@ tasks.forEach(t=>{
                 } else {
                     if (t.target.indexOf('ms1')!==-1 && (seedi<10 || seedi>=20)){
                         // ms1 只用 seedi 10~19
+                        return;
+                    }
+                    if (t.target.indexOf('ms2')!==-1 && seedi>=20){
+                        // ms2 只用 seedi 0~19
                         return;
                     }
                 }
