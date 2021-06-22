@@ -3,7 +3,7 @@
     "xsize": "11",
     "ysize": "11",
     "use00": false,
-    "brokenBits": "[]",
+    "brokenBits": "[4,5,11,17,22,65]",
     "part1": "[]",
     "depth": "16",
     "searchPattern": "012323010123230121",
