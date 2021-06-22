@@ -23,7 +23,7 @@ let renderTaskInput=(task)=>{
     return input
 }
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = ms => new Promise(res => setTimeout(res, ms+1000));
 
 let dotask = async (tasks)=>{
     for (const task of tasks) {
@@ -43,6 +43,7 @@ let giveuptask = async (tasks)=>{
         let input= renderTaskInput(task)
         let {xsize,balancedRange,searchPattern,screenName}=task
         //
+        if (task.giveup) continue;
         execSync(`screen -S ${screenName} -X quit`)
         await delay(10)
     }
