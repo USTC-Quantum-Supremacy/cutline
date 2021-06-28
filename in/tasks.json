@@ -72,5 +72,18 @@
     {"xsize":"12","balancedRange":6,"searchPattern":"012323010123230101232301","screenName":"sc71"},
     {"xsize":"12","balancedRange":10,"searchPattern":"012323010123230101232301","screenName":"sc72"},
     {"xsize":"12","balancedRange":14,"searchPattern":"012323010123230101232301","screenName":"sc73"},
-    {"xsize":"12","balancedRange":20,"searchPattern":"012323010123230101232301","screenName":"sc74"}
+    {"xsize":"12","balancedRange":20,"searchPattern":"012323010123230101232301","screenName":"sc74"},
+
+    {"xsize":"12","balancedRange":6,"searchPattern":"0123230101232301012321","screenName":"sc75"},
+    {"xsize":"12","balancedRange":10,"searchPattern":"0123230101232301012321","screenName":"sc76"},
+    {"xsize":"12","balancedRange":14,"searchPattern":"0123230101232301012321","screenName":"sc77"},
+    {"xsize":"12","balancedRange":20,"searchPattern":"0123230101232301012321","screenName":"sc78"},
+    {"xsize":"12","balancedRange":6,"searchPattern":"0123230101232301012303","screenName":"sc79"},
+    {"xsize":"12","balancedRange":10,"searchPattern":"0123230101232301012303","screenName":"sc80"},
+    {"xsize":"12","balancedRange":14,"searchPattern":"0123230101232301012303","screenName":"sc81"},
+    {"xsize":"12","balancedRange":20,"searchPattern":"0123230101232301012303","screenName":"sc82"},
+    {"xsize":"12","balancedRange":6,"searchPattern":"0123230101232301012301","screenName":"sc83"},
+    {"xsize":"12","balancedRange":10,"searchPattern":"0123230101232301012301","screenName":"sc84"},
+    {"xsize":"12","balancedRange":14,"searchPattern":"0123230101232301012301","screenName":"sc85"},
+    {"xsize":"12","balancedRange":20,"searchPattern":"0123230101232301012301","screenName":"sc86"}
 ]
