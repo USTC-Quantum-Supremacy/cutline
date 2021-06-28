@@ -113,7 +113,7 @@ let tasks=[
     {n:[60],d:[10,12,14,16,18,20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p1.txt',part1:'[0,1,2,6,7,8,12,13,14,18,19,20,24,25,26,30,31,32]',target:['EXP','PATCH','once']},
     {n:[60],d:[10,12,14,16,18,20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p2.txt',part1:'[2,3,9,10,14,15,16,21,23,26,27,28,29,33,34,35,40,41]',target:['EXP','PATCH','once']},
     {n:[60],d:[10,12,14,16,18,20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p3.txt',part1:'[30,31,32,36,37,38,42,43,44,48,49,50,54,55,56,60,61,62]',target:['EXP','PATCH','once']},
-    {n:[60],d:[10,16,20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p4.txt',part1:'[33,34,38,39,40,41,45,46,47,50,51,52,53,57,58,59,62,63,64]',target:['EXP','PATCH','once']},
+    {n:[60],d:[10,12,14,16,18,20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_reargs2_p4.txt',part1:'[33,34,38,39,40,41,45,46,47,50,51,52,53,57,58,59,62,63,64]',target:['EXP','PATCH','once']},
 
 
 
