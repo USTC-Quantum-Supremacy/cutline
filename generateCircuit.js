@@ -51,31 +51,31 @@ let tasks=[
     
     // 60qubit SFA supremacy
     {n:[60],d:[12],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[12],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[12],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[12],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
     
     {n:[60],d:[14],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[14],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[14],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[14],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
 
     {n:[60],d:[16],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[16],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[16],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[16],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
 
     {n:[60],d:[18],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[18],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[18],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[18],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
 
     {n:[60],d:[20],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[20],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[20],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
 
     {n:[60],d:[22],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[22],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[22],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[22],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
 
     {n:[60],d:[24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',target:['EXP','PATCH']},
-    {n:[60],d:[24],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['EXP','SFACutSearch','TNCTime']},
+    {n:[60],d:[24],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:['EXP','SFACutSearch','TNCTime']},
     {n:[60],d:[24],p:mp('IJKL','01232301'),e:'8',s:'circuit/sycamore{n}_{d}_IJKL_E8gate.txt',target:['EXP','SFA','SFATime','super']},
 
     // 66qubit SFA supremacy
