@@ -147,6 +147,16 @@ let tasks=[
     {n:[66],d:[10],p:'MNOPOPMNMN',s:'circuit/sycamore{n}_{d}_MNOP_fullcircuit_PYPEPSTime.txt',target:['PYPEPSTime']},
 
     {n:[60],d:[22],tpl:'2',p:mp('IJKL','0123230101232301012301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_tail01.txt',target:[]},
+    //23 39.6
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail01.txt',target:[]},//37.5
+    // {n:[60],d:[22],p:mp('IJKL','0123230101232301012302'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail01.txt',target:[]},//37.1
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012303'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail03.txt',target:[]},//37.5
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012310'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail10.txt',target:[]},//38
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012312'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail12.txt',target:[]},//38.6
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012313'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail13.txt',target:[]},//39.1
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail20.txt',target:[]},//38.1
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012321'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail21.txt',target:[]},//38.5
+
 
     // cal xeb when perfect
     {n:[15,18,21,24,27,30,33,36],d:[10],p:'IJKLKLIJIJ',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E6layer.txt',target:['SA','xebcal','eseeds']},
