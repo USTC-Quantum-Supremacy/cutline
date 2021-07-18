@@ -122,7 +122,8 @@ let tasks=[
     {n:[60],d:[16,18,20,24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_testpatch1.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,27,3,32,33,38,6,7,8,9,16,23,29,28,35,41]',target:['EXP','PATCH']},
     {n:[60],d:[16,18,20,24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_testpatch2.txt',part1:'[10,14,15,19,2,21,26,27,3,32,33,38,9,16,23,29,28,35,41,1,8,13,20,25,40,46,52,47,53,59]',target:['EXP','PATCH']},
     {n:[60],d:[16,18,20,24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_testpatch3.txt',part1:'[10,14,15,2,21,26,27,3,32,33,38,9,16,23,29,28,35,41,40,46,52,47,53,59,34,39,45,51,58,64]',target:['EXP','PATCH']},
-    {n:[60],d:[16,18,20,24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_testpatch4.txt',part1:'[16,23,29,28,35,41,40,46,52,47,53,59,34,39,45,51,58,64,50,56,61,62,57,63,43,49,48,54,60,55]',target:['EXP','PATCH']},
+    {n:[60],d:[16,18,20,24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_testpatch4.txt',part1:'[10,14,15,2,3,9,16,23,29,28,35,41,40,46,52,47,53,59,34,39,45,51,58,64,50,56,61,62,57,63]',target:['EXP','PATCH']},
+    {n:[60],d:[16,18,20,24],p:mp('IJKL','01232301'),e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer_testpatch5.txt',part1:'[16,23,29,28,35,41,40,46,52,47,53,59,34,39,45,51,58,64,50,56,61,62,57,63,43,49,48,54,60,55]',target:['EXP','PATCH']},
     
 
     {meta:3},
