@@ -169,6 +169,10 @@ let tasks=[
     {n:[60],d:[22],p:mp('IJKL','0123230101232301012320'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail20.txt',target:[]},//38.1
     {n:[60],d:[22],p:mp('IJKL','0123230101232301012321'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_sp_tail21.txt',target:[]},//38.5
 
+    {n:[60],d:[24],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_u0.txt',part1:'[0,1,10,12,13,14,15,18,19,2,20,21,24,25,26,27,3,30,31,32,33,36,37,38,42,44,6,7,8,9]',target:[]},//44
+    {n:[60],d:[24],p:mp('IJKL','01232301'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_u6.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:[]},//42.511183906514226 33 27
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012321'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_tail21_u0.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,24,25,26,27,3,30,31,32,33,36,37,38,42,6,7,8,9]',target:[]},//40
+    {n:[60],d:[22],p:mp('IJKL','0123230101232301012321'),s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_tail21_u6.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:[]},//37.511183906514226 33 27
 
     // cal xeb when perfect
     {n:[15,18,21,24,27,30,33,36],d:[10],p:'IJKLKLIJIJ',e:'6layer',s:'circuit/sycamore{n}_{d}_IJKL_xebcal_E6layer.txt',target:['SA','xebcal','eseeds']},
