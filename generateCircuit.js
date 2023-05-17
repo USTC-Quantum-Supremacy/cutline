@@ -307,24 +307,13 @@ tasks.forEach(t=>{
     t.n.forEach(n=>{
         t.d.forEach(d=>{
             seeds.forEach((seed,seedi)=>{
-                if (t.target.indexOf('moreseeds')===-1) {
-                    if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1 && t.target.indexOf('eseeds')===-1) || t.target.indexOf('once')!==-1)) {
-                        // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
-                        return;
-                    }
-                    if (seedi>=10 && (t.target.indexOf('EXP')!==-1 || t.target.indexOf('eseeds')!==-1)) {
-                        // EXP 或 eseeds 只用 seedi<10
-                        return;
-                    }
-                } else {
-                    if (t.target.indexOf('ms1')!==-1 && (seedi<10 || seedi>=20)){
-                        // ms1 只用 seedi 10~19
-                        return;
-                    }
-                    if (t.target.indexOf('ms2')!==-1 && seedi>=20){
-                        // ms2 只用 seedi 0~19
-                        return;
-                    }
+                if (seedi!==0 && ((t.target.indexOf('EXP')===-1 && t.target.indexOf('seeds')===-1 && t.target.indexOf('eseeds')===-1) || t.target.indexOf('once')!==-1)) {
+                    // ((不含EXP 且 不含seeds) 或 含once) 时只用 seedi==0
+                    return;
+                }
+                if (seedi>=20 && (t.target.indexOf('EXP')!==-1 || t.target.indexOf('eseeds')!==-1)) {
+                    // EXP 只用 seedi<20
+                    return;
                 }
                 let r=s=>(s||'').split('{n}').join(n).split('{d}').join(d)
                 let tpli=~~r(t.tpl)
