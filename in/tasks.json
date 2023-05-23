@@ -1,5 +1,5 @@
 [
-    {"xsize":"12","balancedRange":6,"searchPattern":"01232301","screenName":"sc1"},
-    {"xsize":"12","balancedRange":10,"searchPattern":"01232301","screenName":"sc2"},
-    {"xsize":"12","balancedRange":20,"searchPattern":"01232301","screenName":"sc3"}
+    {"xsize":"12","balancedRange":6,"searchPattern":"012323010123230101232301","screenName":"sc1"},
+    {"xsize":"12","balancedRange":10,"searchPattern":"012323010123230101232301","screenName":"sc2"},
+    {"xsize":"12","balancedRange":20,"searchPattern":"012323010123230101232301","screenName":"sc3"}
 ]

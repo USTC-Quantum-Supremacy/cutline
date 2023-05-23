@@ -247,6 +247,9 @@ let tasks=[
     {n:[54],d:[14],p:'IJKLKLIJIJKLIL',e:'0layer',s:'circuit/sycamore{n}_{d}_IJKL_E0layer.txt',part1:part1s[1],target:['PATCH']},
 
     {n:[53],d:[20],tpl:'1',p:mp('IJKL','01232301'),s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['SFACutSearch']},
+
+    {n:[70],d:[8,16,24],tpl:'4',p:mp('IJKL','01232301'),s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['']},
+    {n:[70],d:[8,16,24],tpl:'5',p:mp('IJKL','01232301'),s:'circuit/google5_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['']},
     
 
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:'IJKLKLIJIJ',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_PYPEPSTime.txt',target:['PYPEPSTime']},

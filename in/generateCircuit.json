@@ -452,4 +452,192 @@
         }
     ]
 }
+,
+{
+    "type": "prog",
+    "xsize": "12",
+    "ysize": "12",
+    "use00": false,
+    "brokenBits": "[11,5]",
+    "part1": "[0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]",
+    "depth": "24",
+    "searchPattern": "012323010123230101232301",
+    "errorRates": "[0.0016,0.008,0.038]",
+    "removedEntrances": "[]",
+    "balancedRange": 6,
+    "search": "notprune",
+    "showMark": [
+        {
+            "type": "markQi"
+        }
+    ],
+    "showPattern": [
+        {
+            "type": "patternDefine",
+            "pattern": "I",
+            "bitString": "1_11111111111"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "J",
+            "bitString": "1_00000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "K",
+            "bitString": "0_00000000000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "L",
+            "bitString": "0_11111111111"
+        },
+        {
+            "type": "patternNormal",
+            "pattern": "I",
+            "color": "#cc0000"
+        },
+        {
+            "type": "patternNormal",
+            "pattern": "J",
+            "color": "#009900"
+        },
+        {
+            "type": "patternNormal",
+            "pattern": "K",
+            "color": "#ff9900"
+        },
+        {
+            "type": "patternNormal",
+            "pattern": "L",
+            "color": "#3333ff"
+        }
+    ],
+    "generatingCircuit": [
+        {
+            "type": "generatingCircuit",
+            "qubitNumber": 70,
+            "elided": "",
+            "pattern": "IJKLKLIJIJKLKLIJIJKLKLIJ",
+            "seed": "13874234",
+            "simulationFilename": "circuit/q70_24_ABCD.txt",
+            "auxiliaryFilename": "circuit/q70_24_ABCD.txt.json",
+            "experimentFilename": "unknown now",
+            "order": [
+                {
+                    "type": "orderlist",
+                    "order": "[0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]"
+                }
+            ],
+            "sfaCut": "-1",
+            "pepsCut": "[42,36,36,43]",
+            "pepsPath": [
+                {
+                    "type": "orderlist",
+                    "order": "[0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]"
+                }
+            ],
+            "gateArgs": [
+                {
+                    "type": "gateArgs",
+                    "unknow": "[1.5707963267948966,0.5235987755982988,0,0,0]"
+                }
+            ]
+        }
+    ]
+}
+,
+{
+    "type": "prog",
+    "xsize": "12",
+    "ysize": "12",
+    "use00": false,
+    "brokenBits": "[11,5]",
+    "part1": "[0,1,12,13,14,18,19,2,20,24,25,3,30,31,32,36,37,42,43,44,48,49,54,55,56,6,60,61,62,66,67,68,7,8,9]",
+    "depth": "24",
+    "searchPattern": "012323010123230101232301",
+    "errorRates": "[0.0016,0.008,0.038]",
+    "removedEntrances": "[]",
+    "balancedRange": 6,
+    "search": "notprune",
+    "showMark": [
+        {
+            "type": "markQi"
+        }
+    ],
+    "showPattern": [
+        {
+            "type": "patternDefine",
+            "pattern": "I",
+            "bitString": "0_00000011100"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "J",
+            "bitString": "0_11111100011"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "K",
+            "bitString": "1_0011100000"
+        },
+        {
+            "type": "patternDefine",
+            "pattern": "L",
+            "bitString": "1_1100011111"
+        },
+        {
+            "type": "patternA",
+            "pattern": "I",
+            "color": "#ff9900"
+        },
+        {
+            "type": "patternA",
+            "pattern": "J",
+            "color": "#3333ff"
+        },
+        {
+            "type": "patternC",
+            "pattern": "K",
+            "color": "#009900"
+        },
+        {
+            "type": "patternC",
+            "pattern": "L",
+            "color": "#cc0000"
+        }
+    ],
+    "generatingCircuit": [
+        {
+            "type": "generatingCircuit",
+            "qubitNumber": 70,
+            "elided": "",
+            "pattern": "IJKLKLIJIJKLKLIJIJKLKLIJ",
+            "seed": "13874234",
+            "simulationFilename": "circuit/q70_24_ABCD.txt",
+            "auxiliaryFilename": "circuit/q70_24_ABCD.txt.json",
+            "experimentFilename": "unknown now",
+            "order": [
+                {
+                    "type": "orderlist",
+                    "order": "[0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]"
+                }
+            ],
+            "sfaCut": "-1",
+            "pepsCut": "[42,36,36,43]",
+            "pepsPath": [
+                {
+                    "type": "orderlist",
+                    "order": "[0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71]"
+                }
+            ],
+            "gateArgs": [
+                {
+                    "type": "gateArgs",
+                    "unknow": "[1.5707963267948966,0.5235987755982988,0,0,0]"
+                }
+            ]
+        }
+    ]
+}
 ]
