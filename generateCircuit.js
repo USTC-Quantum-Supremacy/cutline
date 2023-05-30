@@ -250,6 +250,10 @@ let tasks=[
 
     {n:[70],d:[8,16,24],tpl:'4',p:mp('IJKL','01232301'),s:'circuit/google_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['']},
     {n:[70],d:[8,16,24],tpl:'5',p:mp('IJKL','01232301'),s:'circuit/google5_sycamore{n}_{d}_IJKL_fullcircuit.txt',target:['']},
+
+    {n:[60],d:[8,16,24],tpl:'6',p:mp('IJKL','01232301'),s:'circuit/changsha{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:[]},
+    {n:[60],d:[8,16,24],tpl:'7',p:mp('IJKL','01232301'),s:'circuit/changsha_abcd_{n}_{d}_IJKL_fullcircuit.txt',part1:'[0,1,10,12,13,14,15,16,18,19,2,20,21,23,24,25,26,3,30,31,32,36,37,42,6,7,8,9]',target:[]},
+    
     
 
     {n:[15,18,21,24,27,30,33,36,39,42,45,48,51,54,60,66],d:[10],p:'IJKLKLIJIJ',s:'circuit/sycamore{n}_{d}_IJKL_fullcircuit_PYPEPSTime.txt',target:['PYPEPSTime']},
