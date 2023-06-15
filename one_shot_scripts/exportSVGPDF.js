@@ -2,7 +2,7 @@ exportfile=(function(){
 
 function adjust(params) {
     Array.from(document.querySelectorAll('circle.qstart')).forEach(v=>v.style.display='none')
-    Array.from(document.querySelectorAll('circle.qpt')).forEach(v=>v.setAttribute('fill','#000'))
+    // Array.from(document.querySelectorAll('circle.qpt')).forEach(v=>v.setAttribute('fill','#000'))
 }
 
 function createAndDownloadFile(contents, filename, fileType) {
@@ -21,7 +21,13 @@ function createAndDownloadFile(contents, filename, fileType) {
 }
 
 function getSVGText(params) {
-    return document.querySelector("#insertHere").children[0].outerHTML.replace(/(viewBox.*?)(width[^>]*)(>)/,'$1$3')
+    let toret = document.querySelector("#insertHere").children[0].outerHTML.replace(/(viewBox.*?)(width[^>]*)(>)/,'$1$3')
+    if(1){ //'insert edge color css'
+        let mark='<style xmlns="http://www.w3.org/2000/svg" type="text/css">'
+        toret=toret.split(mark).join(mark+patternColor.innerHTML.replace(/insertHere/g,insertHere.children[0].id))
+        
+    }
+    return toret
 }
 
 function downloadSVG(filename) {
@@ -151,7 +157,7 @@ return {adjust,createAndDownloadFile,downloadSVG,downloadPDF,main};
 })();
 
 exportfile.main(function () {
-    let name='export'
+    let name=window.exportfilename||'export'
     console.log(name);
     exportfile.adjust()
     exportfile.downloadSVG(name)
