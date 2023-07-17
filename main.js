@@ -801,6 +801,25 @@ StructDataClass.prototype.setSplit = function (removeList) {
     return this
 }
 
+StructDataClass.prototype.setParts = function (params) {
+    let parts=eval(this.input.parts)
+    for (let parti = 0; parti < parts.length; parti++) {
+        const arr = parts[parti];
+        for (const qi of arr) {
+            this.qubit(qi).area3=parti+3
+        }
+    }
+    for (let ei = 0; ei < this.maxAreaEdges.length; ei++) {
+        const edge = this.edge(this.maxAreaEdges[ei]);
+        let aq1 = this.qubit(edge.q1).area3||this.qubit(edge.q1).area2
+        let aq2 = this.qubit(edge.q2).area3||this.qubit(edge.q2).area2
+        if (aq1!=2 && aq2!=2 && aq1!=aq2) {
+            edge.isSplitEdge = 2
+        }
+    }
+    return this
+}
+
 StructDataClass.prototype.calPatterns = function (o1,o2) {
     if (this.use00) {
         o1={x:o1.x,y:o1.y+1}
@@ -1366,7 +1385,7 @@ StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber
         if (qubit.area2===2 && qindexs.indexOf(qi)!==-1) {
             AIndexes.push(qi)
         }
-        if (qubit.area2===1 && qindexs.indexOf(qi)!==-1) {
+        if (qubit.area2===1 && qindexs.indexOf(qi)!==-1 && !qubit.area3) {
             BIndexes.push(qi)
         }
     }
@@ -1374,7 +1393,7 @@ StructDataClass.prototype.renderAuxiliaryFiles = function (orderList,qubitNumber
     // let mapText=`${orderList.map((v,i)=>v+' '+(i+1)).join('\n')}\n`
     let auxiliaryText=json.d1({
         N:qubitNumber,
-        AIndexes,BIndexes,SFACut:sfaCut,
+        AIndexes,BIndexes,ExtraIndexes:eval(this.input.parts),SFACut:sfaCut,
         PEPSCut:pepsCut.map((v,i,a)=>[v,a[i+1]]).filter((v,i)=>i%2==0),PEPSOrder:pepsPath,
         map:orderList.map((v,i)=>[v,i+1]),
     })
@@ -1404,6 +1423,7 @@ StructDataClass.prototype.generateCircuit = function (outputFunc) {
         let elided=circuitInput.elided===''?null:parseInt(circuitInput.elided)
         let elidedMod=circuitInput.elided.slice(-5)==='layer'?'layer':'number'
         let seed=circuitInput.seed+''
+        this.setParts()
         let circuitProto = this.generateCircuitProto(circle,depth,seed)
         let {circuit,crossGateNumber} = this.renderCircuitProtoToSimulation(circuitProto,orderList.slice(0,qubitNumber),elided,elidedMod,null)
         let {auxiliaryText} = this.renderAuxiliaryFiles(orderList,qubitNumber,pepsPath,pepsCut,sfaCut)

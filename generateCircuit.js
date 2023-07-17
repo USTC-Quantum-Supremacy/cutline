@@ -338,6 +338,7 @@ tasks.forEach(t=>{
                 input.generatingCircuit[0].qubitNumber=n
                 input.depth=d+''
                 input.part1=r(t.part1)||input.part1
+                input.parts=r(t.parts)||input.parts
                 input.generatingCircuit[0].pattern=r(t.p)
                 input.generatingCircuit[0].elided=r(t.e)
                 input.generatingCircuit[0].sfaCut=r(t.sfaCut)||'-1'

@@ -32,6 +32,8 @@ function buildMainSVG(params) {
     } catch (error) {
     }
     
+    sd.setParts()
+
     var view=new VisualClass();
     view.init().importData(sd).generateBaseSVG().generateSVGCSS().generateSVG()
     console.log(view)
