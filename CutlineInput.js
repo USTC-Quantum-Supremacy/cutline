@@ -406,7 +406,7 @@ Object.assign(CutlineInputBlocks,{
         "type": "statement",
         "json": {
             "type": "prog",
-            "message0": "xsize %1 ysize %2 use00 %3 %4 broken bits %5 %6 part1 indexes %7 %8 depth %9 %10 search %11 > pattern %12 %13 > e1 e2 er %14 %15 > removed entrances %16 %17 > n1-n2 no bigger than %18 %19 > %20 %21 show mark ~n(only for mark) %22 %23 show and define pattern ~n %24 %25 generating circuit ~1 %26 %27",
+            "message0": "xsize %1 ysize %2 use00 %3 %4 broken bits %5 %6 part1 indexes %7 %8 more parts %9 %10 depth %11 %12 search %13 > pattern %14 %15 > e1 e2 er %16 %17 > removed entrances %18 %19 > n1-n2 no bigger than %20 %21 > %22 %23 show mark ~n(only for mark) %24 %25 show and define pattern ~n %26 %27 generating circuit ~1 %28 %29",
             "args0": [
                 Object.assign({},CutlineInputBlocks.Number_List,{
                     "name": "xsize",
@@ -432,6 +432,13 @@ Object.assign(CutlineInputBlocks,{
                 },
                 Object.assign({},CutlineInputBlocks.JsonStr,{
                     "name": "part1",
+                    "text": "[]"
+                }),
+                {
+                    "type": "input_dummy"
+                },
+                Object.assign({},CutlineInputBlocks.JsonStr,{
+                    "name": "parts",
                     "text": "[]"
                 }),
                 {
@@ -528,6 +535,11 @@ Object.assign(CutlineInputBlocks,{
                 throw new OmitedError(block,'part1','prog');
             }
             part1 = CutlineInputFunctions.pre('JsonStr')(part1,block,'part1','prog');
+            var parts = block.getFieldValue('parts');
+            if (parts==='') {
+                throw new OmitedError(block,'parts','prog');
+            }
+            parts = CutlineInputFunctions.pre('JsonStr')(parts,block,'parts','prog');
             var depth = block.getFieldValue('depth');
             depth = CutlineInputFunctions.pre('Number_List')(depth,block,'depth','prog');
             var searchPattern = block.getFieldValue('searchPattern');
@@ -563,11 +575,11 @@ Object.assign(CutlineInputBlocks,{
             }
             return CutlineInputFunctions.defaultCode('prog',eval('['+CutlineInputBlocks['prog'].args.join(',')+']'),block);
         },
-        "args": ["xsize","ysize","use00","brokenBits","part1","depth","searchPattern","errorRates","removedEntrances","balancedRange","search","showMark","showPattern","generatingCircuit"],
-        "argsType": ["field","field","field","field","field","field","field","field","field","field","field","statement","statement","statement"],
-        "argsGrammarName": ["Number_List","Number_List","Bool","JsonStr","JsonStr","Number_List","NormalStr","JsonStr","JsonStr","Int","Search_List","marks","patterns","generatingCircuits"],
-        "omitted": [false,false,false,false,false,false,true,false,false,false,false,false,false,false],
-        "multi": [false,false,false,false,false,false,false,false,false,false,false,true,true,true],
+        "args": ["xsize","ysize","use00","brokenBits","part1","parts","depth","searchPattern","errorRates","removedEntrances","balancedRange","search","showMark","showPattern","generatingCircuit"],
+        "argsType": ["field","field","field","field","field","field","field","field","field","field","field","field","statement","statement","statement"],
+        "argsGrammarName": ["Number_List","Number_List","Bool","JsonStr","JsonStr","JsonStr","Number_List","NormalStr","JsonStr","JsonStr","Int","Search_List","marks","patterns","generatingCircuits"],
+        "omitted": [false,false,false,false,false,false,false,true,false,false,false,false,false,false,false],
+        "multi": [false,false,false,false,false,false,false,false,false,false,false,false,true,true,true],
         "fieldDefault": function (keyOrIndex) {
             return CutlineInputFunctions.fieldDefault('prog',keyOrIndex);
         },

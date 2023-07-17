@@ -3,6 +3,7 @@ grammar CutlineInput;
 prog:   'xsize' xsize=Number_List 'ysize' ysize=Number_List 'use00' use00=Bool BGNL 
         'broken bits' brokenBits=JsonStr BGNL
         'part1 indexes' part1=JsonStr BGNL
+        'more parts' parts=JsonStr BGNL
         'depth' depth=Number_List BGNL
         'search' BGNL
         '> pattern' searchPattern=NormalStr? BGNL
@@ -14,7 +15,7 @@ prog:   'xsize' xsize=Number_List 'ysize' ysize=Number_List 'use00' use00=Bool B
         'show and define pattern ~n' BGNL showPattern=patterns+
         'generating circuit ~1' BGNL generatingCircuit=generatingCircuits+
 /* prog
-defaultMap : {xsize:'12',ysize:'11',use00:true,brokenBits:'[]',part1:'[]',depth:'20',searchPattern:'01232301',errorRates:'[0.0016,0.0062,0.038]',removedEntrances:'[]',balancedRange:6,search:'prune'}
+defaultMap : {xsize:'12',ysize:'11',use00:true,brokenBits:'[]',part1:'[]',parts:'[]',depth:'20',searchPattern:'01232301',errorRates:'[0.0016,0.0062,0.038]',removedEntrances:'[]',balancedRange:6,search:'prune'}
 if (searchPattern==='') {
     throw "examples: 01232301, 0123, 012323010123230121, 012323010123230103"
 }

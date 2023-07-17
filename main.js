@@ -102,6 +102,7 @@ StructDataClass.prototype.fixInput = function () {
     input.removedEntrances=input.removedEntrances||'[]'
     input.showPattern=input.showPattern||[]
     input.part1=input.part1||'[]'
+    input.parts=input.parts||'[]'
     return this
 }
 
