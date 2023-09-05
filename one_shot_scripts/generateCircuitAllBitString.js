@@ -151,7 +151,6 @@ circles.forEach(carr=>{
     input.generatingCircuit[0].simulationFilename=input.generatingCircuit[0].simulationFilename.split('.txt').join('_'+circuitIndex+'.txt')
 
     input.generatingCircuit[0].auxiliaryFilename=input.generatingCircuit[0].simulationFilename+'.json'
-    input.generatingCircuit[0].seed=seed
 
     inputs.push(input)
     taskDisplay.push([pid,circuitIndex,pname,JSON.stringify(patterns),sfacost,JSON.stringify(infos),JSON.stringify(input)])
