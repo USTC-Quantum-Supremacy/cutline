@@ -129,7 +129,7 @@ let getBitStringCircles = function (tsd) {
 const circles=getBitStringCircles(tsd)
 tsd.searchPath()
 
-const taskDisplay=[['pid','circuitIndex','pname','patterns','sfacost','input']]
+const taskDisplay=[['pid','circuitIndex','pname','patterns','sfacost','infos','input']]
 
 circles.forEach(carr=>{
     let [pname,patterns,pid]=carr
@@ -142,6 +142,7 @@ circles.forEach(carr=>{
     sd.import(input)
     sd.circles=[['IJKLKLIJ','IJKL']]
     let output = sd.processPathsResult()
+    output.instance.calExpectation()
     let sfacost=output.instance.expectation[3]/output.instance.expectation[0]
     let infos=JSON.stringify(output.maxofmin)
 
@@ -153,7 +154,7 @@ circles.forEach(carr=>{
     input.generatingCircuit[0].seed=seed
 
     inputs.push(input)
-    taskDisplay.push([pid,circuitIndex,pname,JSON.stringify(patterns),sfacost,JSON.stringify(input)])
+    taskDisplay.push([pid,circuitIndex,pname,JSON.stringify(patterns),sfacost,JSON.stringify(infos),JSON.stringify(input)])
 
     circuitIndex++;
 })
