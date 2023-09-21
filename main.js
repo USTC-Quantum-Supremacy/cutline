@@ -1129,7 +1129,7 @@ StructDataClass.prototype._processPathsResult = function (circles,func,showProgr
     }
     let patternMin={};
     list.forEach((v,i,a)=>{
-        if(showProgress)console.log(`${i+1} of ${a.length}`);
+        if(showProgress)console.log(`${i+1} of ${a.length} at ${Date.now()}`);
         /** @type {StructDataClass} */
         let csd=v
         func.call(csd,circles)

@@ -16,8 +16,8 @@ const tplInput={
     "use00": true,
     "brokenBits": "[]",
     "part1": "[]",
-    "depth": "20",
-    "searchPattern": "01232301012323010123",
+    "depth": "12",
+    "searchPattern": "012323010123",
     "errorRates": "[0.0016,0.008,0.038]",
     "removedEntrances": "[]",
     "balancedRange": 6,
@@ -74,9 +74,9 @@ const tplInput={
             "type": "generatingCircuit",
             "qubitNumber": 25,
             "elided": "",
-            "pattern": "IJKLKLIJIJKLKLIJIJKL",
+            "pattern": "IJKLKLIJIJKL",
             "seed": "13874234",
-            "simulationFilename": "circuit/allbitstring25_20_IJKL_fullcircuit.txt",
+            "simulationFilename": "circuit/allbitstring25_12_IJKL_fullcircuit.txt",
             "auxiliaryFilename": "",
             "experimentFilename": "",
             "order": [
@@ -180,4 +180,4 @@ inputs.forEach(input=>{
     })
 })
 
-fs.writeFileSync('../output/circuitsAllBitstring.json',JSON.stringify({outFileName:'output/circuitsAllBitstring.xlsx',title:['circuits'],data:[taskDisplay]},null,4),{encoding:'utf-8'})
+fs.writeFileSync('../output/circuitsAllBitstring12.json',JSON.stringify({outFileName:'output/circuitsAllBitstring12.xlsx',title:['circuits'],data:[taskDisplay]},null,4),{encoding:'utf-8'})
