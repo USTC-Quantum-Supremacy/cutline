@@ -115,6 +115,7 @@ StructDataClass.prototype.buildInput = function (params) {
         use00:this.use00,
         brokenBits:JSON.stringify(this.choosen||[]),
         part1:JSON.stringify(this.removeList||[]),
+        parts:this.input.parts||'[]',
         depth:(this.input.depth||'20')+'',
         searchPattern:this.input.searchPattern||'01232301',
         errorRates:(this.input.errorRates||'[0.0016,0.0062,0.038]')+'',
